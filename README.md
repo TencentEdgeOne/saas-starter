@@ -199,6 +199,15 @@ For detailed setup and configuration, see `cms/contentful/README.md`.
 ### Internationalization
 Our project supports multiple languages, you can find all the translation files in the `dictionaries/` directory. For detailed internationalization setup and configuration, please see `dictionaries/README.md`.
 
+### Data Analytics
+The project has built-in support for Google Analytics data analytics.
+
+1. Sign up for [Google Analytics](https://developers.google.com/analytics?hl=en-US) to get the tracking code
+2. Set the tracking code in the environment variables
+```
+NEXT_PUBLIC_GA_ID=G-xxxxx
+```
+
 ## 📱 Pages Included
 
 - **Homepage** (`/`) - Complete landing page with all sections

@@ -200,6 +200,16 @@ public/images/contentful/  # 下载的图像
 
 我们的项目支持多语言，你可以在 `dictionaries/` 目录中找到所有的翻译文件。详细的国际化设置和配置，请见 `dictionaries/README.md`。
 
+### 数据统计
+项目内置支持Google Analytics数据统计。
+
+1. 开通 [Google Analytics](https://developers.google.com/analytics?hl=zh-cn)，得到统计代码
+2. 把统计代码设置到环境变量中
+```
+NEXT_PUBLIC_GA_ID=G-xxxxx
+```
+
+
 ## 📱 包含的页面
 
 - **首页** (`/`) - 完整的登陆页面，包含所有部分

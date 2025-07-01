@@ -107,20 +107,51 @@ function getSlugs(contentDir, type, langs) {
   return slugs;
 }
 
-// 5. 主流程
+// 5. 安全写入文件（强制覆盖）
+function writeFileSafely(filePath, content) {
+  try {
+    // 确保目录存在
+    const dir = path.dirname(filePath);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    
+    // 强制覆盖文件
+    fs.writeFileSync(filePath, content, 'utf8');
+    return true;
+  } catch (error) {
+    console.error(`❌ Error writing file ${filePath}:`, error.message);
+    return false;
+  }
+}
+
+// 6. 主流程
 function main() {
   const contentDir = path.join(process.cwd(), 'content');
   const blogSlugs = getSlugs(contentDir, 'blog', LANGS);
 
+  console.log(`🌐 Domain: ${DOMAIN}`);
+  console.log(`🌍 Languages: ${LANGS.join(', ')}`);
+  console.log(`📝 Blog posts found: ${blogSlugs.length}`);
+  console.log('');
+
   // robots.txt
   const robots = genRobotsTxt(DOMAIN);
-  fs.writeFileSync(path.join(process.cwd(), 'public', 'robots.txt'), robots, 'utf8');
-  console.log('✅ robots.txt generated');
+  const robotsPath = path.join(process.cwd(), 'public', 'robots.txt');
+  if (writeFileSafely(robotsPath, robots)) {
+    console.log('✅ robots.txt generated/updated');
+  }
 
   // sitemap.xml
   const sitemap = genSitemapXml(DOMAIN, LANGS, STATIC_ROUTES, blogSlugs);
-  fs.writeFileSync(path.join(process.cwd(), 'public', 'sitemap.xml'), sitemap, 'utf8');
-  console.log('✅ sitemap.xml generated');
+  const sitemapPath = path.join(process.cwd(), 'public', 'sitemap.xml');
+  if (writeFileSafely(sitemapPath, sitemap)) {
+    console.log('✅ sitemap.xml generated/updated');
+  }
+
+  console.log('');
+  console.log('🎉 SEO files generation completed!');
+  console.log(`📊 Total URLs in sitemap: ${STATIC_ROUTES.length * LANGS.length + blogSlugs.length * LANGS.length}`);
 }
 
 main(); 
