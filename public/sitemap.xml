@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://saas-starter.edgeone.app/en</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://saas-starter.edgeone.app/en" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://saas-starter.edgeone.app/zh" />
+  </url>
+  <url>
+    <loc>https://saas-starter.edgeone.app/zh</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://saas-starter.edgeone.app/en" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://saas-starter.edgeone.app/zh" />
+  </url>
+  <url>
+    <loc>https://saas-starter.edgeone.app/en/blog</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://saas-starter.edgeone.app/en/blog" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://saas-starter.edgeone.app/zh/blog" />
+  </url>
+  <url>
+    <loc>https://saas-starter.edgeone.app/zh/blog</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://saas-starter.edgeone.app/en/blog" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://saas-starter.edgeone.app/zh/blog" />
+  </url>
+  <url>
+    <loc>https://saas-starter.edgeone.app/en/cases</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://saas-starter.edgeone.app/en/cases" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://saas-starter.edgeone.app/zh/cases" />
+  </url>
+  <url>
+    <loc>https://saas-starter.edgeone.app/zh/cases</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://saas-starter.edgeone.app/en/cases" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://saas-starter.edgeone.app/zh/cases" />
+  </url>
+  <url>
+    <loc>https://saas-starter.edgeone.app/en/features</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://saas-starter.edgeone.app/en/features" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://saas-starter.edgeone.app/zh/features" />
+  </url>
+  <url>
+    <loc>https://saas-starter.edgeone.app/zh/features</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://saas-starter.edgeone.app/en/features" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://saas-starter.edgeone.app/zh/features" />
+  </url>
+  <url>
+    <loc>https://saas-starter.edgeone.app/en/contact</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://saas-starter.edgeone.app/en/contact" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://saas-starter.edgeone.app/zh/contact" />
+  </url>
+  <url>
+    <loc>https://saas-starter.edgeone.app/zh/contact</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://saas-starter.edgeone.app/en/contact" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://saas-starter.edgeone.app/zh/contact" />
+  </url>
+  <url>
+    <loc>https://saas-starter.edgeone.app/en/pricing</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://saas-starter.edgeone.app/en/pricing" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://saas-starter.edgeone.app/zh/pricing" />
+  </url>
+  <url>
+    <loc>https://saas-starter.edgeone.app/zh/pricing</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://saas-starter.edgeone.app/en/pricing" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://saas-starter.edgeone.app/zh/pricing" />
+  </url>
+  <url>
+    <loc>https://saas-starter.edgeone.app/en/about</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://saas-starter.edgeone.app/en/about" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://saas-starter.edgeone.app/zh/about" />
+  </url>
+  <url>
+    <loc>https://saas-starter.edgeone.app/zh/about</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://saas-starter.edgeone.app/en/about" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://saas-starter.edgeone.app/zh/about" />
+  </url>
+  <url>
+    <loc>https://saas-starter.edgeone.app/en/blog/nextjs-best-practices</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://saas-starter.edgeone.app/en/blog/nextjs-best-practices" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://saas-starter.edgeone.app/zh/blog/nextjs-best-practices" />
+  </url>
+  <url>
+    <loc>https://saas-starter.edgeone.app/zh/blog/nextjs-best-practices</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://saas-starter.edgeone.app/en/blog/nextjs-best-practices" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://saas-starter.edgeone.app/zh/blog/nextjs-best-practices" />
+  </url>
+  <url>
+    <loc>https://saas-starter.edgeone.app/en/blog/getting-started-with-saas</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://saas-starter.edgeone.app/en/blog/getting-started-with-saas" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://saas-starter.edgeone.app/zh/blog/getting-started-with-saas" />
+  </url>
+  <url>
+    <loc>https://saas-starter.edgeone.app/zh/blog/getting-started-with-saas</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://saas-starter.edgeone.app/en/blog/getting-started-with-saas" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://saas-starter.edgeone.app/zh/blog/getting-started-with-saas" />
+  </url>
+</urlset>

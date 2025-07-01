@@ -217,6 +217,11 @@ public/images/contentful/  # 下载的图像
 - 快速加载时间
 - 移动优先的响应式设计
 
+### robot.txt 和 sitemap.xml
+项目提供了自动生成robot.txt 和 sitemap.xml的脚本。
+只需要在 package.json 中修改gen:seo命令的 SITE_URL 为您自己的站点地址，然后运行：
+`npm run gen:seo`即可。
+
 ## 🚀 部署
 [![使用 EdgeOne Pages 部署](https://cdnstatic.tencentcs.com/edgeone/pages/deploy.svg)](https://console.cloud.tencent.com/edgeone/pages/new?template=saas-starter)
 

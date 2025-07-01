@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "next lint",
     "export": "next build",
-    "contentful:export": "node -r dotenv/config cms/contentful/contentful2md.js"
+    "contentful:export": "node -r dotenv/config cms/contentful/contentful2md.js",
+    "gen:seo": "SITE_URL=https://your-domain.com node scripts/gen-seo-files.js"
   },
   "dependencies": {
     "@contentful/rich-text-html-renderer": "^16.3.2",
@@ -19,6 +20,7 @@
     "clsx": "^2.0.0",
     "contentful": "^10.6.13",
     "date-fns": "^2.30.0",
+    "glob": "^11.0.3",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.516.0",
     "next": "14.0.4",

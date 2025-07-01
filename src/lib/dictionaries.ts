@@ -49,11 +49,11 @@ export interface Dictionary {
   };
   common: {
     buttons: {
-      learnMore: string;
-      getStarted: string;
-      readMore: string;
-      contactSales: string;
-      startFreeTrial: string;
+    learnMore: string;
+    getStarted: string;
+    readMore: string;
+    contactSales: string;
+    startFreeTrial: string;
       viewDocumentation: string;
       scheduleDemo: string;
       getStartedFree: string;
@@ -72,15 +72,15 @@ export interface Dictionary {
       error: string;
     };
     pricing: {
-      perMonth: string;
-      unlimited: string;
-      popular: string;
+    perMonth: string;
+    unlimited: string;
+    popular: string;
     };
     common: {
-      yes: string;
-      no: string;
-      switchLanguage: string;
-      toggleTheme: string;
+    yes: string;
+    no: string;
+    switchLanguage: string;
+    toggleTheme: string;
     };
   };
   shared: {
@@ -170,7 +170,7 @@ export interface Dictionary {
       errorMessage: string;
     };
   };
-
+  
   form: {
     labels: {
       fullName: string;
