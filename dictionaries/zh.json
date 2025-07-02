@@ -82,6 +82,8 @@
   },
   "common": {
     "buttons": {
+    "documentation": "文档",
+    "documentationUrl": "https://saas-starter-docs.edgeone.app/zh",
     "learnMore": "了解更多",
     "getStarted": "立即开始",
     "readMore": "阅读更多",

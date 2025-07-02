@@ -82,6 +82,8 @@
   },
   "common": {
     "buttons": {
+      "documentation": "Documentation",
+      "documentationUrl": "https://saas-starter-docs.edgeone.app/en",
     "learnMore": "Learn More",
     "getStarted": "Get Started",
     "readMore": "Read More",

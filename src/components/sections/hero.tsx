@@ -132,9 +132,12 @@ export function Hero({ dict, params, layout = 'center' }: HeroProps) {
               {dict?.common?.buttons?.getStartedFree || "Get Started Free"}
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
-            <Button variant="outline" size="lg">
-              {dict?.common?.buttons?.viewDemo || "View Demo"}
-            </Button>
+            <Link href={dict?.common?.buttons?.documentationUrl || "https://saas-starter-docs.edgeone.app/en"} target="_blank">
+              <Button variant="outline" size="lg">
+                {dict?.common?.buttons?.documentation || "Documentation"}
+              </Button>
+            </Link>
+            
           </div>
 
           {/* Social Proof */}

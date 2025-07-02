@@ -49,6 +49,8 @@ export interface Dictionary {
   };
   common: {
     buttons: {
+    documentation: string;
+    documentationUrl: string;
     learnMore: string;
     getStarted: string;
     readMore: string;
