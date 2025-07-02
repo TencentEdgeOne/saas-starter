@@ -229,9 +229,6 @@ dictionaries/[locale].json          # e.g., ja.json, fr.json
 
 # Create blocks dictionary file  
 dictionaries/blocks-[locale].json   # e.g., blocks-ja.json, blocks-fr.json
-
-# Create case data file for the new language
-dictionaries/case-[locale].json    # e.g., case-ja.json, case-fr.json
 ```
 
 **File Structure Requirements:**
@@ -271,17 +268,7 @@ const blocksDictionaries = {
 };
 ```
 
-#### 4. **Update Route Generation (if using App Router)**
-```typescript
-// In src/app/[lang]/layout.tsx - ensure generateStaticParams includes new locale
-export async function generateStaticParams() {
-  return locales.map((locale) => ({
-    lang: locale,
-  }));
-}
-```
-
-#### 5. **Update contentful2md.js**
+#### 4. **Update `contentful2md.js`**
 In `cms/contentful/contentful2md.js`, you can modify:
 
 ```javascript
@@ -296,7 +283,7 @@ const LANGS = Object.keys(LANG_MAPPING); // Supported local languages
 const CONTENT_TYPE = 'blog'; // Contentful content model ID
 ```
 
-#### 6. **Test the New Language**
+#### 5. **Test the New Language**
 - Visit `http://localhost:3000/[locale]` (e.g., `/ja`)
 - Test language switcher functionality
 - Verify all pages render correctly
