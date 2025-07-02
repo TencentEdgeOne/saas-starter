@@ -44,6 +44,7 @@ export default async function HomePage({
           {
             text: dict.common.buttons.viewDocumentation,
             variant: "secondary",
+            href: dict.common.buttons.documentationUrl,
           },
         ]}
         trustIndicators={dict.home.bottomCta.trustIndicators?.map(text => ({ text }))}

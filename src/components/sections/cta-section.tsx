@@ -109,7 +109,7 @@ export function CTASection({
 
   const handleButtonClick = (button: CTAButton) => {
     if (button.href) {
-      window.location.href = button.href;
+      window.open(`${button.href}`, '_blank')
     } else if (button.onClick) {
       button.onClick();
     }
