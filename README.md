@@ -243,7 +243,7 @@ You only need to modify the SITE_URL in the gen:seo command in package.json to y
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/TencentEdgeOne/saas-starter/blob/main/LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
