@@ -401,6 +401,46 @@ export interface Dictionary {
       value: string;
     }>;
   };
+  auth: {
+    login: {
+      title: string;
+      subtitle: string;
+      formTitle: string;
+      formDescription: string;
+      emailLabel: string;
+      emailPlaceholder: string;
+      passwordLabel: string;
+      passwordPlaceholder: string;
+      signInButton: string;
+      signingIn: string;
+      noAccount: string;
+      signUpLink: string;
+    };
+    signup: {
+      title: string;
+      subtitle: string;
+      formTitle: string;
+      formDescription: string;
+      fullNameLabel: string;
+      fullNamePlaceholder: string;
+      emailLabel: string;
+      emailPlaceholder: string;
+      passwordLabel: string;
+      passwordPlaceholder: string;
+      confirmPasswordLabel: string;
+      confirmPasswordPlaceholder: string;
+      signUpButton: string;
+      creating: string;
+      hasAccount: string;
+      signInLink: string;
+    };
+    user: {
+      welcome: string;
+      signOut: string;
+      profile: string;
+      dashboard: string;
+    };
+  };
 }
 
 export interface BlocksDictionary {

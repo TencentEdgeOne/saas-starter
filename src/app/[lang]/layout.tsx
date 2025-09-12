@@ -1,5 +1,6 @@
 import { Inter } from 'next/font/google'
 import { ThemeProvider } from '@/components/providers/theme-provider'
+import { AuthProvider } from '@/contexts/AuthContext'
 import { Locale, locales } from '@/lib/i18n'
 import { generateMetadata as generateI18nMetadata } from '@/lib/metadata'
 import '../globals.css'
@@ -37,7 +38,9 @@ export default function LangLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <AuthProvider>
+            {children}
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

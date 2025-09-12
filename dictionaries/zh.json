@@ -865,5 +865,45 @@
       { "key": "Succeed", "value": "成功" },
       { "key": "Blog", "value": "博客" }
     ]
+  },
+  "auth": {
+    "login": {
+      "title": "登录您的账户",
+      "subtitle": "欢迎回来！请登录以继续。",
+      "formTitle": "登录",
+      "formDescription": "输入您的凭据以访问您的账户",
+      "emailLabel": "邮箱地址",
+      "emailPlaceholder": "请输入您的邮箱",
+      "passwordLabel": "密码",
+      "passwordPlaceholder": "请输入您的密码",
+      "signInButton": "登录",
+      "signingIn": "登录中...",
+      "noAccount": "还没有账户？",
+      "signUpLink": "立即注册"
+    },
+    "signup": {
+      "title": "创建您的账户",
+      "subtitle": "今天就加入我们，开始您的旅程。",
+      "formTitle": "注册",
+      "formDescription": "创建您的账户以开始使用",
+      "fullNameLabel": "姓名",
+      "fullNamePlaceholder": "请输入您的姓名",
+      "emailLabel": "邮箱地址",
+      "emailPlaceholder": "请输入您的邮箱",
+      "passwordLabel": "密码",
+      "passwordPlaceholder": "请输入您的密码",
+      "confirmPasswordLabel": "确认密码",
+      "confirmPasswordPlaceholder": "请再次输入密码",
+      "signUpButton": "注册",
+      "creating": "创建账户中...",
+      "hasAccount": "已有账户？",
+      "signInLink": "立即登录"
+    },
+    "user": {
+      "welcome": "欢迎回来",
+      "signOut": "退出登录",
+      "profile": "个人资料",
+      "dashboard": "仪表板"
+    }
   }
 } 

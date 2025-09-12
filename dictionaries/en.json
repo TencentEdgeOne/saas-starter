@@ -877,5 +877,45 @@
       { "key": "Succeed", "value": "Succeed" },
       { "key": "Blog", "value": "Blog" }
     ]
+  },
+  "auth": {
+    "login": {
+      "title": "Sign in to your account",
+      "subtitle": "Welcome back! Please sign in to continue.",
+      "formTitle": "Sign In",
+      "formDescription": "Enter your credentials to access your account",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "Enter your email",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "signInButton": "Sign In",
+      "signingIn": "Signing in...",
+      "noAccount": "Don't have an account?",
+      "signUpLink": "Sign up here"
+    },
+    "signup": {
+      "title": "Create your account",
+      "subtitle": "Join us today and get started with your journey.",
+      "formTitle": "Sign Up",
+      "formDescription": "Create your account to get started",
+      "fullNameLabel": "Full Name",
+      "fullNamePlaceholder": "Enter your full name",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "Enter your email",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "confirmPasswordLabel": "Confirm Password",
+      "confirmPasswordPlaceholder": "Confirm your password",
+      "signUpButton": "Sign Up",
+      "creating": "Creating account...",
+      "hasAccount": "Already have an account?",
+      "signInLink": "Sign in here"
+    },
+    "user": {
+      "welcome": "Welcome back",
+      "signOut": "Sign Out",
+      "profile": "Profile",
+      "dashboard": "Dashboard"
+    }
   }
 } 
