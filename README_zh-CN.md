@@ -245,7 +245,7 @@ NEXT_PUBLIC_GA_ID=G-xxxxx
 
 ## 📄 许可
 
-本项目根据 MIT 许可证进行许可 - 请查看 [LICENSE](LICENSE) 文件了解详情。
+本项目根据 MIT 许可证进行许可 - 请查看 [LICENSE](https://github.com/TencentEdgeOne/saas-starter/blob/main/LICENSE) 文件了解详情。
 
 ## 🙏鸣谢
 
