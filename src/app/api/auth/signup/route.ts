@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createServerClient } from '@/lib/supabase'
+import { createOrRetrieveCustomer, createServerClient, createSupabaseAdminClient } from '@/lib/supabase'
+import { createStripe } from '@/lib/stripe'
 
 export async function POST(request: NextRequest) {
   try {
@@ -29,6 +30,19 @@ export async function POST(request: NextRequest) {
         { error: error.message },
         { status: 400 }
       )
+    }
+
+    let customer;
+    try {
+      customer = await createOrRetrieveCustomer({
+        uuid: error ? "" : data.user?.id || "",
+        email: email,
+      }).catch((err: any) => {
+        throw err;
+      });
+    } catch (err: any) {
+      console.error(err);
+      return new Response(err.message, { status: 500 });
     }
 
     return NextResponse.json({

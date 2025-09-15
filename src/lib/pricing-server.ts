@@ -22,30 +22,15 @@ export async function getPricingData(locale: Locale = 'en'): Promise<ProcessedPr
       return [];
     }
 
-    console.log("Supabase pricing data:", data);
-
     // 获取国际化字典
     const dict = await getDictionary(locale)
     const pricingDict = dict.pricing
 
-    console.log(`获取 ${locale} 语言的价格字典:`, pricingDict.plans.map(p => p.name))
-
     const pricing = data
       ?.map((item: SupabaseProduct, index: number) => {
         // 根据产品名称映射到字典中的对应计划
-        
-        const planKey = {
-          'Lite': '入门版',
-          'Standard': '专业版', 
-          'Pro': '企业版'
-        }
-        console.log(`映射 ${item.name} -> ${planKey}`)
-        
-        const planData = pricingDict.plans.find(plan => 
-          plan.name.toLowerCase() === planKey[item.name]
-        )
-        
-        console.log(`找到计划数据:`, planData?.name || '未找到',planData)
+        // 直接使用索引映射，因为 Supabase 数据已经按价格排序
+        const planData = pricingDict.plans[index] || pricingDict.plans[0]
 
         return {
           id: item.id,

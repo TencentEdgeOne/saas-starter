@@ -88,12 +88,25 @@ export function Pricing({ pricingData, dict }: PricingProps) {
                   </ul>
                   
                   <div className="mt-auto">
-                    <Button 
-                      className={`w-full ${isPopular ? 'btn-gradient text-white' : ''}`}
-                      variant={isPopular ? 'default' : 'outline'}
-                    >
-                      {planButtonText}
-                    </Button>
+                    {isSupabaseData && plan.priceId ? (
+                      <a 
+                        href={`/api/checkout?plan=${encodeURIComponent(planName)}&price=${plan.priceId}`}
+                        className={`w-full inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${
+                          isPopular 
+                            ? 'bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 btn-gradient text-white' 
+                            : 'border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2'
+                        }`}
+                      >
+                        {planButtonText}
+                      </a>
+                    ) : (
+                      <Button 
+                        className={`w-full ${isPopular ? 'btn-gradient text-white' : ''}`}
+                        variant={isPopular ? 'default' : 'outline'}
+                      >
+                        {planButtonText}
+                      </Button>
+                    )}
                   </div>
                 </CardContent>
               </Card>
