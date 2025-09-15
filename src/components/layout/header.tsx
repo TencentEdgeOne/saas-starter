@@ -25,7 +25,7 @@ export function Header({ dict }: HeaderProps) {
   
   // 获取认证状态
   const { user, loading, signOut } = useAuth()
-  console.log(user, loading, signOut)
+  // console.log(user, loading, signOut)
   
   // Use default values if dict is not provided
   const siteInfo = dict?.site || {
