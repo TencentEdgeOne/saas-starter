@@ -108,6 +108,7 @@
     },
     "pricing": {
     "perMonth": "per month",
+    "perYear": "per year",
     "unlimited": "Unlimited",
       "popular": "Popular"
     },
@@ -471,7 +472,7 @@
     "discount": "Save 20%",
     "plans": [
       {
-        "name": "Starter",
+        "name": "Lite",
         "price": "$9",
         "originalPrice": "$29",
         "period": "per month",
@@ -495,7 +496,7 @@
         "buttonVariant": "outline"
       },
       {
-        "name": "Professional",
+        "name": "Standard",
         "price": "$29",
         "originalPrice": "$99",
         "period": "per month",
@@ -519,7 +520,7 @@
         "buttonVariant": "default"
       },
       {
-        "name": "Enterprise",
+        "name": "Pro",
         "price": "$99",
         "originalPrice": "$199",
         "period": "per month",
