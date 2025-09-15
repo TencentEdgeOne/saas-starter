@@ -23,18 +23,9 @@ export function Header({ dict }: HeaderProps) {
   // Extract current language from path
   const currentLang = (pathname.split('/')[1] || 'en') as Locale
   
-  // Only use auth context if we're in a client-side context
-  let user = null
-  let signOut = () => {}
-  
-  try {
-    const auth = useAuth()
-    user = auth.user
-    signOut = auth.signOut
-  } catch (error) {
-    // useAuth hook not available (server-side rendering)
-    // This is expected during SSG/SSR
-  }
+  // 获取认证状态
+  const { user, loading, signOut } = useAuth()
+  console.log(user, loading, signOut)
   
   // Use default values if dict is not provided
   const siteInfo = dict?.site || {
@@ -112,7 +103,11 @@ export function Header({ dict }: HeaderProps) {
             </Button>
 
             {/* Auth Buttons */}
-            {user ? (
+            {loading ? (
+              <div className="hidden md:flex items-center space-x-2">
+                <div className="w-16 h-8 bg-gray-200 rounded animate-pulse"></div>
+              </div>
+            ) : user ? (
               <div className="hidden md:flex items-center space-x-2">
                 <span className="text-sm text-gray-600">
                   {dict?.auth?.user?.welcome || 'Welcome back'}, {user.email}
@@ -186,7 +181,11 @@ export function Header({ dict }: HeaderProps) {
               </div>
               
               {/* Mobile Auth Buttons */}
-              {user ? (
+              {loading ? (
+                <div className="px-3 py-2">
+                  <div className="w-24 h-6 bg-gray-200 rounded animate-pulse"></div>
+                </div>
+              ) : user ? (
                 <div className="px-3 py-2 space-y-2">
                   <div className="text-sm text-gray-600 text-center">
                     {dict?.auth?.user?.welcome || 'Welcome back'}, {user.email}

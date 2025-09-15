@@ -1,10 +1,11 @@
 import { supabase } from './supabase'
+import { Subscription } from '@/types/subscription'
 
 export interface User {
   id: string
-  email: string
-  created_at: string
-  updated_at: string
+  email?: string
+  created_at?: string
+  updated_at?: string
 }
 
 
@@ -52,4 +53,23 @@ export function onAuthStateChange(callback: (user: User | null) => void) {
   return supabase.auth.onAuthStateChange((event, session) => {
     callback(session?.user as User || null)
   })
+}
+
+// 获取用户订阅信息
+export async function getSubscriptions(): Promise<{ subscriptions: Subscription[] | null; error: string | null }> {
+  try {
+    const response = await fetch('/api/subscriptions')
+    const data = await response.json()
+
+    if (!response.ok) {
+      return { subscriptions: null, error: data.error || 'Failed to fetch subscriptions' }
+    }
+
+    return { subscriptions: data.subscriptions, error: null }
+  } catch (error) {
+    return { 
+      subscriptions: null, 
+      error: error instanceof Error ? error.message : 'Network error' 
+    }
+  }
 }

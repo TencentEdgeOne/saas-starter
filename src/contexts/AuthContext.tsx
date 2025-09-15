@@ -11,29 +11,30 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState(true)
+interface AuthProviderProps {
+  children: React.ReactNode
+  initialUser?: User | null
+}
+
+export function AuthProvider({ children, initialUser }: AuthProviderProps) {
+  const [user, setUser] = useState<User | null>(initialUser || null)
+  const [loading, setLoading] = useState(!initialUser) // 如果有初始用户，不需要加载状态
 
   useEffect(() => {
-    // Get initial user
-    getCurrentUser().then(({ user }) => {
-      setUser(user)
-      setLoading(false)
-    })
-
-    // Listen for auth state changes
-    const { data: { subscription } } = onAuthStateChange((user) => {
-      setUser(user)
-      setLoading(false)
-    })
-
-    return () => subscription.unsubscribe()
-  }, [])
+    // 如果没有初始用户，才去获取
+    if (!initialUser) {
+      getCurrentUser().then(({ user }) => {
+        setUser(user)
+        setLoading(false)
+      })
+    
+    }
+  }, [initialUser])
 
   const signOut = async () => {
     const { signOut: signOutUser } = await import('@/lib/auth')
     await signOutUser()
+    setUser(null)
   }
 
   const value = {

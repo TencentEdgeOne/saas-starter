@@ -905,5 +905,19 @@
       "profile": "个人资料",
       "dashboard": "仪表板"
     }
+  },
+  "subscriptions": {
+    "title": "订阅管理",
+    "description": "管理您的活跃订阅和账单信息。",
+    "noSubscriptions": "暂无活跃订阅",
+    "noSubscriptionsDescription": "您目前没有任何活跃的订阅。",
+    "browsePlans": "浏览套餐",
+    "manage": "管理",
+    "cancel": "取消",
+    "nextBilling": "下次扣费",
+    "trialEnds": "试用结束",
+    "loading": "正在加载订阅...",
+    "error": "加载订阅时出错",
+    "tryAgain": "重试"
   }
 } 

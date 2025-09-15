@@ -441,6 +441,20 @@ export interface Dictionary {
       dashboard: string;
     };
   };
+  subscriptions: {
+    title: string;
+    description: string;
+    noSubscriptions: string;
+    noSubscriptionsDescription: string;
+    browsePlans: string;
+    manage: string;
+    cancel: string;
+    nextBilling: string;
+    trialEnds: string;
+    loading: string;
+    error: string;
+    tryAgain: string;
+  };
 }
 
 export interface BlocksDictionary {
