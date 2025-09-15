@@ -918,18 +918,27 @@
       "dashboard": "Dashboard"
     }
   },
-  "subscriptions": {
-    "title": "Subscriptions",
-    "description": "Manage your active subscriptions and billing information.",
+  "profile": {
+    "title": "Profile",
+    "description": "Manage your profile and subscription information.",
+    "loading": "Loading profile...",
+    "notLoggedIn": "Not Logged In",
+    "pleaseSignIn": "Please sign in to view your profile.",
+    "personalInfo": "Personal Information",
+    "personalInfoDescription": "Your account details and preferences",
+    "email": "Email",
+    "memberSince": "Member Since",
+    "editProfile": "Edit Profile",
+    "subscriptions": "Subscriptions",
+    "subscriptionsDescription": "Manage your active subscriptions and billing",
+    "loadingSubscriptions": "Loading subscriptions...",
+    "subscriptionsError": "Error",
+    "tryAgain": "Try Again",
     "noSubscriptions": "No Active Subscriptions",
     "noSubscriptionsDescription": "You don't have any active subscriptions yet.",
     "browsePlans": "Browse Plans",
     "manage": "Manage",
     "cancel": "Cancel",
-    "nextBilling": "Next billing",
-    "trialEnds": "Trial ends",
-    "loading": "Loading subscriptions...",
-    "error": "Error loading subscriptions",
-    "tryAgain": "Try Again"
+    "trialEnds": "Trial ends"
   }
 } 

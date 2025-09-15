@@ -906,18 +906,27 @@
       "dashboard": "仪表板"
     }
   },
-  "subscriptions": {
-    "title": "订阅管理",
-    "description": "管理您的活跃订阅和账单信息。",
+  "profile": {
+    "title": "个人主页",
+    "description": "管理您的个人资料和订阅信息。",
+    "loading": "正在加载个人资料...",
+    "notLoggedIn": "未登录",
+    "pleaseSignIn": "请登录以查看您的个人资料。",
+    "personalInfo": "个人信息",
+    "personalInfoDescription": "您的账户详情和偏好设置",
+    "email": "邮箱",
+    "memberSince": "注册时间",
+    "editProfile": "编辑资料",
+    "subscriptions": "订阅管理",
+    "subscriptionsDescription": "管理您的活跃订阅和账单",
+    "loadingSubscriptions": "正在加载订阅...",
+    "subscriptionsError": "错误",
+    "tryAgain": "重试",
     "noSubscriptions": "暂无活跃订阅",
     "noSubscriptionsDescription": "您目前没有任何活跃的订阅。",
     "browsePlans": "浏览套餐",
     "manage": "管理",
     "cancel": "取消",
-    "nextBilling": "下次扣费",
-    "trialEnds": "试用结束",
-    "loading": "正在加载订阅...",
-    "error": "加载订阅时出错",
-    "tryAgain": "重试"
+    "trialEnds": "试用结束"
   }
 } 

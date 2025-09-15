@@ -109,9 +109,12 @@ export function Header({ dict }: HeaderProps) {
               </div>
             ) : user ? (
               <div className="hidden md:flex items-center space-x-2">
-                <span className="text-sm text-gray-600">
+                <Link
+                  href={getLocalizedHref('/profile')}
+                  className="text-sm text-gray-600 hover:text-primary transition-colors cursor-pointer"
+                >
                   {dict?.auth?.user?.welcome || 'Welcome back'}, {user.email}
-                </span>
+                </Link>
                 <Button
                   variant="outline"
                   size="sm"
@@ -187,9 +190,13 @@ export function Header({ dict }: HeaderProps) {
                 </div>
               ) : user ? (
                 <div className="px-3 py-2 space-y-2">
-                  <div className="text-sm text-gray-600 text-center">
+                  <Link
+                    href={getLocalizedHref('/profile')}
+                    className="block text-sm text-gray-600 text-center hover:text-primary transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
                     {dict?.auth?.user?.welcome || 'Welcome back'}, {user.email}
-                  </div>
+                  </Link>
                   <Button
                     variant="outline"
                     size="sm"

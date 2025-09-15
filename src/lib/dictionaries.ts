@@ -441,19 +441,28 @@ export interface Dictionary {
       dashboard: string;
     };
   };
-  subscriptions: {
+  profile: {
     title: string;
     description: string;
+    loading: string;
+    notLoggedIn: string;
+    pleaseSignIn: string;
+    personalInfo: string;
+    personalInfoDescription: string;
+    email: string;
+    memberSince: string;
+    editProfile: string;
+    subscriptions: string;
+    subscriptionsDescription: string;
+    loadingSubscriptions: string;
+    subscriptionsError: string;
+    tryAgain: string;
     noSubscriptions: string;
     noSubscriptionsDescription: string;
     browsePlans: string;
     manage: string;
     cancel: string;
-    nextBilling: string;
     trialEnds: string;
-    loading: string;
-    error: string;
-    tryAgain: string;
   };
 }
 

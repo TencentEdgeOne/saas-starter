@@ -1,5 +1,6 @@
 import { getDictionary } from '@/lib/dictionaries'
 import { Locale } from '@/lib/i18n'
+import { Layout } from '@/components/layout/layout'
 import LoginForm from './login-form'
 
 interface LoginPageProps {
@@ -22,18 +23,20 @@ export default async function LoginPage({ params }: LoginPageProps) {
   const dict = await getDictionary(params.lang)
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            {dict.auth?.login?.title || 'Sign in to your account'}
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            {dict.auth?.login?.subtitle || 'Welcome back! Please sign in to continue.'}
-          </p>
+    <Layout dict={dict}>
+      <div className="flex items-center justify-center py-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full space-y-8">
+          <div>
+            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+              {dict.auth?.login?.title || 'Sign in to your account'}
+            </h2>
+            <p className="mt-2 text-center text-sm text-gray-600">
+              {dict.auth?.login?.subtitle || 'Welcome back! Please sign in to continue.'}
+            </p>
+          </div>
+          <LoginForm dict={dict} />
         </div>
-        <LoginForm dict={dict} />
       </div>
-    </div>
+    </Layout>
   )
 }
