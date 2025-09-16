@@ -2,6 +2,8 @@ import { getDictionary } from '@/lib/dictionaries'
 import { Locale } from '@/lib/i18n'
 import { Layout } from '@/components/layout/layout'
 import SignupForm from './signup-form'
+import { getServerUser } from '@/lib/auth-server'
+import { redirect } from 'next/navigation'
 
 interface SignupPageProps {
   params: { lang: Locale }
@@ -21,6 +23,13 @@ export async function generateMetadata({
 
 export default async function SignupPage({ params }: SignupPageProps) {
   const dict = await getDictionary(params.lang)
+
+  // 检查用户是否已登录
+  const user = await getServerUser()
+  if (user) {
+    // 如果已登录，重定向到个人页
+    redirect(`/${params.lang}/profile`)
+  }
 
   return (
     <Layout dict={dict}>

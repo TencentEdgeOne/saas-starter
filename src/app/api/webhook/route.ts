@@ -87,7 +87,7 @@ export async function POST(request: NextRequest) {
     } catch (error) {
       console.log(error);
       return new Response(
-        'Webhook handler failed. View your function logs.' + error.message + ';' + sig,
+        'Webhook handler failed. View your function logs.' + (error instanceof Error ? error.message : 'Unknown error') + ';' + sig,
         {
           status: 400
         }

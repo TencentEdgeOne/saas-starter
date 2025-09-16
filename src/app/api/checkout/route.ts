@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServerClient, createSupabaseAdminClient } from '@/lib/supabase'
 import { createStripe, getRedirectUrl, parseQueryParams } from '@/lib/stripe'
+import { withTokenRefresh } from '@/lib/auth-server'
 
 // 强制动态渲染
 export const dynamic = 'force-dynamic'
@@ -17,11 +18,8 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    // 检查用户认证状态
-    const cookieStore = request.cookies
-    const accessToken = cookieStore.get('sb-access-token')?.value
-    const refreshToken = cookieStore.get('sb-refresh-token')?.value
-
+    // 检查是否有 access token
+    const accessToken = request.cookies.get('sb-access-token')?.value
     if (!accessToken) {
       // 未登录，重定向到登录页面
       const redirectUrl = getRedirectUrl(`/checkout?plan=${plan}&price=${priceId}`)
@@ -29,37 +27,10 @@ export async function GET(request: NextRequest) {
       return NextResponse.redirect(loginUrl, 302)
     }
 
-    // 创建 Supabase 客户端
-    const supabase = createServerClient()
-
-    // 验证访问令牌并获取用户信息
-    const { data: { user }, error: userError } = await supabase.auth.getUser(accessToken)
-    
-    if (userError || !user) {
-      // 如果访问令牌过期，尝试使用刷新令牌
-      if (refreshToken) {
-        const { data: refreshData, error: refreshError } = await supabase.auth.refreshSession({
-          refresh_token: refreshToken
-        })
-
-        if (refreshError || !refreshData.session) {
-          const redirectUrl = getRedirectUrl(`/checkout?plan=${plan}&price=${priceId}`)
-          const loginUrl = getRedirectUrl(`/login?redirectUrl=${encodeURIComponent(redirectUrl)}`)
-          return NextResponse.redirect(loginUrl, 302)
-        }
-
-        // 使用刷新后的用户信息
-        const refreshedUser = refreshData.session.user
-        return await createCheckoutSession(refreshedUser.id, plan, priceId)
-      }
-
-      const redirectUrl = getRedirectUrl(`/checkout?plan=${plan}&price=${priceId}`)
-      const loginUrl = getRedirectUrl(`/login?redirectUrl=${encodeURIComponent(redirectUrl)}`)
-      return NextResponse.redirect(loginUrl, 302)
-    }
-
-    // 创建 checkout session
-    return await createCheckoutSession(user.id, plan, priceId)
+    // 使用 withTokenRefresh 处理认证和自动刷新
+    return withTokenRefresh(request, async (user) => {
+      return await createCheckoutSession(user.id, plan, priceId)
+    })
 
   } catch (error) {
     console.error('Checkout error:', error)

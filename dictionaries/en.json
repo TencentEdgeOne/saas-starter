@@ -473,8 +473,6 @@
     "plans": [
       {
         "name": "Lite",
-        "price": "$9",
-        "originalPrice": "$29",
         "period": "per month",
         "description": "Perfect for individuals and small projects getting started",
         "features": [
@@ -492,13 +490,11 @@
           "API access"
         ],
         "popular": false,
-        "buttonText": "Start Free Trial",
+        "buttonText": "Get Started",
         "buttonVariant": "outline"
       },
       {
         "name": "Standard",
-        "price": "$29",
-        "originalPrice": "$99",
         "period": "per month",
         "description": "Ideal for growing businesses and professional teams",
         "features": [
@@ -521,8 +517,6 @@
       },
       {
         "name": "Pro",
-        "price": "$99",
-        "originalPrice": "$199",
         "period": "per month",
         "description": "For large organizations with advanced requirements",
         "features": [
@@ -538,7 +532,7 @@
         ],
         "limitations": [],
         "popular": false,
-        "buttonText": "Contact Sales",
+        "buttonText": "Get Started",
         "buttonVariant": "outline"
       }
     ],

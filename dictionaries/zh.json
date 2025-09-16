@@ -473,8 +473,6 @@
     "plans": [
       {
         "name": "入门版",
-        "price": "$9",
-        "originalPrice": "$29",
         "period": "每月",
         "description": "适合初学者和小型项目的个人用户",
         "features": [
@@ -497,8 +495,6 @@
       },
       {
         "name": "专业版",
-        "price": "$29",
-        "originalPrice": "$99",
         "period": "每月",
         "description": "适合成长中的企业和专业团队",
         "features": [
@@ -521,8 +517,6 @@
       },
       {
         "name": "企业版",
-        "price": "$99",
-        "originalPrice": "$199",
         "period": "每月",
         "description": "适合有高级需求的大型组织",
         "features": [

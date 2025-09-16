@@ -195,7 +195,7 @@ export const manageSubscriptionStatusChange = async (
   const stripe = createStripe();
   const subscription = await stripe.subscriptions.retrieve(subscriptionId, {
     expand: ['default_payment_method']
-  });
+  }) as Stripe.Subscription;
   // Upsert the latest status of the subscription object.
   const subscriptionData = {
     id: subscription.id,
@@ -214,10 +214,10 @@ export const manageSubscriptionStatusChange = async (
       ? toDateTime(subscription.canceled_at).toISOString()
       : null,
     current_period_start: toDateTime(
-      subscription.current_period_start
+      (subscription as any).current_period_start
     ).toISOString(),
     current_period_end: toDateTime(
-      subscription.current_period_end
+      (subscription as any).current_period_end
     ).toISOString(),
     created: toDateTime(subscription.created).toISOString(),
     ended_at: subscription.ended_at

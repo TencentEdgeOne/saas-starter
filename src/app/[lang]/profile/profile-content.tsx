@@ -164,7 +164,7 @@ export function ProfileContent({ dict }: ProfileContentProps) {
                           'destructive'
                         }
                       >
-                        {subscription.status}
+                        {subscription.status.charAt(0).toUpperCase() + subscription.status.slice(1)}
                       </Badge>
                     </div>
                     
@@ -182,15 +182,7 @@ export function ProfileContent({ dict }: ProfileContentProps) {
                           /{subscription.prices?.interval || 'month'}
                         </span>
                       </div>
-                      
-                      <div className="flex space-x-2">
-                        <Button variant="outline" size="sm">
-                          {dict?.profile?.manage || 'Manage'}
-                        </Button>
-                        <Button variant="outline" size="sm">
-                          {dict?.profile?.cancel || 'Cancel'}
-                        </Button>
-                      </div>
+                    
                     </div>
                     
                     {subscription.trial_end && (

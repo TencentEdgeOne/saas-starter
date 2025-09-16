@@ -33,10 +33,11 @@ export function parseQueryParams(url: string) {
 
 /**
  * Create a Stripe Customer
- * @param {*} email 
+ * @param {string} email 
+ * @param {string} uuid 
  * @returns 
  */
-export const createStripeCustomer = async (email, uuid) => {
+export const createStripeCustomer = async (email: string, uuid: string) => {
     const stripe = createStripe();
     const params = {
       email,
@@ -51,9 +52,9 @@ export const createStripeCustomer = async (email, uuid) => {
   };
   /**
    * Create a Stripe Portal Session
-   * @param {*} customerId 
+   * @param {string} customerId 
    */
-  export const createStripePortalSession = async (customerId) => {
+  export const createStripePortalSession = async (customerId: string) => {
     const stripe = createStripe();
   
     const session = await stripe.billingPortal.sessions.create({
