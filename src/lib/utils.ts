@@ -5,15 +5,30 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function formatDate(date: Date | string): string {
-  // Ensure using UTC time to avoid timezone differences
-  const d = typeof date === 'string' ? new Date(date + 'T00:00:00.000Z') : date;
-  const months = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
-  ];
-  return `${months[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
+/**
+ * Format a date into a consistent string format.
+ * Ensures consistency between server-side and client-side rendering.
+ * @param date - Date string or Date object
+ * @returns Formatted date string (MM/DD/YYYY format)
+ */
+export function formatDate(date: string | Date | null | undefined): string {
+  if (!date) return 'N/A'
+  
+  try {
+    const dateObj = typeof date === 'string' ? new Date(date) : date
+    
+    // Use a fixed format to ensure consistency between server and client
+    const year = dateObj.getFullYear()
+    const month = String(dateObj.getMonth() + 1).padStart(2, '0')
+    const day = String(dateObj.getDate()).padStart(2, '0')
+    
+    return `${month}/${day}/${year}`
+  } catch (error) {
+    console.error('Error formatting date:', error)
+    return 'N/A'
+  }
 }
+
 
 export function slugify(text: string): string {
   return text

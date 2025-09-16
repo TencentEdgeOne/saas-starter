@@ -24,10 +24,10 @@ export async function generateMetadata({
 export default async function SignupPage({ params }: SignupPageProps) {
   const dict = await getDictionary(params.lang)
 
-  // 检查用户是否已登录
-  const user = await getServerUser()
+  // Check if the user is already logged in
+  const { user } = await getServerUser()
   if (user) {
-    // 如果已登录，重定向到个人页
+    // If already logged in, redirect to the profile page
     redirect(`/${params.lang}/profile`)
   }
 

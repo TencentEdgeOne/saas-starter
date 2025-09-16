@@ -473,6 +473,8 @@
     "plans": [
       {
         "name": "Lite",
+        "price": "$9",
+        "originalPrice": "",
         "period": "per month",
         "description": "Perfect for individuals and small projects getting started",
         "features": [
@@ -495,6 +497,8 @@
       },
       {
         "name": "Standard",
+        "price": "$29",
+        "originalPrice": "",
         "period": "per month",
         "description": "Ideal for growing businesses and professional teams",
         "features": [
@@ -517,6 +521,8 @@
       },
       {
         "name": "Pro",
+        "price": "$99",
+        "originalPrice": "",
         "period": "per month",
         "description": "For large organizations with advanced requirements",
         "features": [

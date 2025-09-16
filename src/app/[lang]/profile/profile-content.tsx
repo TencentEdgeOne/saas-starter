@@ -10,6 +10,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Loader2, User, Mail, Calendar, CreditCard, DollarSign, Settings, LogOut } from 'lucide-react'
 import { Dictionary } from '@/lib/dictionaries'
+import { formatDate } from '@/lib/utils'
 
 interface ProfileContentProps {
   dict?: Dictionary
@@ -97,7 +98,7 @@ export function ProfileContent({ dict }: ProfileContentProps) {
               <div>
                 <p className="text-sm font-medium">{dict?.profile?.memberSince || 'Member Since'}</p>
                 <p className="text-sm text-gray-600">
-                  {user.created_at ? new Date(user.created_at).toLocaleDateString() : 'N/A'}
+                  {formatDate(user.created_at)}
                 </p>
               </div>
             </div>
@@ -188,7 +189,7 @@ export function ProfileContent({ dict }: ProfileContentProps) {
                     {subscription.trial_end && (
                       <div className="mt-3 bg-blue-50 p-3 rounded-lg">
                         <p className="text-sm text-blue-800">
-                          {dict?.profile?.trialEnds || 'Trial ends'}: {new Date(subscription.trial_end).toLocaleDateString()}
+                          {dict?.profile?.trialEnds || 'Trial ends'}: {formatDate(subscription.trial_end)}
                         </p>
                       </div>
                     )}
