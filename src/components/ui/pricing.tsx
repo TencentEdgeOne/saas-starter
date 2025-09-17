@@ -40,15 +40,15 @@ export function Pricing({ pricingData, dict }: PricingProps) {
           {pricingPlans.map((plan, index) => {
             // 处理不同的数据结构
             const isSupabaseData = 'priceId' in plan
-            const planName = isSupabaseData ? plan.name : plan.name
-            const planDescription = isSupabaseData ? plan.description : plan.description
-            const planPrice = isSupabaseData ? `$${plan.price}` : plan.price
+            const planName = plan.name
+            const planDescription = plan.description
+            const planPrice = plan.price
             const planPeriod = isSupabaseData 
               ? plan.interval === 'month' ? dict?.common?.pricing?.perMonth : dict?.common?.pricing?.perYear
               : plan.period
-            const planFeatures = isSupabaseData ? plan.features : plan.features
-            const planButtonText = isSupabaseData ? plan.buttonText : plan.buttonText
-            const isPopular = isSupabaseData ? plan.popular : plan.popular
+            const planFeatures = plan.features
+            const planButtonText = plan.buttonText
+            const isPopular = plan.popular
             
             return (
               <Card 
