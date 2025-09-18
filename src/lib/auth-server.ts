@@ -8,8 +8,6 @@ export async function getServerUser(): Promise<{ user: User | null; error: strin
     const cookieStore = cookies()
     const supabase = createServerClient()
 
-    // const accessToken = cookieStore.get('sb-access-token')?.value
-    // const refreshToken = cookieStore.get('sb-refresh-token')?.value
     const authTokenData = cookieStore.get('auth-token')?.value
 
     if (!authTokenData) {
@@ -51,15 +49,6 @@ export async function withTokenRefresh(
   handler: (user: any, response?: NextResponse) => Promise<NextResponse>
 ) {
   try {
-    // const accessToken = request.cookies.get('sb-access-token')?.value
-    // const refreshToken = request.cookies.get('sb-refresh-token')?.value
-
-    // if (!accessToken) {
-    //   return NextResponse.json(
-    //     { error: 'No access token provided' },
-    //     { status: 401 }
-    //   )
-    // }
 
     const authTokenData = request.cookies.get('auth-token')?.value
 
@@ -93,22 +82,7 @@ export async function withTokenRefresh(
         
         // 刷新成功，创建包含新 token 的响应
         const response = await handler(refreshData.session.user)
-        
-        // // 设置新的 cookies
-        // response.cookies.set('sb-access-token', refreshData.session.access_token, {
-        //   httpOnly: true,
-        //   secure: process.env.NODE_ENV === 'production',
-        //   sameSite: 'lax',
-        //   maxAge: 60 * 60 * 24 * 7 // 7 days
-        // })
-        
-        // response.cookies.set('sb-refresh-token', refreshData.session.refresh_token, {
-        //   httpOnly: true,
-        //   secure: process.env.NODE_ENV === 'production',
-        //   sameSite: 'lax',
-        //   maxAge: 60 * 60 * 24 * 30 // 30 days
-        // })
-
+       
         response.cookies.set('auth-token', JSON.stringify({access_token: refreshData.session.access_token, refresh_token: refreshData.session.refresh_token}),
         {
           httpOnly: true,
