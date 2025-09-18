@@ -19,7 +19,8 @@ export async function GET(request: NextRequest) {
     }
 
     // 检查是否有 access token
-    const accessToken = request.cookies.get('sb-access-token')?.value
+    const accessToken = request.cookies.get('auth-token')?.value
+    // const accessToken = request.cookies.get('sb-access-token')?.value
     if (!accessToken) {
       // 未登录，重定向到登录页面
       const redirectUrl = getRedirectUrl(`/checkout?plan=${plan}&price=${priceId}`)

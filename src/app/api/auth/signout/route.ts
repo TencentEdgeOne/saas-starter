@@ -19,21 +19,26 @@ export async function POST(request: NextRequest) {
       message: 'Signed out successfully'
     })
 
-    // 清除认证 Cookie
-    response.cookies.set('sb-access-token', '', {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 0 // 立即过期
-    })
+    // // 清除认证 Cookie
+    // response.cookies.set('sb-access-token', '', {
+    //   httpOnly: true,
+    //   secure: process.env.NODE_ENV === 'production',
+    //   sameSite: 'lax',
+    //   maxAge: 0 // 立即过期
+    // })
     
-    response.cookies.set('sb-refresh-token', '', {
+    // response.cookies.set('sb-refresh-token', '', {
+    //   httpOnly: true,
+    //   secure: process.env.NODE_ENV === 'production',
+    //   sameSite: 'lax',
+    //   maxAge: 0 // 立即过期
+    // })
+    response.cookies.set('auth-token', '', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       maxAge: 0 // 立即过期
     })
-
     return response
 
   } catch (error) {
