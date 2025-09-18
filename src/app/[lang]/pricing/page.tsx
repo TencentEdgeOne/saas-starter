@@ -7,6 +7,7 @@ import { MinimalCTA } from "@/components/sections/cta-section";
 import { getDictionary } from "@/lib/dictionaries";
 import { Locale } from "@/lib/i18n";
 import { SectionLayout } from "@/components/layout/section-layout";
+import { getPricingData } from "@/lib/pricing-server";
 
 export default async function PricingPage({
   params,
@@ -15,6 +16,9 @@ export default async function PricingPage({
 }) {
   const dict = await getDictionary(params.lang);
   const comparison = dict.pricing.comparison;
+  
+  // 从 Supabase 获取价格数据（带国际化）
+  const pricingData = await getPricingData(params.lang);
   
   // Create adapted dictionary for FAQ component
   const faqDict = {
@@ -50,7 +54,7 @@ export default async function PricingPage({
      
 
       {/* Pricing Section */}
-      <Pricing dict={dict} />
+      <Pricing pricingData={pricingData} dict={dict} />
 
       {/* Feature Comparison Table */}
       <PricingComparison 
@@ -66,6 +70,7 @@ export default async function PricingPage({
         title={dict.pricing.ctaTitle}
         description={dict.pricing.ctaDescription}
         buttonText={dict.common.buttons.getStartedNow}
+        href={`/${params.lang}/signup`}
       />
     </Layout>
   );

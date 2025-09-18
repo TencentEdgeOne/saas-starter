@@ -3,12 +3,13 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu, X, Sun, Moon } from 'lucide-react'
+import { Menu, X, Sun, Moon, User, LogOut } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { Button } from '@/components/ui/button'
 import { Dictionary } from '@/lib/dictionaries'
 import { Locale } from '@/lib/i18n'
 import LanguageSwitcher from '@/components/language-switcher'
+import { useAuth } from '@/contexts/AuthContext'
 
 interface HeaderProps {
   dict?: Dictionary
@@ -21,6 +22,10 @@ export function Header({ dict }: HeaderProps) {
   
   // Extract current language from path
   const currentLang = (pathname.split('/')[1] || 'en') as Locale
+  
+  // 获取认证状态
+  const { user, loading, signOut } = useAuth()
+  // console.log(user, loading, signOut)
   
   // Use default values if dict is not provided
   const siteInfo = dict?.site || {
@@ -97,13 +102,45 @@ export function Header({ dict }: HeaderProps) {
               )}
             </Button>
 
-            {/* CTA Button */}
-            <Link
-              href={getLocalizedHref(headerConfig.cta.href)}
-              className="hidden md:inline-flex bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/90 transition-colors whitespace-nowrap"
-            >
-              {headerConfig.cta.text}
-            </Link>
+            {/* Auth Buttons */}
+            {loading ? (
+              <div className="hidden md:flex items-center space-x-2">
+                <div className="w-16 h-8 bg-gray-200 rounded animate-pulse"></div>
+              </div>
+            ) : user ? (
+              <div className="hidden md:flex items-center space-x-2">
+                <Link
+                  href={getLocalizedHref('/profile')}
+                  className="text-sm text-gray-600 hover:text-primary transition-colors cursor-pointer"
+                >
+                  {dict?.auth?.user?.welcome || 'Welcome back'}, {user.email}
+                </Link>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={signOut}
+                  className="flex items-center space-x-1"
+                >
+                  <LogOut className="h-4 w-4" />
+                  <span>{dict?.auth?.user?.signOut || 'Sign Out'}</span>
+                </Button>
+              </div>
+            ) : (
+              <div className="hidden md:flex items-center space-x-2">
+                <Link
+                  href={getLocalizedHref('/login')}
+                  className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+                >
+                  {dict?.auth?.login?.signInButton || 'Sign In'}
+                </Link>
+                <Link
+                  href={getLocalizedHref('/signup')}
+                  className="bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/90 transition-colors whitespace-nowrap"
+                >
+                  {dict?.auth?.signup?.signUpButton || 'Sign Up'}
+                </Link>
+              </div>
+            )}
 
             {/* Mobile menu button */}
             <Button
@@ -146,13 +183,51 @@ export function Header({ dict }: HeaderProps) {
                 <LanguageSwitcher currentLang={currentLang} dict={dict} />
               </div>
               
-              <Link
-                href={getLocalizedHref(headerConfig.cta.href)}
-                className="bg-primary text-primary-foreground px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/90 transition-colors text-center mt-4 whitespace-nowrap"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {headerConfig.cta.text}
-              </Link>
+              {/* Mobile Auth Buttons */}
+              {loading ? (
+                <div className="px-3 py-2">
+                  <div className="w-24 h-6 bg-gray-200 rounded animate-pulse"></div>
+                </div>
+              ) : user ? (
+                <div className="px-3 py-2 space-y-2">
+                  <Link
+                    href={getLocalizedHref('/profile')}
+                    className="block text-sm text-gray-600 text-center hover:text-primary transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {dict?.auth?.user?.welcome || 'Welcome back'}, {user.email}
+                  </Link>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      signOut()
+                      setIsMenuOpen(false)
+                    }}
+                    className="w-full flex items-center justify-center space-x-1"
+                  >
+                    <LogOut className="h-4 w-4" />
+                    <span>{dict?.auth?.user?.signOut || 'Sign Out'}</span>
+                  </Button>
+                </div>
+              ) : (
+                <div className="px-3 py-2 space-y-2">
+                  <Link
+                    href={getLocalizedHref('/login')}
+                    className="block text-center text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {dict?.auth?.login?.signInButton || 'Sign In'}
+                  </Link>
+                  <Link
+                    href={getLocalizedHref('/signup')}
+                    className="block bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/90 transition-colors text-center whitespace-nowrap"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {dict?.auth?.signup?.signUpButton || 'Sign Up'}
+                  </Link>
+                </div>
+              )}
             </nav>
           </div>
         )}

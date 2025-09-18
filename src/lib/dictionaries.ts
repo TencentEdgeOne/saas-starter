@@ -248,8 +248,6 @@ export interface Dictionary {
     discount: string;
     plans: Array<{
       name: string;
-      price: string;
-      originalPrice: string;
       period: string;
       description: string;
       features: string[];
@@ -400,6 +398,69 @@ export interface Dictionary {
       key: string;
       value: string;
     }>;
+  };
+  auth: {
+    login: {
+      title: string;
+      subtitle: string;
+      formTitle: string;
+      formDescription: string;
+      emailLabel: string;
+      emailPlaceholder: string;
+      passwordLabel: string;
+      passwordPlaceholder: string;
+      signInButton: string;
+      signingIn: string;
+      noAccount: string;
+      signUpLink: string;
+    };
+    signup: {
+      title: string;
+      subtitle: string;
+      formTitle: string;
+      formDescription: string;
+      fullNameLabel: string;
+      fullNamePlaceholder: string;
+      emailLabel: string;
+      emailPlaceholder: string;
+      passwordLabel: string;
+      passwordPlaceholder: string;
+      confirmPasswordLabel: string;
+      confirmPasswordPlaceholder: string;
+      signUpButton: string;
+      creating: string;
+      hasAccount: string;
+      signInLink: string;
+    };
+    user: {
+      welcome: string;
+      signOut: string;
+      profile: string;
+      dashboard: string;
+    };
+  };
+  profile: {
+    title: string;
+    description: string;
+    loading: string;
+    notLoggedIn: string;
+    pleaseSignIn: string;
+    personalInfo: string;
+    personalInfoDescription: string;
+    email: string;
+    memberSince: string;
+    editProfile: string;
+    subscriptions: string;
+    subscriptionsDescription: string;
+    loadingSubscriptions: string;
+    subscriptionsError: string;
+    tryAgain: string;
+    noSubscriptions: string;
+    noSubscriptionsDescription: string;
+    browsePlans: string;
+    manage: string;
+    cancel: string;
+    trialEnds: string;
   };
 }
 

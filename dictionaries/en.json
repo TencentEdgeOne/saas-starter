@@ -108,6 +108,7 @@
     },
     "pricing": {
     "perMonth": "per month",
+    "perYear": "per year",
     "unlimited": "Unlimited",
       "popular": "Popular"
     },
@@ -471,9 +472,7 @@
     "discount": "Save 20%",
     "plans": [
       {
-        "name": "Starter",
-        "price": "$9",
-        "originalPrice": "$29",
+        "name": "Lite",
         "period": "per month",
         "description": "Perfect for individuals and small projects getting started",
         "features": [
@@ -491,13 +490,11 @@
           "API access"
         ],
         "popular": false,
-        "buttonText": "Start Free Trial",
+        "buttonText": "Get Started",
         "buttonVariant": "outline"
       },
       {
-        "name": "Professional",
-        "price": "$29",
-        "originalPrice": "$99",
+        "name": "Standard",
         "period": "per month",
         "description": "Ideal for growing businesses and professional teams",
         "features": [
@@ -519,9 +516,7 @@
         "buttonVariant": "default"
       },
       {
-        "name": "Enterprise",
-        "price": "$99",
-        "originalPrice": "$199",
+        "name": "Pro",
         "period": "per month",
         "description": "For large organizations with advanced requirements",
         "features": [
@@ -537,7 +532,7 @@
         ],
         "limitations": [],
         "popular": false,
-        "buttonText": "Contact Sales",
+        "buttonText": "Get Started",
         "buttonVariant": "outline"
       }
     ],
@@ -877,5 +872,68 @@
       { "key": "Succeed", "value": "Succeed" },
       { "key": "Blog", "value": "Blog" }
     ]
+  },
+  "auth": {
+    "login": {
+      "title": "Sign in to your account",
+      "subtitle": "Welcome back! Please sign in to continue.",
+      "formTitle": "Sign In",
+      "formDescription": "Enter your credentials to access your account",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "Enter your email",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "signInButton": "Sign In",
+      "signingIn": "Signing in...",
+      "noAccount": "Don't have an account?",
+      "signUpLink": "Sign up here"
+    },
+    "signup": {
+      "title": "Create your account",
+      "subtitle": "Join us today and get started with your journey.",
+      "formTitle": "Sign Up",
+      "formDescription": "Create your account to get started",
+      "fullNameLabel": "Full Name",
+      "fullNamePlaceholder": "Enter your full name",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "Enter your email",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "confirmPasswordLabel": "Confirm Password",
+      "confirmPasswordPlaceholder": "Confirm your password",
+      "signUpButton": "Sign Up",
+      "creating": "Creating account...",
+      "hasAccount": "Already have an account?",
+      "signInLink": "Sign in here"
+    },
+    "user": {
+      "welcome": "Welcome back",
+      "signOut": "Sign Out",
+      "profile": "Profile",
+      "dashboard": "Dashboard"
+    }
+  },
+  "profile": {
+    "title": "Profile",
+    "description": "Manage your profile and subscription information.",
+    "loading": "Loading profile...",
+    "notLoggedIn": "Not Logged In",
+    "pleaseSignIn": "Please sign in to view your profile.",
+    "personalInfo": "Personal Information",
+    "personalInfoDescription": "Your account details and preferences",
+    "email": "Email",
+    "memberSince": "Member Since",
+    "editProfile": "Edit Profile",
+    "subscriptions": "Subscriptions",
+    "subscriptionsDescription": "Manage your active subscriptions and billing",
+    "loadingSubscriptions": "Loading subscriptions...",
+    "subscriptionsError": "Error",
+    "tryAgain": "Try Again",
+    "noSubscriptions": "No Active Subscriptions",
+    "noSubscriptionsDescription": "You don't have any active subscriptions yet.",
+    "browsePlans": "Browse Plans",
+    "manage": "Manage",
+    "cancel": "Cancel",
+    "trialEnds": "Trial ends"
   }
 } 

@@ -9,6 +9,7 @@ import { FAQ } from "@/components/sections/faq";
 import { CTASection } from "@/components/sections/cta-section";
 import { Locale } from "@/lib/i18n";
 import { getDictionary } from "@/lib/dictionaries";
+import { getPricingData } from "@/lib/pricing-server";
 
 export default async function HomePage({
   params,
@@ -16,6 +17,9 @@ export default async function HomePage({
   params: { lang: Locale };
 }) {
   const dict = await getDictionary(params.lang);
+  
+  // 从 Supabase 获取价格数据（带国际化）
+  const pricingData = await getPricingData(params.lang);
 
   return (
     <Layout dict={dict}>
@@ -28,7 +32,7 @@ export default async function HomePage({
         description={dict?.pricing?.description}
         locale={params.lang}
       >
-        <Pricing dict={dict} />
+        <Pricing pricingData={pricingData} dict={dict} lang={params.lang} />
       </SectionLayout>
       <Testimonials dict={dict} params={params} />
       <FAQ dict={dict} />
@@ -40,6 +44,7 @@ export default async function HomePage({
           {
             text: dict.common.buttons.getStartedNow,
             variant: "secondary",
+            href: `/${params.lang}/signup`,
           },
           {
             text: dict.common.buttons.viewDocumentation,

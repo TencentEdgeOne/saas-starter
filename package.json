@@ -16,6 +16,8 @@
     "@contentful/rich-text-html-renderer": "^16.3.2",
     "@contentful/rich-text-types": "^16.3.2",
     "@radix-ui/react-select": "^2.2.5",
+    "@supabase/ssr": "^0.7.0",
+    "@supabase/supabase-js": "^2.57.4",
     "@types/react-syntax-highlighter": "^15.5.13",
     "clsx": "^2.0.0",
     "contentful": "^10.6.13",
@@ -31,6 +33,7 @@
     "react-syntax-highlighter": "^15.6.1",
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
+    "stripe": "^18.5.0",
     "tailwind-merge": "^2.0.0",
     "turndown": "^7.1.2"
   },

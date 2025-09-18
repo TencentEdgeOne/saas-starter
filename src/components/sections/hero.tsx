@@ -128,10 +128,12 @@ export function Hero({ dict, params, layout = 'center' }: HeroProps) {
 
           {/* CTA Buttons */}
           <div className={`${layoutClasses.buttons} mb-12`}>
-            <Button size="lg" className="btn-gradient text-white">
-              {dict?.common?.buttons?.getStartedFree || "Get Started Free"}
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
+            <Link href={`/${params?.lang}/signup`}> 
+              <Button size="lg" className="btn-gradient text-white">
+                {dict?.common?.buttons?.getStartedFree || "Get Started Free"}
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
             <Link href={dict?.common?.buttons?.documentationUrl || "https://saas-starter-docs.edgeone.app/en"} target="_blank">
               <Button variant="outline" size="lg">
                 {dict?.common?.buttons?.documentation || "Documentation"}

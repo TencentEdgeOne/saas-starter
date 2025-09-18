@@ -515,9 +515,40 @@ const componentMap = {
   // Layout Components
   header: () => (
     <div className="bg-background min-h-screen">
-      <Header />
+      <div className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            {/* Logo */}
+            <div className="flex-shrink-0">
+              <span className="text-2xl font-bold text-primary">EdgeOne Saas Starter</span>
+            </div>
+
+            {/* Right side */}
+            <div className="flex items-center space-x-4">
+              {/* Theme toggle placeholder */}
+              <div className="w-10 h-10 bg-gray-200 rounded"></div>
+              
+              {/* Auth Buttons - Preview Mode */}
+              <div className="hidden md:flex items-center space-x-2">
+                <span className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+                  Sign In
+                </span>
+                <span className="bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/90 transition-colors whitespace-nowrap">
+                  Sign Up
+                </span>
+              </div>
+
+              {/* Mobile menu button placeholder */}
+              <div className="w-10 h-10 bg-gray-200 rounded md:hidden"></div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="pt-20 p-8">
         <p className="text-muted-foreground">This is a preview of the Header component in action.</p>
+        <p className="text-sm text-muted-foreground mt-2">
+          Note: This is a static preview. The actual Header component requires AuthProvider context.
+        </p>
       </div>
     </div>
   ),
@@ -553,7 +584,6 @@ const componentMap = {
             {
               name: "Basic",
               description: "For small teams and individual users",
-              price: "$10",
               period: "month",
               popular: false,
               features: ["1000 API calls", "1000 API calls", "1000 API calls", "1000 API calls", "1000 API calls"],
@@ -562,7 +592,6 @@ const componentMap = {
             {
               name: "Pro",
               description: "For large teams and enterprise users",
-              price: "$100",
               period: "month",
               popular: true,
               features: ["1000 API calls", "1000 API calls", "1000 API calls", "1000 API calls", "1000 API calls"],
