@@ -14,9 +14,10 @@ import { formatDate } from '@/lib/utils'
 
 interface ProfileContentProps {
   dict?: Dictionary
+  lang?: string
 }
 
-export function ProfileContent({ dict }: ProfileContentProps) {
+export function ProfileContent({ dict, lang }: ProfileContentProps) {
   const { user, loading: authLoading, signOut } = useAuth()
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([])
   const [subscriptionsLoading, setSubscriptionsLoading] = useState(true)
@@ -61,7 +62,7 @@ export function ProfileContent({ dict }: ProfileContentProps) {
         <h3 className="text-lg font-semibold mb-2">{dict?.profile?.notLoggedIn || 'Not Logged In'}</h3>
         <p className="text-gray-600 mb-4">{dict?.profile?.pleaseSignIn || 'Please sign in to view your profile.'}</p>
         <Link 
-          href="/login"
+          href={`/${lang}/login`}
           className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
         >
           {dict?.auth?.login?.signInButton || 'Sign In'}
@@ -144,7 +145,7 @@ export function ProfileContent({ dict }: ProfileContentProps) {
                 <h3 className="text-lg font-semibold mb-2">{dict?.profile?.noSubscriptions || 'No Active Subscriptions'}</h3>
                 <p className="text-gray-600 mb-4">{dict?.profile?.noSubscriptionsDescription || 'You don\'t have any active subscriptions yet.'}</p>
                 <Link 
-                  href="/pricing"
+                  href={`/${lang}/pricing`}
                   className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
                 >
                   {dict?.profile?.browsePlans || 'Browse Plans'}

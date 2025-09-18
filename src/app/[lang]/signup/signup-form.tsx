@@ -11,9 +11,10 @@ import { Eye, EyeOff, Mail, Lock, User } from 'lucide-react'
 
 interface SignupFormProps {
   dict: Dictionary
+  lang?: string
 }
 
-export default function SignupForm({ dict }: SignupFormProps) {
+export default function SignupForm({ dict, lang }: SignupFormProps) {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -71,7 +72,7 @@ export default function SignupForm({ dict }: SignupFormProps) {
       if (response.ok) {
         setToast({ message: data.message || 'Account created successfully!', type: 'success' })
         setTimeout(() => {
-          router.push('/login')
+          router.push(`/${lang}/login`)
         }, 2000)
       } else {
         setError(data.error || 'An error occurred')

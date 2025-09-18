@@ -70,6 +70,7 @@ export default async function PricingPage({
         title={dict.pricing.ctaTitle}
         description={dict.pricing.ctaDescription}
         buttonText={dict.common.buttons.getStartedNow}
+        href={`/${params.lang}/signup`}
       />
     </Layout>
   );

@@ -43,7 +43,7 @@ export default async function SignupPage({ params }: SignupPageProps) {
               {dict.auth?.signup?.subtitle || 'Join us today and get started with your journey.'}
             </p>
           </div>
-          <SignupForm dict={dict} />
+          <SignupForm dict={dict} lang={params.lang} />
         </div>
       </div>
     </Layout>

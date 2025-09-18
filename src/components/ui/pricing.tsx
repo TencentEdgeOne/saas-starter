@@ -7,13 +7,13 @@ import { ProcessedPricing } from '@/types/pricing'
 
 interface PricingProps {
   pricingData?: ProcessedPricing[]
+  lang?: string
   dict?: {
     pricing: {
       mostPopular?: string,
       plans: {
         name: string
         description: string
-        price: string
         period: string
         popular: boolean
         features: string[]
@@ -29,7 +29,7 @@ interface PricingProps {
   }
 }
 
-export function Pricing({ pricingData, dict }: PricingProps) {
+export function Pricing({ pricingData, dict, lang }: PricingProps) {
   // 优先使用 Supabase 数据，如果没有则使用字典数据作为后备
   const pricingPlans = pricingData || dict?.pricing.plans || []
   
@@ -42,7 +42,7 @@ export function Pricing({ pricingData, dict }: PricingProps) {
             const isSupabaseData = 'priceId' in plan
             const planName = plan.name
             const planDescription = plan.description
-            const planPrice = plan.price
+            const planPrice = isSupabaseData ? `$${plan.price}` : 'Contact Us' // Supabase数据有价格，字典数据显示联系我们
             const planPeriod = isSupabaseData 
               ? plan.interval === 'month' ? dict?.common?.pricing?.perMonth : dict?.common?.pricing?.perYear
               : plan.period
@@ -90,7 +90,7 @@ export function Pricing({ pricingData, dict }: PricingProps) {
                   <div className="mt-auto">
                     {isSupabaseData && plan.priceId ? (
                       <a 
-                        href={`/api/checkout?plan=${encodeURIComponent(planName)}&price=${plan.priceId}`}
+                        href={`/${lang}/pricing`}
                         className={`w-full inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${
                           isPopular 
                             ? 'bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 btn-gradient text-white' 

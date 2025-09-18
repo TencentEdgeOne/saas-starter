@@ -584,7 +584,6 @@ const componentMap = {
             {
               name: "Basic",
               description: "For small teams and individual users",
-              price: "$10",
               period: "month",
               popular: false,
               features: ["1000 API calls", "1000 API calls", "1000 API calls", "1000 API calls", "1000 API calls"],
@@ -593,7 +592,6 @@ const componentMap = {
             {
               name: "Pro",
               description: "For large teams and enterprise users",
-              price: "$100",
               period: "month",
               popular: true,
               features: ["1000 API calls", "1000 API calls", "1000 API calls", "1000 API calls", "1000 API calls"],

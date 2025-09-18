@@ -248,8 +248,6 @@ export interface Dictionary {
     discount: string;
     plans: Array<{
       name: string;
-      price: string;
-      originalPrice: string;
       period: string;
       description: string;
       features: string[];

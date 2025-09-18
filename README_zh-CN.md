@@ -60,13 +60,11 @@ yarn install
 
 3. **启动开发服务器**
 ```bash
-npm run dev
-# 或
-yarn dev
+edgeone pages dev
 ```
 
 4. **打开浏览器**
-访问 [http://localhost:3000](http://localhost:3000) 查看你的应用。
+访问 [http://localhost:8088](http://localhost:8088) 查看你的应用。
 
 ## 📁 项目结构
 

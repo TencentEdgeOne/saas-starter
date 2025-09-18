@@ -60,13 +60,11 @@ yarn install
 
 3. **Start development server**
 ```bash
-npm run dev
-# or
-yarn dev
+edgeone pages dev
 ```
 
 4. **Open your browser**
-Visit [http://localhost:3000](http://localhost:3000) to see your app.
+Visit [http://localhost:8088](http://localhost:8088) to see your app.
 
 ## 📁 Project Structure
 

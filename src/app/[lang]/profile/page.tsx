@@ -38,7 +38,7 @@ export default async function ProfilePage({
           </p>
         </div>
         
-        <ProfileContent dict={dict} />
+        <ProfileContent dict={dict} lang={params.lang} />
       </div>
     </Layout>
   )
