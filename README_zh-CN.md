@@ -251,14 +251,6 @@ NEXT_PUBLIC_GA_ID=G-xxxxx
 - 使用 [Tailwind CSS](https://tailwindcss.com/) 样式
 - 来自 [Lucide React](https://lucide.dev/) 的图标
 
-## 📞 支持
-
-如果你对模板有任何问题或需要帮助：
-
-- 在 GitHub 创建一个问题
-- 发送邮件到 support@saas-starter.com
-- 加入我们的 Discord 社区
-
 ---
 
 **祝你愉快的构建！ 🚀** 

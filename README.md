@@ -249,13 +249,6 @@ This project is licensed under the MIT License - see the [LICENSE](https://githu
 - Styled with [Tailwind CSS](https://tailwindcss.com/)
 - Icons from [Lucide React](https://lucide.dev/)
 
-## 📞 Support
-
-If you have any questions or need help with the template:
-
-- Create an issue on GitHub
-- Email us at support@saas-starter.com
-- Join our Discord community
 
 ---
 
