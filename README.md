@@ -228,7 +228,7 @@ The project provides scripts to automatically generate robot.txt and sitemap.xml
 You only need to modify the SITE_URL in the gen:seo command in package.json to your own site address, then run:
 `npm run gen:seo` to generate them.
 
-## 🚀 Deploy
+## Deploy
 [![Deploy with EdgeOne Pages](https://cdnstatic.tencentcs.com/edgeone/pages/deploy.svg)](https://edgeone.ai/pages/new?template=saas-starter)
 
 ## 🤝 Contributing
