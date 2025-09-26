@@ -54,7 +54,7 @@ export default async function PricingPage({
      
 
       {/* Pricing Section */}
-      <Pricing pricingData={pricingData} dict={dict} />
+      <Pricing pricingData={pricingData} dict={dict} lang={params.lang} />
 
       {/* Feature Comparison Table */}
       <PricingComparison 

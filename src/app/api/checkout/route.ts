@@ -9,7 +9,8 @@ export const dynamic = 'force-dynamic'
 export async function GET(request: NextRequest) {
   try {
     // 解析查询参数
-    const { plan, price: priceId } = parseQueryParams(request.url)
+    console.log('request.url', request.url,parseQueryParams(request.url))
+    const { plan, price: priceId, lang } = parseQueryParams(request.url)
     
     if (!plan || !priceId) {
       return NextResponse.json(
@@ -23,7 +24,7 @@ export async function GET(request: NextRequest) {
     if (!accessToken) {
       // 未登录，重定向到登录页面
       const redirectUrl = getRedirectUrl(`/checkout?plan=${plan}&price=${priceId}`)
-      const loginUrl = getRedirectUrl(`/login?redirectUrl=${encodeURIComponent(redirectUrl)}`)
+      const loginUrl = getRedirectUrl(`/${lang}/login?redirectUrl=${encodeURIComponent(redirectUrl)}`)
       return NextResponse.redirect(loginUrl, 302)
     }
 
