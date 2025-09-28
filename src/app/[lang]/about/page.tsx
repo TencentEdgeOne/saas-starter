@@ -9,6 +9,9 @@ import { Locale } from '@/lib/i18n'
 import { getDictionary } from '@/lib/dictionaries'
 import Image from 'next/image'
 
+// 强制动态渲染，因为需要显示用户认证状态
+export const dynamic = 'force-dynamic'
+
 export default async function AboutPage({
   params,
 }: {

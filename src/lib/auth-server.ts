@@ -46,7 +46,7 @@ export async function getServerUser(): Promise<{ user: User | null; error: strin
  */
 export async function withTokenRefresh(
   request: NextRequest,
-  handler: (user: any, response?: NextResponse) => Promise<NextResponse>
+  handler: (user: any) => Promise<NextResponse>
 ) {
   try {
 
@@ -81,7 +81,7 @@ export async function withTokenRefresh(
         }
         
         // 刷新成功，创建包含新 token 的响应
-        const response = await handler(refreshData.session.user)
+        const response = await handler({...refreshData.session.user, access_token: refreshData.session.access_token})
        
         response.cookies.set('auth-token', JSON.stringify({access_token: refreshData.session.access_token, refresh_token: refreshData.session.refresh_token}),
         {

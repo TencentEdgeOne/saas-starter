@@ -8,6 +8,9 @@ import { getDictionary } from '@/lib/dictionaries'
 import { formatDate } from '@/lib/utils'
 import Link from 'next/link'
 
+// 强制动态渲染，因为需要显示用户认证状态
+export const dynamic = 'force-dynamic'
+
 interface BlogPostPageProps {
   params: {
     lang: string
