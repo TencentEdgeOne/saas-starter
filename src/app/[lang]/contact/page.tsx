@@ -11,8 +11,8 @@ import {
 import { getDictionary } from '@/lib/dictionaries';
 import { Locale, locales } from '@/lib/i18n';
 
-// 强制动态渲染，因为需要显示用户认证状态
-export const dynamic = 'force-dynamic';
+// 完全静态生成，内容在构建时预渲染
+export const dynamic = 'force-static';
 
 export async function generateStaticParams() {
   return locales.map((locale) => ({

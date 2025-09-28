@@ -4,9 +4,10 @@ import matter from 'gray-matter'
 import { remark } from 'remark'
 import html from 'remark-html'
 import { getDictionary } from './dictionaries'
+import { getContentDirectory } from './path-utils'
 
 function getPostsDirectory(lang: string = 'en') {
-  return path.join(process.cwd(), 'content', lang, 'blog')
+  return getContentDirectory(lang, 'blog')
 }
 
 // BlogPost type is now in @/types/blog
@@ -21,6 +22,7 @@ function estimateReadTime(text: string): number {
 
 export function getAllPosts(lang: string = 'en'): BlogPost[] {
   const postsDirectory = getPostsDirectory(lang)
+  console.log('postsDirectory', postsDirectory)
   if (!fs.existsSync(postsDirectory)) {
     fs.mkdirSync(postsDirectory, { recursive: true })
     return []

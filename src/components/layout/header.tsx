@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Menu, X, Sun, Moon, User, LogOut } from 'lucide-react'
@@ -10,22 +10,38 @@ import { Dictionary } from '@/lib/dictionaries'
 import { Locale } from '@/lib/i18n'
 import LanguageSwitcher from '@/components/language-switcher'
 import { useAuth } from '@/contexts/AuthContext'
+import { User as UserType } from '@/lib/auth'
 
 interface HeaderProps {
   dict?: Dictionary
+  initialUser?: UserType | null
 }
 
-export function Header({ dict }: HeaderProps) {
+export function Header({ dict, initialUser }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [user, setUser] = useState<UserType | null>(initialUser || null)
+  const [loading, setLoading] = useState(!initialUser)
   const { theme, setTheme } = useTheme()
   const pathname = usePathname()
   
   // Extract current language from path
   const currentLang = (pathname.split('/')[1] || 'en') as Locale
   
-  // 获取认证状态
-  const { user, loading, signOut } = useAuth()
-  // console.log(user, loading, signOut)
+  // 获取认证状态 - 只有在没有初始用户时才获取
+  const { user: authUser, loading: authLoading, signOut } = useAuth()
+  
+  // 同步认证状态
+  useEffect(() => {
+    if (initialUser !== undefined) {
+      // 如果有初始用户状态（来自服务端），直接使用
+      setUser(initialUser)
+      setLoading(false)
+    } else {
+      // 如果没有初始用户状态（静态页面），使用客户端认证状态
+      setUser(authUser)
+      setLoading(authLoading)
+    }
+  }, [initialUser, authUser, authLoading])
   
   // Use default values if dict is not provided
   const siteInfo = dict?.site || {

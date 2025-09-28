@@ -6,7 +6,8 @@ import { getDictionary } from '@/lib/dictionaries'
 import { Locale, locales } from '@/lib/i18n'
 import { getHighlightedText } from '@/lib/text-highlight'
 
-export const dynamic = 'force-dynamic'
+// 完全静态生成，内容在构建时预渲染
+export const dynamic = 'force-static'
 
 export async function generateStaticParams() {
   return locales.map((locale) => ({
@@ -15,6 +16,7 @@ export async function generateStaticParams() {
 }
 
 export default async function BlogPage({params}: {params: {lang: Locale}}) {
+  // 获取静态内容（构建时预渲染）
   const posts = getAllPosts(params.lang)
   const dict = await getDictionary(params.lang);
 

@@ -8,6 +8,7 @@ import type { CaseShowcaseItem } from '@/types/cases';
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
+import { getContentDirectory } from './path-utils'
 
 // CaseShowcaseItem type is now in @/types/cases
 export type { CaseShowcaseItem }
@@ -145,7 +146,7 @@ export function getAllCases(lang: string = 'en'): CaseShowcaseItem[] {
 }
 
 function getCasesDirectory(lang: string = 'en') {
-  return path.join(process.cwd(), 'content', lang, 'cases')
+  return getContentDirectory(lang, 'cases')
 }
 
 export function getAllCasesByLocale(): Record<string, CaseShowcaseItem[]> {
