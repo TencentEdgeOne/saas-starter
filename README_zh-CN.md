@@ -168,6 +168,15 @@ readTime: "5 分钟读取"
    CONTENTFUL_SPACE_ID=your_space_id
    CONTENTFUL_ACCESS_TOKEN=your_access_token
    CONTENTFUL_ENVIRONMENT=master
+   NEXT_PUBLIC_SUPABASE_URL=your-supabse-url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+   SUPABASE_SERVICE_ROLE_KEY=your-supabase-anon-service-role-key
+   
+   STRIPE_WEBHOOK_SECRET=your-stripe-webhooksecret
+   STRIPE_SECRET_KEY=your-stripe-secret-key
+   STRIPE_CALLBACK_URL=site-url
+   
+   NEXT_PUBLIC_APP_URL=site-url
    ```
 
 3. **将内容导出到本地Markdown**：
