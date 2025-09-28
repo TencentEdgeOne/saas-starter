@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm run contentful:export && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "export": "next build",
