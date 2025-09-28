@@ -8,6 +8,8 @@ import { Locale } from '@/lib/i18n'
 import { getDictionary } from '@/lib/dictionaries'
 import { ExternalLink, Plus } from 'lucide-react'
 
+export const dynamic = 'force-dynamic'
+
 export default async function CasesPage({
   params,
 }: {
