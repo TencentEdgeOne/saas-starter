@@ -11,21 +11,22 @@ import { getPricingData } from "@/lib/pricing-server";
 import { getServerUser } from "@/lib/auth-server";
 
 // 强制动态渲染，因为需要显示用户认证状态
-export const dynamic = 'force-dynamic';
+// export const dynamic = 'force-dynamic';
 
 export default async function PricingPage({
   params,
 }: {
-  params: { lang: Locale };
+  params: Promise<{ lang: Locale }>;
 }) {
   // 服务端获取用户状态
   const { user } = await getServerUser()
-  
-  const dict = await getDictionary(params.lang);
+
+  const { lang } = await params;
+  const dict = await getDictionary(lang);
   const comparison = dict.pricing.comparison;
   
   // 从 Supabase 获取价格数据（带国际化）
-  const pricingData = await getPricingData(params.lang);
+  const pricingData = await getPricingData(lang);
   
   // Create adapted dictionary for FAQ component
   const faqDict = {
@@ -61,7 +62,7 @@ export default async function PricingPage({
      
 
       {/* Pricing Section */}
-      <Pricing pricingData={pricingData} dict={dict} lang={params.lang} />
+      <Pricing pricingData={pricingData} dict={dict} lang={lang} />
 
       {/* Feature Comparison Table */}
       <PricingComparison 
@@ -77,7 +78,7 @@ export default async function PricingPage({
         title={dict.pricing.ctaTitle}
         description={dict.pricing.ctaDescription}
         buttonText={dict.common.buttons.getStartedNow}
-        href={`/${params.lang}/signup`}
+        href={`/${lang}/signup`}
       />
     </Layout>
   );

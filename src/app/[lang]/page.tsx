@@ -12,36 +12,35 @@ import { getDictionary } from "@/lib/dictionaries";
 import { getPricingData } from "@/lib/pricing-server";
 import { getServerUser } from "@/lib/auth-server";
 
-// 强制动态渲染，因为需要显示用户认证状态
-export const dynamic = 'force-dynamic';
 
 export default async function HomePage({
   params,
 }: {
-  params: { lang: Locale };
+  params: Promise<{ lang: Locale }>;
 }) {
   // 服务端获取用户状态
-  const { user } = await getServerUser()
-  
-  const dict = await getDictionary(params.lang);
+  const { user } = await getServerUser() 
+
+  const { lang } = await params;
+  const dict = await getDictionary(lang);
   
   // 从 Supabase 获取价格数据（带国际化）
-  const pricingData = await getPricingData(params.lang);
+  const pricingData = await getPricingData(lang);
 
   return (
     <Layout dict={dict} initialUser={user}>
-      <Hero dict={dict} params={params} />
+      <Hero dict={dict} lang={lang} />
       <Features dict={dict} />
       {/*Pricing Section*/}
       <SectionLayout
         id="pricing"
         title={dict?.pricing?.title || "Simple, Transparent Pricing"}
         description={dict?.pricing?.description}
-        locale={params.lang}
+        locale={lang}
       >
-        <Pricing pricingData={pricingData} dict={dict} lang={params.lang} />
+        <Pricing pricingData={pricingData} dict={dict} lang={lang} />
       </SectionLayout>
-      <Testimonials dict={dict} params={params} />
+      <Testimonials dict={dict} lang={lang} />
       <FAQ dict={dict} />
       <CTASection
         variant="gradient"
@@ -51,7 +50,7 @@ export default async function HomePage({
           {
             text: dict.common.buttons.getStartedNow,
             variant: "secondary",
-            href: `/${params.lang}/signup`,
+            href: `/${lang}/signup`,
           },
           {
             text: dict.common.buttons.viewDocumentation,

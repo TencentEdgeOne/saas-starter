@@ -12,7 +12,7 @@ import { getDictionary } from '@/lib/dictionaries';
 import { Locale, locales } from '@/lib/i18n';
 
 // 完全静态生成，内容在构建时预渲染
-export const dynamic = 'force-static';
+// export const dynamic = 'force-static';
 
 export async function generateStaticParams() {
   return locales.map((locale) => ({
@@ -21,13 +21,14 @@ export async function generateStaticParams() {
 }
 
 interface ContactPageProps {
-  params: {
+  params: Promise<{
     lang: Locale;
-  };
+  }>;
 }
 
 export default async function ContactPage({ params }: ContactPageProps) {
-  const dict = await getDictionary(params.lang);
+  const { lang } = await params;
+  const dict = await getDictionary(lang);
 
   const contactInfo = [
     {

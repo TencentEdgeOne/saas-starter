@@ -7,7 +7,7 @@ const nextConfig = {
     unoptimized: true,
   },
   trailingSlash: true,
-  output: 'standalone',
+  // output: 'standalone',
   
 }
 

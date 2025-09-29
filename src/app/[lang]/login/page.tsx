@@ -6,15 +6,16 @@ import { getServerUser } from '@/lib/auth-server'
 import { redirect } from 'next/navigation'
 
 interface LoginPageProps {
-  params: { lang: Locale }
+  params: Promise<{ lang: Locale }>;
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: { lang: Locale }
+  params: Promise<{ lang: Locale }>;
 }) {
-  const dict = await getDictionary(params.lang)
+  const { lang } = await params;
+  const dict = await getDictionary(lang)
   return {
     title: dict.auth?.login?.title || 'Sign In',
     description: dict.auth?.login?.subtitle || 'Sign in to your account',
@@ -22,13 +23,14 @@ export async function generateMetadata({
 }
 
 export default async function LoginPage({ params }: LoginPageProps) {
-  const dict = await getDictionary(params.lang)
+  const { lang } = await params;
+  const dict = await getDictionary(lang)
 
   // Check if the user is already logged in
   const { user } = await getServerUser()
   if (user) {
     // If already logged in, redirect to the profile page
-    redirect(`/${params.lang}/profile`)
+    redirect(`/${lang}/profile`)
   }
 
   return (

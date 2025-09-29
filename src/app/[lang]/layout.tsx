@@ -11,9 +11,12 @@ const inter = Inter({ subsets: ['latin'] })
 export async function generateMetadata({
   params,
 }: {
-  params: { lang: Locale }
+  params: Promise<{ lang: string }>
 }) {
-  return await generateI18nMetadata(params.lang)
+  const { lang } = await params;
+  // 确保 lang 是有效的 Locale 类型
+  const validLang = locales.includes(lang as Locale) ? (lang as Locale) : 'en';
+  return await generateI18nMetadata(validLang)
 }
 
 // Generate all language paths for static export
@@ -22,20 +25,20 @@ export async function generateStaticParams() {
     lang: locale,
   }));
 }
-
+  
 export default async function LangLayout({
   children,
   params,
 }: {
   children: React.ReactNode
-  params: { lang: Locale }
+  params: Promise<{ lang: string }>
 }) {
   // 在服务端获取用户认证状态
   const { user } = await getServerUser()
+  const { lang } = await params
 
   return (
-    // <html lang={params.lang} suppressHydrationWarning>
-      // <body className={inter.className}>
+   
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
@@ -46,7 +49,6 @@ export default async function LangLayout({
             {children}
           </AuthProvider>
         </ThemeProvider>
-      // </body>
-    // </html>
+     
   )
 } 

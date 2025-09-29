@@ -6,15 +6,16 @@ import { getServerUser } from '@/lib/auth-server'
 import { redirect } from 'next/navigation'
 
 interface SignupPageProps {
-  params: { lang: Locale }
+  params: Promise<{ lang: Locale }>;
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: { lang: Locale }
+  params: Promise<{ lang: Locale }>;
 }) {
-  const dict = await getDictionary(params.lang)
+  const { lang } = await params;
+  const dict = await getDictionary(lang)
   return {
     title: dict.auth?.signup?.title || 'Sign Up',
     description: dict.auth?.signup?.subtitle || 'Create your account',
@@ -22,13 +23,14 @@ export async function generateMetadata({
 }
 
 export default async function SignupPage({ params }: SignupPageProps) {
-  const dict = await getDictionary(params.lang)
+  const { lang } = await params;
+  const dict = await getDictionary(lang)
 
   // Check if the user is already logged in
   const { user } = await getServerUser()
   if (user) {
     // If already logged in, redirect to the profile page
-    redirect(`/${params.lang}/profile`)
+    redirect(`/${lang}/profile`)
   }
 
   return (
@@ -43,7 +45,7 @@ export default async function SignupPage({ params }: SignupPageProps) {
               {dict.auth?.signup?.subtitle || 'Join us today and get started with your journey.'}
             </p>
           </div>
-          <SignupForm dict={dict} lang={params.lang} />
+          <SignupForm dict={dict} lang={lang} />
         </div>
       </div>
     </Layout>

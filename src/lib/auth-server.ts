@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function getServerUser(): Promise<{ user: User | null; error: string | null }> {
   try {
-    const cookieStore = cookies()
+    const cookieStore = await cookies()
     const supabase = createServerClient()
 
     const authTokenData = cookieStore.get('auth-token')?.value

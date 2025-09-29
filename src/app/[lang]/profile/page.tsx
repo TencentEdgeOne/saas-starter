@@ -5,15 +5,16 @@ import { getDictionary } from '@/lib/dictionaries'
 import { Locale } from '@/lib/i18n'
 
 interface ProfilePageProps {
-  params: {
+  params: Promise<{
     lang: Locale
-  }
+  }>;
 }
 
 export async function generateMetadata({
   params,
 }: ProfilePageProps): Promise<Metadata> {
-  const dict = await getDictionary(params.lang)
+  const { lang } = await params;
+  const dict = await getDictionary(lang)
   
   return {
     title: dict?.profile?.title || 'Profile',
@@ -24,7 +25,8 @@ export async function generateMetadata({
 export default async function ProfilePage({
   params,
 }: ProfilePageProps) {
-  const dict = await getDictionary(params.lang)
+  const { lang } = await params;
+  const dict = await getDictionary(lang)
 
   return (
     <Layout dict={dict}>
@@ -38,7 +40,7 @@ export default async function ProfilePage({
           </p>
         </div>
         
-        <ProfileContent dict={dict} lang={params.lang} />
+        <ProfileContent dict={dict} lang={lang} />
       </div>
     </Layout>
   )

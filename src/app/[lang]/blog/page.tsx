@@ -7,7 +7,7 @@ import { getHighlightedText } from '@/lib/text-highlight'
 import { Layout } from '@/components/layout/layout'
 
 // 完全静态生成，内容在构建时预渲染
-export const dynamic = 'force-static'
+// export const dynamic = 'force-static'
 
 export async function generateStaticParams() {
   return locales.map((locale) => ({
@@ -15,10 +15,11 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function BlogPage({params}: {params: {lang: Locale}}) {
+export default async function BlogPage({params}: {params: Promise<{lang: Locale}>}) {
   // 获取静态内容（构建时预渲染）
-  const posts = getAllPosts(params.lang)
-  const dict = await getDictionary(params.lang);
+  const { lang } = await params;
+  const posts = getAllPosts(lang)
+  const dict = await getDictionary(lang);
 
   return (
     <Layout dict={dict}>
@@ -28,7 +29,7 @@ export default async function BlogPage({params}: {params: {lang: Locale}}) {
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-responsive-xl font-bold text-foreground mb-6">
               <span dangerouslySetInnerHTML={{
-                __html: getHighlightedText(dict.blog.pageTitle, params.lang)
+                __html: getHighlightedText(dict.blog.pageTitle, lang)
               }} />
             </h1>
             <p className="text-xl text-muted-foreground leading-relaxed">
@@ -60,7 +61,7 @@ export default async function BlogPage({params}: {params: {lang: Locale}}) {
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
                 {posts.map((post) => (
-                  <BlogCard key={post.slug} post={post} variant="wide" className="h-full" lang={params.lang} />
+                  <BlogCard key={post.slug} post={post} variant="wide" className="h-full" lang={lang} />
                 ))}
               </div>
             )}

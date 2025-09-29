@@ -22,7 +22,7 @@ function estimateReadTime(text: string): number {
 
 export function getAllPosts(lang: string = 'en'): BlogPost[] {
   const postsDirectory = getPostsDirectory(lang)
-  console.log('postsDirectory', postsDirectory)
+  // console.log('postsDirectory', postsDirectory)
   if (!fs.existsSync(postsDirectory)) {
     fs.mkdirSync(postsDirectory, { recursive: true })
     return []

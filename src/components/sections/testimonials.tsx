@@ -4,7 +4,7 @@ import { SectionLayout } from "@/components/layout/section-layout"
 import { TestimonialsGrid } from "@/components/ui/testimonials-grid"
 import type { TestimonialsProps } from '@/types/testimonials'
 
-export function Testimonials({ dict, params }: TestimonialsProps) {
+export function Testimonials({ dict, lang }: TestimonialsProps) {
   const testimonials = dict?.testimonials.testimonials || []
   const stats = dict?.testimonials.stats || []
   
@@ -12,7 +12,7 @@ export function Testimonials({ dict, params }: TestimonialsProps) {
     <SectionLayout
       title={dict?.testimonials?.title}
       description={dict?.testimonials?.description}
-      locale={params?.lang || 'en'}
+      locale={lang || 'en'}
       background="muted"
     >
       <TestimonialsGrid 

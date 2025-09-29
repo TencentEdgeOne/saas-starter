@@ -40,7 +40,7 @@ export interface TestimonialsProps {
   dict?: {
     testimonials: TestimonialsData
   }
-  params?: { lang: string }
+  lang?: string
 }
 
 export interface TestimonialCardProps {

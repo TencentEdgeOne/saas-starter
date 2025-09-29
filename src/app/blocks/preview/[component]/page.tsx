@@ -2,9 +2,9 @@ import { notFound } from "next/navigation";
 import { ComponentPreviewClient } from "./component-preview-client";
 
 interface PreviewPageProps {
-  params: {
+  params: Promise<{
     component: string;
-  };
+  }>;
 }
 
 // All available components list - keep in sync with componentMap in component-preview-client.tsx
@@ -32,8 +32,9 @@ const AVAILABLE_COMPONENTS = [
   'contact-form'
 ] as const;
 
-export default function ComponentPreview({ params }: PreviewPageProps) {
-  const { component } = params;
+export default async function ComponentPreview({ params }: PreviewPageProps) {
+  const { component } = await params;
+  // const { component } = params;
   
   // Check if component exists in available components list
   if (!AVAILABLE_COMPONENTS.includes(component as any)) {

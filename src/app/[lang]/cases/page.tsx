@@ -8,15 +8,16 @@ import { Locale } from '@/lib/i18n'
 import { getDictionary } from '@/lib/dictionaries'
 import { ExternalLink, Plus } from 'lucide-react'
 
-export const dynamic = 'force-dynamic'
+// export const dynamic = 'force-dynamic'
 
 export default async function CasesPage({
   params,
 }: {
-  params: { lang: Locale };
+  params: Promise<{ lang: Locale }>;
 }) {
-  const cases = getAllCases(params.lang)
-  const dict = await getDictionary(params.lang);
+  const { lang } = await params;
+  const cases = getAllCases(lang)
+  const dict = await getDictionary(lang);
 
   return (
     <Layout dict={dict}>
@@ -37,7 +38,7 @@ export default async function CasesPage({
         {/* Showcase Grid */}
         <section className="section-padding">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <CaseShowcaseGrid cases={cases} lang={params.lang} dict={dict} />
+            <CaseShowcaseGrid cases={cases} lang={lang} dict={dict} />
           </div>
         </section>
 

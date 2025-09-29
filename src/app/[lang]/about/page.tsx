@@ -10,14 +10,14 @@ import { getDictionary } from '@/lib/dictionaries'
 import Image from 'next/image'
 
 // 完全静态生成，内容在构建时预渲染
-export const dynamic = 'force-static'
 
 export default async function AboutPage({
   params,
 }: {
-  params: { lang: Locale };
+  params: Promise<{ lang: Locale }>;
 }) {
-  const dict = await getDictionary(params.lang);
+  const { lang } = await params;
+  const dict = await getDictionary(lang);
 
   // Use values data from dictionary
   const values = [
@@ -78,7 +78,7 @@ export default async function AboutPage({
           title={dict.about.valuesTitle}
           description={dict.about.valuesSubtitle}
           containerClassName="max-w-6xl"
-          locale={params.lang}
+          locale={lang}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {values.map((value, index) => (
@@ -103,7 +103,7 @@ export default async function AboutPage({
           description={dict.about.teamSubtitle}
           background="muted"
           containerClassName="max-w-6xl"
-          locale={params.lang}
+          locale={lang}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {team.map((member, index) => (

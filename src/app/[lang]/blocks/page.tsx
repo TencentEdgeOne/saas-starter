@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
 import { Layout } from "@/components/layout/layout";
 import { Button } from "@/components/ui/button";
 import { 
@@ -16,31 +17,27 @@ import { Locale } from "@/lib/i18n";
 import { CodeHighlighter } from "@/components/ui/code-highlighter";
 import { useToast } from "@/components/ui/toast";
 
-interface BlocksPageProps {
-  params: {
-    lang: Locale;
-  };
-}
-
-export default function BlocksPage({ params }: BlocksPageProps) {
+export default function BlocksPage() {
+  const params = useParams();
+  const lang = params.lang as Locale;
+  
   const [selectedComponent, setSelectedComponent] = useState("button");
   const [showCode, setShowCode] = useState(false);
   const [dictBlocks, setDictBlocks] = useState<any>(null);
   const [dict, setDict] = useState<any>(null);
   const [categories, setCategories] = useState<BlockCategory[]>([]);
   const { showToast, ToastContainer } = useToast();
-  
   useEffect(() => {
     const loadData = async () => {
-      const dictionary = await getBlocksDictionary(params.lang);
+      const dictionary = await getBlocksDictionary(lang);
       setDictBlocks(dictionary);
       setCategories(dictionary.blocks.categories);
 
-      const dict = await getDictionary(params.lang);
+      const dict = await getDictionary(lang);
       setDict(dict);
     };
     loadData();
-  }, [params.lang]);
+  }, [lang]);
 
   if (!dictBlocks || !categories.length) {
     return (

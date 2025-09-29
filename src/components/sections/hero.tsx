@@ -12,7 +12,7 @@ type HeroLayout = 'left' | 'center' | 'right'
 
 interface HeroProps {
   dict?: Dictionary
-  params?: { lang: string }
+  lang?: string
   layout?: HeroLayout
 }
 
@@ -66,7 +66,7 @@ const getLayoutClasses = (layout: HeroLayout) => {
   }
 }
 
-export function Hero({ dict, params, layout = 'center' }: HeroProps) {
+export function Hero({ dict, lang, layout = 'center' }: HeroProps) {
   const layoutClasses = getLayoutClasses(layout)
 
   return (
@@ -110,7 +110,7 @@ export function Hero({ dict, params, layout = 'center' }: HeroProps) {
           <h1 className={`text-responsive-xl font-bold text-foreground mb-6 max-w-4xl ${layoutClasses.heading} ${layout === 'center' ? 'mx-auto' : layout === 'right' ? 'ml-auto' : ''}`}>
             {dict?.hero?.title ? (
               <span dangerouslySetInnerHTML={{
-                __html: getHighlightedText(dict.hero.title, params?.lang || 'en')
+                __html: getHighlightedText(dict.hero.title, lang || 'en')
               }} />
             ) : (
               <>
@@ -128,7 +128,7 @@ export function Hero({ dict, params, layout = 'center' }: HeroProps) {
 
           {/* CTA Buttons */}
           <div className={`${layoutClasses.buttons} mb-12`}>
-            <Link href={`/${params?.lang}/signup`}> 
+            <Link href={`/${lang}/signup`}> 
               <Button size="lg" className="btn-gradient text-white">
                 {dict?.common?.buttons?.getStartedFree || "Get Started Free"}
                 <ArrowRight className="ml-2 h-5 w-5" />

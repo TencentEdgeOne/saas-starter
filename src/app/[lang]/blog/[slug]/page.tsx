@@ -9,13 +9,13 @@ import { formatDate } from '@/lib/utils'
 import Link from 'next/link'
 
 // 强制动态渲染，因为需要显示用户认证状态
-export const dynamic = 'force-dynamic'
+// export const dynamic = 'force-dynamic'
 
 interface BlogPostPageProps {
-  params: {
+  params: Promise<{
     lang: string
     slug: string
-  }
+  }>;
 }
 
 export async function generateStaticParams() {
@@ -36,7 +36,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: BlogPostPageProps) {
-  const post = await getPostBySlug(params.slug, params.lang)
+  const { lang,slug } = await params;
+  const post = await getPostBySlug(slug, lang)
   if (!post) {
     return {
       title: 'Blog Post Not Found',
@@ -50,8 +51,9 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = await getPostBySlug(params.slug, params.lang)
-  const dict = await getDictionary(params.lang as 'en' | 'zh')
+  const { lang,slug } = await params;
+  const post = await getPostBySlug(slug, lang)
+  const dict = await getDictionary(lang as 'en' | 'zh')
 
   if (!post) {
     notFound()
@@ -64,7 +66,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Back Link */}
           <Link 
-            href={`/${params.lang}/blog`}
+            href={`/${lang}/blog`}
             className="inline-flex items-center text-muted-foreground hover:text-primary transition-colors mb-8"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
@@ -114,7 +116,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 {dict.blog.article.thanksMessage}
               </p>
               <Link 
-                href={`/${params.lang}/blog`}
+                href={`/${lang}/blog`}
                 className="inline-flex items-center bg-primary text-primary-foreground px-6 py-3 rounded-md font-medium hover:bg-primary/90 transition-colors"
               >
                 {dict.blog.article.readMoreArticles}

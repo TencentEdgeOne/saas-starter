@@ -8,14 +8,15 @@ import { Locale } from "@/lib/i18n";
 import { FeaturesClient, HeroFeatures, SupportFeatures } from "./features-client";
 
 // 强制动态渲染，因为需要显示用户认证状态
-export const dynamic = 'force-dynamic';
+// export const dynamic = 'force-dynamic';
 
 export default async function FeaturesPage({
   params,
 }: {
-  params: { lang: Locale };
+  params: Promise<{ lang: Locale }>;
 }) {
-  const dict = await getDictionary(params.lang);
+  const { lang } = await params;
+  const dict = await getDictionary(lang);
   
   // Get data from dictionary
   const heroFeatures = dict.shared.heroFeatures;
@@ -34,7 +35,7 @@ export default async function FeaturesPage({
         description={dict.features.page.subtitle}
         titleClassName="text-4xl md:text-6xl"
         descriptionClassName="mb-12"
-        locale={params.lang}
+        locale={lang}
       >
         {/* Hero Features Grid */}
         <HeroFeatures 
@@ -54,7 +55,7 @@ export default async function FeaturesPage({
           description={category.description}
           titleClassName="text-3xl md:text-4xl"
           descriptionClassName="max-w-2xl"
-          locale={params.lang}
+          locale={lang}
         >
           <FeaturesClient 
             featureCategories={[category]}
@@ -71,7 +72,7 @@ export default async function FeaturesPage({
         title={dict.features.page.supportTitle}
         description={dict.features.page.supportSubtitle}
         titleClassName="text-3xl md:text-4xl"
-        locale={params.lang}
+        locale={lang}
       >
         <SupportFeatures 
           supportFeatures={supportFeatures}

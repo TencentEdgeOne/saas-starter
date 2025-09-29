@@ -10,6 +10,8 @@ import {
 } from "@/lib/supabase";
 import { NextRequest } from "next/server";
 
+// 强制动态渲染，因为使用了外部 webhook
+export const dynamic = 'force-dynamic'
 
 const relevantEvents = new Set([
   'product.created',
