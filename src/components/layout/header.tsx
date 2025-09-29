@@ -131,13 +131,13 @@ export function Header({ dict, initialUser }: HeaderProps) {
             ) : (
               <div className="hidden md:flex items-center space-x-2">
                 <Link
-                  href={getLocalizedHref('/login')}
+                  href={getLocalizedHref(`/${currentLang}/login`)}
                   className="text-sm w-16 font-medium text-foreground hover:text-primary transition-colors text-center"
                 >
                   {dict?.auth?.login?.signInButton || 'Sign In'}
                 </Link>
                 <Link
-                  href={getLocalizedHref('/signup')}
+                  href={getLocalizedHref(`/${currentLang}/signup`)}
                   className="bg-primary w-16 text-white py-2 rounded-md text-sm font-medium hover:bg-primary/90 transition-colors whitespace-nowrap text-center"
                 >
                   {dict?.auth?.signup?.signUpButton || 'Sign Up'}
