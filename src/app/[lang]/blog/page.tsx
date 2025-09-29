@@ -7,7 +7,7 @@ import { getHighlightedText } from '@/lib/text-highlight'
 import { Layout } from '@/components/layout/layout'
 
 // 完全静态生成，内容在构建时预渲染
-// export const dynamic = 'force-static'
+export const dynamic = 'force-static'
 
 export async function generateStaticParams() {
   return locales.map((locale) => ({
