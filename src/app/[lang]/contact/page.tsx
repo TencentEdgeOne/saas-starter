@@ -11,8 +11,7 @@ import {
 import { getDictionary } from '@/lib/dictionaries';
 import { Locale, locales } from '@/lib/i18n';
 
-// 完全静态生成，内容在构建时预渲染
-// export const dynamic = 'force-static';
+export const dynamic = 'force-static';
 
 export async function generateStaticParams() {
   return locales.map((locale) => ({

@@ -10,25 +10,22 @@ import { CTASection } from "@/components/sections/cta-section";
 import { Locale } from "@/lib/i18n";
 import { getDictionary } from "@/lib/dictionaries";
 import { getPricingData } from "@/lib/pricing-server";
-import { getServerUser } from "@/lib/auth-server";
 
+export const dynamic = 'force-static'
 
 export default async function HomePage({
   params,
 }: {
   params: Promise<{ lang: Locale }>;
 }) {
-  // 服务端获取用户状态
-  const { user } = await getServerUser() 
 
   const { lang } = await params;
   const dict = await getDictionary(lang);
   
-  // 从 Supabase 获取价格数据（带国际化）
   const pricingData = await getPricingData(lang);
 
   return (
-    <Layout dict={dict} initialUser={user}>
+    <Layout dict={dict}>
       <Hero dict={dict} lang={lang} />
       <Features dict={dict} />
       {/*Pricing Section*/}

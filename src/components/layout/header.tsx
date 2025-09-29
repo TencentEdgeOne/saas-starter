@@ -72,6 +72,7 @@ export function Header({ dict, initialUser }: HeaderProps) {
           <nav className="hidden md:flex space-x-8">
             {headerConfig.navigation.map((item) => (
               <Link
+                prefetch={true}
                 key={item.name}
                 href={getLocalizedHref(item.href)}
                  className={`transition-colors duration-200 whitespace-nowrap ${
@@ -137,7 +138,7 @@ export function Header({ dict, initialUser }: HeaderProps) {
                 </Link>
                 <Link
                   href={getLocalizedHref('/signup')}
-                  className="bg-primary w-16 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/90 transition-colors whitespace-nowrap text-center"
+                  className="bg-primary w-16 text-white py-2 rounded-md text-sm font-medium hover:bg-primary/90 transition-colors whitespace-nowrap text-center"
                 >
                   {dict?.auth?.signup?.signUpButton || 'Sign Up'}
                 </Link>

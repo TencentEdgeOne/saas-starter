@@ -28,6 +28,12 @@ export async function POST(request: NextRequest) {
       sameSite: 'lax',
       maxAge: 0 // 立即过期
     })
+    response.cookies.set('sb-user-id', '', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 0 // 立即过期
+    })
     return response
 
   } catch (error) {

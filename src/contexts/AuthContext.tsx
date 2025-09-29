@@ -33,8 +33,9 @@ export function AuthProvider({ children, initialUser }: AuthProviderProps) {
 
 
   const signOut = async () => {
-    const { signOut: signOutUser } = await import('@/lib/auth')
-    await signOutUser()
+    await fetch('/api/auth/signout', {
+      method: 'POST',
+    })
     setUser(null)
   }
 
