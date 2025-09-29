@@ -30,7 +30,7 @@ export function BlogCard({ post, variant = "default", className = "", lang = "en
                 src={post.image}
                 alt={post.imageAlt || post.title}
                 fill
-                className="object-cover group-hover:scale-105 transition-transform duration-300"
+                className="object-cover group-hover:scale-105 transition-transform duration-300 bg-gray-200"
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
             </Link>
@@ -83,7 +83,7 @@ export function BlogCard({ post, variant = "default", className = "", lang = "en
               src={post.image}
               alt={post.imageAlt || post.title}
               fill
-              className="object-cover group-hover:scale-105 transition-transform duration-300"
+              className="object-cover group-hover:scale-105 transition-transform duration-300 bg-gray-200"
               sizes="(max-width: 768px) 100vw, 33vw"
             />
           </Link>
