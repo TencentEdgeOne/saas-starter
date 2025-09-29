@@ -1,10 +1,10 @@
 import React from 'react'
-import { Layout } from '@/components/layout/layout'
 import { BlogCard } from '@/components/ui/blog-card'
 import { getAllPosts } from '@/lib/blog'
 import { getDictionary } from '@/lib/dictionaries'
 import { Locale, locales } from '@/lib/i18n'
 import { getHighlightedText } from '@/lib/text-highlight'
+import { Layout } from '@/components/layout/layout'
 
 // 完全静态生成，内容在构建时预渲染
 export const dynamic = 'force-static'

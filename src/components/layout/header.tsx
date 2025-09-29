@@ -19,29 +19,14 @@ interface HeaderProps {
 
 export function Header({ dict, initialUser }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [user, setUser] = useState<UserType | null>(initialUser || null)
-  const [loading, setLoading] = useState(!initialUser)
   const { theme, setTheme } = useTheme()
   const pathname = usePathname()
   
   // Extract current language from path
   const currentLang = (pathname.split('/')[1] || 'en') as Locale
   
-  // 获取认证状态 - 只有在没有初始用户时才获取
-  const { user: authUser, loading: authLoading, signOut } = useAuth()
-  
-  // 同步认证状态
-  useEffect(() => {
-    if (initialUser !== undefined) {
-      // 如果有初始用户状态（来自服务端），直接使用
-      setUser(initialUser)
-      setLoading(false)
-    } else {
-      // 如果没有初始用户状态（静态页面），使用客户端认证状态
-      setUser(authUser)
-      setLoading(authLoading)
-    }
-  }, [initialUser, authUser, authLoading])
+  // 直接使用认证状态，AuthContext 会处理状态同步
+  const { user, loading, signOut } = useAuth()
   
   // Use default values if dict is not provided
   const siteInfo = dict?.site || {
@@ -122,36 +107,36 @@ export function Header({ dict, initialUser }: HeaderProps) {
             {loading ? (
               <div className="hidden md:flex items-center space-x-2">
                 <div className="w-16 h-8 bg-gray-200 rounded animate-pulse"></div>
+                <div className="w-16 h-8 bg-gray-200 rounded animate-pulse"></div>
               </div>
             ) : user ? (
               <div className="hidden md:flex items-center space-x-2">
                 <Link
                   href={getLocalizedHref('/profile')}
-                  className="text-sm text-gray-600 hover:text-primary transition-colors cursor-pointer"
+                  className="w-16 text-sm text-gray-600 hover:text-primary transition-colors cursor-pointer text-center flex items-center justify-center"
                 >
-                  {dict?.auth?.user?.welcome || 'Welcome back'}, {user.email}
+                   <User className="h-4 w-4" />
                 </Link>
                 <Button
-                  variant="outline"
-                  size="sm"
+                  variant="link"
                   onClick={signOut}
-                  className="flex items-center space-x-1"
+                  className="flex items-center space-x-1 w-12 justify-center w-16"
                 >
                   <LogOut className="h-4 w-4" />
-                  <span>{dict?.auth?.user?.signOut || 'Sign Out'}</span>
+                  {/* <span>{dict?.auth?.user?.signOut || 'Sign Out'}</span> */}
                 </Button>
               </div>
             ) : (
               <div className="hidden md:flex items-center space-x-2">
                 <Link
                   href={getLocalizedHref('/login')}
-                  className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+                  className="text-sm w-16 font-medium text-foreground hover:text-primary transition-colors text-center"
                 >
                   {dict?.auth?.login?.signInButton || 'Sign In'}
                 </Link>
                 <Link
                   href={getLocalizedHref('/signup')}
-                  className="bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/90 transition-colors whitespace-nowrap"
+                  className="bg-primary w-16 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/90 transition-colors whitespace-nowrap text-center"
                 >
                   {dict?.auth?.signup?.signUpButton || 'Sign Up'}
                 </Link>
