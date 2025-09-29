@@ -11,9 +11,10 @@ import { Eye, EyeOff, Mail, Lock } from 'lucide-react'
 
 interface LoginFormProps {
   dict: Dictionary
+  lang: string
 }
 
-export default function LoginForm({ dict }: LoginFormProps) {
+export default function LoginForm({ dict, lang }: LoginFormProps) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -126,7 +127,7 @@ export default function LoginForm({ dict }: LoginFormProps) {
             <p className="text-sm text-gray-600">
               {dict.auth?.login?.noAccount || "Don't have an account?"}{' '}
               <Link
-                href="/signup"
+                href={`/${lang}/signup`}
                 className="font-medium text-primary hover:text-primary/80"
               >
                 {dict.auth?.login?.signUpLink || 'Sign up here'}

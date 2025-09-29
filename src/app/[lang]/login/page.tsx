@@ -45,7 +45,7 @@ export default async function LoginPage({ params }: LoginPageProps) {
               {dict.auth?.login?.subtitle || 'Welcome back! Please sign in to continue.'}
             </p>
           </div>
-          <LoginForm dict={dict} />
+          <LoginForm dict={dict} lang={lang} />
         </div>
       </div>
     </Layout>

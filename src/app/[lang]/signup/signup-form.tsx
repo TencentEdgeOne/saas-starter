@@ -204,7 +204,7 @@ export default function SignupForm({ dict, lang }: SignupFormProps) {
             <p className="text-sm text-gray-600">
               {dict.auth?.signup?.hasAccount || 'Already have an account?'}{' '}
               <Link
-                href="/login"
+                href={`/${lang}/login`}
                 className="font-medium text-primary hover:text-primary/80"
               >
                 {dict.auth?.signup?.signInLink || 'Sign in here'}
