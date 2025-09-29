@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
 
     // 使用 withTokenRefresh 处理认证和自动刷新
     return withTokenRefresh(request, async (user) => {
-      return await createCheckoutSession(user.id, plan, priceId)
+      return await createCheckoutSession(user.id, plan, priceId, lang)
     })
 
   } catch (error) {
@@ -42,7 +42,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-async function createCheckoutSession(userId: string, plan: string, priceId: string) {
+async function createCheckoutSession(userId: string, plan: string, priceId: string, lang: string) {
   try {
     const supabase = createSupabaseAdminClient()
     const stripe = createStripe()
@@ -65,8 +65,8 @@ async function createCheckoutSession(userId: string, plan: string, priceId: stri
     // 创建 Stripe checkout session
     const session = await stripe.checkout.sessions.create({
       customer: customer.stripe_customer_id,
-      success_url: getRedirectUrl('/profile?success=true'),
-      cancel_url: getRedirectUrl('/pricing?canceled=true'),
+      success_url: getRedirectUrl(`/${lang}/profile?success=true`),
+      cancel_url: getRedirectUrl(`/${lang}/pricing?canceled=true`),
       mode: 'subscription',
       line_items: [
         {

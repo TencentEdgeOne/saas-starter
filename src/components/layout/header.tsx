@@ -27,6 +27,7 @@ export function Header({ dict, initialUser }: HeaderProps) {
   
   // 直接使用认证状态，AuthContext 会处理状态同步
   const { user, loading, signOut } = useAuth()
+  console.log(user, loading, signOut)
   
   // Use default values if dict is not provided
   const siteInfo = dict?.site || {

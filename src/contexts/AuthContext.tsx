@@ -30,17 +30,7 @@ export function AuthProvider({ children, initialUser }: AuthProviderProps) {
     }
   }, [initialUser])
 
-  // 监听认证状态变化
-  useEffect(() => {
-    const { data: { subscription } } = onAuthStateChange((user) => {
-      setUser(user)
-      setLoading(false)
-    })
 
-    return () => {
-      subscription?.unsubscribe()
-    }
-  }, [])
 
   const signOut = async () => {
     const { signOut: signOutUser } = await import('@/lib/auth')
