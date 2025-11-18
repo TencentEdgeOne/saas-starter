@@ -853,6 +853,8 @@
       "description": "Pick a model, describe your idea, and let the AI turn it into a visual concept.",
       "modelLabel": "Choose a model",
       "modelPlaceholder": "Select an AI image model",
+      "sizeLabel": "Image Size",
+      "sizePlaceholder": "Select image size",
       "promptLabel": "Describe your image",
       "promptPlaceholder": "e.g. Futuristic city skyline at sunset, cinematic lighting, ultra realistic",
       "generate": "Generate image",
@@ -878,23 +880,6 @@
         {
           "label": "Portrait",
           "prompt": "Portrait of a confident product designer, studio lighting, colorful bokeh background, 85mm lens"
-        }
-      ],
-      "models": [
-        {
-          "value": "gpt-image-1",
-          "label": "OpenAI GPT-Image 1 (1024px)",
-          "description": "Best quality for marketing visuals and hero images."
-        },
-        {
-          "value": "gpt-image-1-768",
-          "label": "OpenAI GPT-Image 1 (768px)",
-          "description": "Balanced speed and detail for concept art."
-        },
-        {
-          "value": "gpt-image-1-512",
-          "label": "OpenAI GPT-Image 1 (512px)",
-          "description": "Fast draft mode for quick explorations."
         }
       ]
     },

@@ -471,11 +471,6 @@ export interface Dictionary {
         label: string;
         prompt: string;
       }>;
-      models: Array<{
-        value: string;
-        label: string;
-        description: string;
-      }>;
     };
     features: {
       title: string;

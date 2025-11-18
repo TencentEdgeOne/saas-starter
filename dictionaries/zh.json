@@ -841,6 +841,8 @@
       "description": "选择模型，输入描述，让 AI 将灵感转化为画面。",
       "modelLabel": "选择模型",
       "modelPlaceholder": "请选择一个 AI 生图模型",
+      "sizeLabel": "图片尺寸",
+      "sizePlaceholder": "选择图片尺寸",
       "promptLabel": "描述图像内容",
       "promptPlaceholder": "例：赛博朋克城市日落，电影级灯光，超现实细节",
       "generate": "开始生图",
@@ -866,23 +868,6 @@
         {
           "label": "创意头像",
           "prompt": "自信的产品设计师肖像，影棚布光，彩色散景背景，85mm 镜头"
-        }
-      ],
-      "models": [
-        {
-          "value": "gpt-image-1",
-          "label": "OpenAI GPT-Image 1（1024px）",
-          "description": "营销海报、主视觉的高清方案。"
-        },
-        {
-          "value": "gpt-image-1-768",
-          "label": "OpenAI GPT-Image 1（768px）",
-          "description": "速度与细节均衡，适合概念设计。"
-        },
-        {
-          "value": "gpt-image-1-512",
-          "label": "OpenAI GPT-Image 1（512px）",
-          "description": "快速草稿模式，便于探索方向。"
         }
       ]
     },
