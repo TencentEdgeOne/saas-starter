@@ -1,6 +1,8 @@
 "use client"
 
 import { useState, useEffect } from 'react'
+import { Button } from '@/components/ui/button'
+import { Image as ImageIcon } from 'lucide-react'
 import { modelOptions, getSupportedSizes, getDefaultSize } from '@/lib/ai-models'
 import { ModelSelector } from './components/model-selector'
 import { SizeSelector } from './components/size-selector'
@@ -120,32 +122,50 @@ export function AIImageGenerator({ config }: AIImageGeneratorProps) {
       {/* Main Container - 60vh height */}
       <div className="h-[60vh] grid grid-cols-2 gap-6">
         {/* Left: Parameters Section */}
-        <div className="h-full overflow-y-auto p-6">
-          <form className="space-y-6" onSubmit={handleGenerate}>
+        <div className="h-full flex flex-col p-6">
+          <form className="flex-1 flex flex-col min-h-0" onSubmit={handleGenerate}>
+            <div className="mb-4 flex items-center justify-between h-6 flex-shrink-0">
+              <label className="text-sm font-medium text-foreground leading-6">
+                {config.promptLabel}
+              </label>
+              <Button
+                type="submit"
+                size="sm"
+                variant="outline"
+                className="h-8 px-3 text-xs"
+                loading={isGenerating}
+                icon={ImageIcon}
+              >
+                {isGenerating ? config.generating : 'Generate'}
+              </Button>
+            </div>
+            
             <PromptInput
               value={prompt}
               onChange={setPrompt}
-              label={config.promptLabel}
+              label=""
               placeholder={config.promptPlaceholder}
               generateText={config.generate}
               generatingText={config.generating}
               isGenerating={isGenerating}
             />
 
-            <ModelSelector
-              value={model}
-              onChange={setModel}
-              label={config.modelLabel}
-              placeholder={config.modelPlaceholder}
-            />
+            <div className="mt-auto space-y-6 flex-shrink-0">
+              <ModelSelector
+                value={model}
+                onChange={setModel}
+                label={config.modelLabel}
+                placeholder={config.modelPlaceholder}
+              />
 
-            <SizeSelector
-              value={size}
-              onChange={setSize}
-              availableSizes={availableSizes}
-              label={config.sizeLabel || 'Image Size'}
-              placeholder={config.sizePlaceholder || 'Select image size'}
-            />
+              <SizeSelector
+                value={size}
+                onChange={setSize}
+                availableSizes={availableSizes}
+                label={config.sizeLabel || 'Image Size'}
+                placeholder={config.sizePlaceholder || 'Select image size'}
+              />
+            </div>
           </form>
 
           <ErrorMessage message={error || ''} />
