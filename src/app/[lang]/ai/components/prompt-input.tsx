@@ -11,6 +11,7 @@ interface PromptInputProps {
   generateText: string
   generatingText: string
   isGenerating: boolean
+  hasError?: boolean
 }
 
 export function PromptInput({
@@ -20,10 +21,11 @@ export function PromptInput({
   placeholder,
   generateText,
   generatingText,
-  isGenerating
+  isGenerating,
+  hasError = false
 }: PromptInputProps) {
   return (
-    <div className="flex-1 flex flex-col min-h-0 mb-6">
+    <div className={`flex flex-col min-h-0 mb-6 transition-all duration-300 ease-out ${hasError ? 'flex-[0.9]' : 'flex-1'}`}>
       {label && (
         <div className="mb-4 flex items-center justify-between h-6 flex-shrink-0">
           <label className="text-sm font-medium text-foreground leading-6">

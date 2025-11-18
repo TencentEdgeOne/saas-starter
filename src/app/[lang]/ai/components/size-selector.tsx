@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from 'react'
 import * as Select from '@radix-ui/react-select'
 import { Check, ChevronDown } from 'lucide-react'
 
@@ -12,16 +13,18 @@ interface SizeSelectorProps {
 }
 
 export function SizeSelector({ value, onChange, availableSizes, label, placeholder }: SizeSelectorProps) {
+  const [open, setOpen] = useState(false)
+  
   return (
     <div>
       <label className="mb-2 block text-sm font-medium text-foreground">
         {label}
       </label>
-      <Select.Root value={value} onValueChange={onChange}>
-        <Select.Trigger className="flex w-full items-center justify-between rounded-lg border border-border bg-background px-4 py-1.5 text-left text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary h-9 data-[state=open]:[&>div>svg]:rotate-180">
+      <Select.Root value={value} onValueChange={onChange} open={open} onOpenChange={setOpen}>
+        <Select.Trigger className="flex w-full items-center justify-between rounded-lg border border-border bg-background px-4 py-1.5 text-left text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary h-9">
           <Select.Value placeholder={placeholder} />
           <Select.Icon className="ml-2">
-            <ChevronDown className="h-4 w-4 text-muted-foreground transition-transform duration-200" />
+            <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
           </Select.Icon>
         </Select.Trigger>
         <Select.Content 

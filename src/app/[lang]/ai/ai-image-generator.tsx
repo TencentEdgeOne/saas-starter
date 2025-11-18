@@ -148,6 +148,7 @@ export function AIImageGenerator({ config }: AIImageGeneratorProps) {
               generateText={config.generate}
               generatingText={config.generating}
               isGenerating={isGenerating}
+              hasError={!!error}
             />
 
             <div className="mt-auto space-y-6 flex-shrink-0">
