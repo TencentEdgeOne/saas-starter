@@ -1,5 +1,6 @@
 import { Locale } from './i18n';
 import type { TestimonialsData } from '@/types/testimonials';
+import type { Feature } from '@/types/features';
 
 // Translation file type definitions
 export interface Dictionary {
@@ -437,6 +438,63 @@ export interface Dictionary {
       signOut: string;
       profile: string;
       dashboard: string;
+    };
+  };
+  ai: {
+    pageTitle: string;
+    pageSubtitle: string;
+    hero: {
+      heading: string;
+      subheading: string;
+      ctaText: string;
+      ctaSecondary: string;
+    };
+    generator: {
+      title: string;
+      description: string;
+      modelLabel: string;
+      modelPlaceholder: string;
+      promptLabel: string;
+      promptPlaceholder: string;
+      generate: string;
+      generating: string;
+      resultTitle: string;
+      emptyStateTitle: string;
+      emptyStateDescription: string;
+      errorTitle: string;
+      errorDescription: string;
+      download: string;
+      retry: string;
+      safetyNote: string;
+      examplesTitle?: string;
+      examples?: Array<{
+        label: string;
+        prompt: string;
+      }>;
+      models: Array<{
+        value: string;
+        label: string;
+        description: string;
+      }>;
+    };
+    features: {
+      title: string;
+      subtitle: string;
+      items: Feature[];
+    };
+    howItWorks: {
+      title: string;
+      subtitle: string;
+      steps: Array<{
+        number: string;
+        title: string;
+        description: string;
+      }>;
+    };
+    cta: {
+      title: string;
+      description: string;
+      buttonText: string;
     };
   };
   profile: {

@@ -48,6 +48,7 @@
       { "name": "价格", "href": "/pricing" },
       { "name": "关于我们", "href": "/about" },
       { "name": "博客", "href": "/blog" },
+      { "name": "AI", "href": "/ai" },
       { "name": "案例", "href": "/cases" },
       { "name": "联系我们", "href": "/contact" },
       { "name": "组件", "href": "/blocks" }
@@ -824,6 +825,118 @@
       "thanksMessage": "感谢阅读！如果您觉得这篇文章有帮助，请分享它。",
       "readMoreArticles": "阅读更多文章",
       "readTime": "阅读约 {minutes} 分钟"
+    }
+  },
+  "ai": {
+    "pageTitle": "AI 生图",
+    "pageSubtitle": "使用人工智能的力量创建令人惊叹的图像。将您的想法转化为视觉现实。",
+    "hero": {
+      "heading": "EdgeOne AI 生图实验室",
+      "subheading": "Vercel AI SDK 驱动的即时生图 Demo。",
+      "ctaText": "开始创作",
+      "ctaSecondary": "查看示例"
+    },
+    "generator": {
+      "title": "实时体验 AI 生图",
+      "description": "选择模型，输入描述，让 AI 将灵感转化为画面。",
+      "modelLabel": "选择模型",
+      "modelPlaceholder": "请选择一个 AI 生图模型",
+      "promptLabel": "描述图像内容",
+      "promptPlaceholder": "例：赛博朋克城市日落，电影级灯光，超现实细节",
+      "generate": "开始生图",
+      "generating": "正在生成...",
+      "resultTitle": "最新结果",
+      "emptyStateTitle": "先输入一个灵感",
+      "emptyStateDescription": "生成的图片会展示在这里。描述越具体，效果越好。",
+      "errorTitle": "生成失败",
+      "errorDescription": "暂时无法生成该提示，请优化描述后重试。",
+      "download": "下载图片",
+      "retry": "重新尝试",
+      "safetyNote": "请遵守模型使用规范，不要输入敏感信息或个人隐私内容。",
+      "examplesTitle": "灵感提示",
+      "examples": [
+        {
+          "label": "品牌主视觉",
+          "prompt": "极简 SaaS 仪表盘主视觉，渐变光影，全息图表，高级 UI 套件，32-bit 渲染"
+        },
+        {
+          "label": "赛博场景",
+          "prompt": "黄昏时分的新东京街市，霓虹倒影，电影级景深，体积光雾"
+        },
+        {
+          "label": "创意头像",
+          "prompt": "自信的产品设计师肖像，影棚布光，彩色散景背景，85mm 镜头"
+        }
+      ],
+      "models": [
+        {
+          "value": "gpt-image-1",
+          "label": "OpenAI GPT-Image 1（1024px）",
+          "description": "营销海报、主视觉的高清方案。"
+        },
+        {
+          "value": "gpt-image-1-768",
+          "label": "OpenAI GPT-Image 1（768px）",
+          "description": "速度与细节均衡，适合概念设计。"
+        },
+        {
+          "value": "gpt-image-1-512",
+          "label": "OpenAI GPT-Image 1（512px）",
+          "description": "快速草稿模式，便于探索方向。"
+        }
+      ]
+    },
+    "features": {
+      "title": "强大功能",
+      "subtitle": "创建精美图像所需的一切",
+      "items": [
+        {
+          "icon": "Zap",
+          "title": "极速生成",
+          "description": "使用我们优化的 AI 模型在几秒钟内生成高质量图像。"
+        },
+        {
+          "icon": "Palette",
+          "title": "多种风格",
+          "description": "从各种艺术风格中选择，包括写实、动漫、油画等。"
+        },
+        {
+          "icon": "Settings",
+          "title": "可自定义",
+          "description": "使用高级参数和控件微调图像的每个方面。"
+        },
+        {
+          "icon": "Shield",
+          "title": "安全私密",
+          "description": "您的图像会被安全处理，未经您的许可绝不会被分享。"
+        }
+      ]
+    },
+    "howItWorks": {
+      "title": "工作原理",
+      "subtitle": "三个简单步骤创建图像",
+      "steps": [
+        {
+          "number": "1",
+          "title": "输入您的提示",
+          "description": "用自然语言描述您想要创建的图像。"
+        },
+        {
+          "number": "2",
+          "title": "选择您的风格",
+          "description": "从各种艺术风格中选择，并调整参数以匹配您的愿景。"
+        },
+        {
+          "number": "3",
+          "title": "生成和下载",
+          "description": "观看 AI 将您的想法变为现实，然后下载您的杰作。"
+        }
+      ]
+    },
+    "cta": {
+      "title": "准备开始创作了吗？",
+      "description": "立即开始使用 AI 生成精美图像。无需信用卡。",
+      "buttonText": "免费开始"
     }
   },
   "metadata": {

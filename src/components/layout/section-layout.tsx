@@ -105,7 +105,7 @@ export function SectionLayout({
   
   const sectionClasses = `${getPaddingClasses()} ${getBackgroundClasses()} ${className}`.trim()
   const containerClasses = `${getVariantClasses()} ${containerClassName}`.trim()
-  const headerClasses = `${getHeaderAlignmentClasses()} mb-16 ${headerClassName}`.trim()
+  const headerClasses = `${getHeaderAlignmentClasses()} ${headerClassName || 'mb-6'}`.trim()
   
   return (
     <section id={id} className={sectionClasses}>
