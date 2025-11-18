@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createOrRetrieveCustomer, createServerClient, createSupabaseAdminClient } from '@/lib/supabase'
-import { createStripe } from '@/lib/stripe'
 
 // 强制动态渲染，因为使用了外部服务
 export const dynamic = 'force-dynamic'

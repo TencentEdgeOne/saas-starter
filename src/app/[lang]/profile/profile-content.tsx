@@ -8,7 +8,7 @@ import { Subscription } from '@/types/subscription'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Loader2, User, Mail, Calendar, CreditCard, DollarSign, Settings, LogOut } from 'lucide-react'
+import { Loader2, User, Mail, Calendar, CreditCard, DollarSign, Settings, LogOut, Coins } from 'lucide-react'
 import { Dictionary } from '@/lib/dictionaries'
 import { formatDate } from '@/lib/utils'
 
@@ -100,6 +100,16 @@ export function ProfileContent({ dict, lang }: ProfileContentProps) {
                 <p className="text-sm font-medium">{dict?.profile?.memberSince || 'Member Since'}</p>
                 <p className="text-sm text-gray-600">
                   {formatDate(user.created_at)}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center space-x-3">
+              <Coins className="h-4 w-4 text-gray-500" />
+              <div>
+                <p className="text-sm font-medium">{ '积分余额'}</p>
+                <p className="text-sm text-gray-600">
+                  {0}
                 </p>
               </div>
             </div>
