@@ -37,14 +37,22 @@ interface AIImageGeneratorProps {
   config: GeneratorConfig
 }
 
-const API_BASE =
-  process.env.NEXT_PUBLIC_DEV === 'true' &&
-  process.env.NEXT_PUBLIC_API_URL_DEV
-    ? process.env.NEXT_PUBLIC_API_URL_DEV
-    : ''
-
-const buildApiUrl = (path: string) =>
-  `${API_BASE}${path.startsWith('/') ? path : `/${path}`}`
+// Use Next.js API Route in development, or Node Functions in production
+const buildApiUrl = (path: string) => {
+  // Always use /api prefix for Next.js API routes
+  const apiPath = path.startsWith('/') ? path : `/${path}`
+  
+  // Check if we have a production API base URL
+  const API_BASE = process.env.NEXT_PUBLIC_API_URL_DEV
+  
+  // If API_BASE is set, use it (production with EdgeOne Node Functions)
+  if (API_BASE && API_BASE.trim() !== '') {
+    return `${API_BASE}${apiPath}`
+  }
+  
+  // Otherwise, use Next.js API routes (development or standard Next.js deployment)
+  return `/api${apiPath}`
+}
 
 export function AIImageGenerator({ config }: AIImageGeneratorProps) {
   const [model, setModel] = useState(modelOptions[0]?.value ?? 'dall-e-3')
@@ -79,7 +87,7 @@ export function AIImageGenerator({ config }: AIImageGeneratorProps) {
     setImageUrl(null)
 
     try {
-      const response = await fetch(buildApiUrl('/ai/generate-image'), {
+      const response = await fetch(buildApiUrl('/ai'), {
         method: 'POST',
         headers: {
           'content-type': 'application/json'
@@ -135,6 +143,7 @@ export function AIImageGenerator({ config }: AIImageGeneratorProps) {
                 className="h-8 px-3 text-xs"
                 loading={isGenerating}
                 icon={ImageIcon}
+                disabled={!prompt.trim() || isGenerating}
               >
                 {isGenerating ? config.generating : 'Generate'}
               </Button>
@@ -179,9 +188,7 @@ export function AIImageGenerator({ config }: AIImageGeneratorProps) {
           resultTitle={config.resultTitle}
           emptyStateDescription={config.emptyStateDescription}
           downloadText={config.download}
-          retryText={config.retry}
           onDownload={handleDownload}
-          onRetry={() => setImageUrl(null)}
         />
       </div>
     </div>

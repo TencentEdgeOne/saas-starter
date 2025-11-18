@@ -28,7 +28,7 @@
     "@supabase/ssr": "^0.7.0",
     "@supabase/supabase-js": "^2.57.4",
     "@types/react-syntax-highlighter": "^15.5.13",
-    "ai": "^3.4.0",
+    "ai": "^5.0.93",
     "clsx": "^2.0.0",
     "contentful": "^10.6.13",
     "date-fns": "^2.30.0",

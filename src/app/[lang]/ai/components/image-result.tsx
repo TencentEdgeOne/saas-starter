@@ -9,9 +9,7 @@ interface ImageResultProps {
   resultTitle: string
   emptyStateDescription: string
   downloadText: string
-  retryText: string
   onDownload: () => void
-  onRetry: () => void
 }
 
 export function ImageResult({
@@ -20,52 +18,42 @@ export function ImageResult({
   resultTitle,
   emptyStateDescription,
   downloadText,
-  retryText,
-  onDownload,
-  onRetry
+  onDownload
 }: ImageResultProps) {
   return (
-    <div className="h-full flex flex-col p-6">
+    <div className="h-full flex flex-col p-6 min-h-0">
       <div className="mb-4 flex items-center justify-between h-6">
         <p className="text-sm font-medium text-foreground leading-6">
           {resultTitle}
         </p>
         {imageUrl && (
           <Button
-            variant="ghost"
+            variant="outline"
             size="sm"
             type="button"
-            onClick={onRetry}
+            onClick={onDownload}
           >
-            {retryText}
+            <Download className="mr-2 h-4 w-4" />
+            {downloadText}
           </Button>
         )}
       </div>
 
-      <div className="flex-1 flex items-center justify-center rounded-xl border border-dashed border-border/70 p-4 overflow-hidden">
+      <div className="flex-1 rounded-xl border border-border/70 overflow-hidden min-h-0">
         {imageUrl ? (
-          <div className="w-full h-full flex flex-col space-y-4">
-            <div className="flex-1 flex items-center justify-center overflow-hidden">
-              <img
-                src={imageUrl}
-                alt={prompt}
-                className="max-w-full max-h-full rounded-lg object-contain"
-              />
-            </div>
-            <Button
-              className="w-full"
-              variant="outline"
-              type="button"
-              onClick={onDownload}
-            >
-              <Download className="mr-2 h-4 w-4" />
-              {downloadText}
-            </Button>
+          <div className="w-full h-full overflow-hidden">
+            <img
+              src={imageUrl}
+              alt={prompt}
+              className="w-full h-full object-cover"
+            />
           </div>
         ) : (
-          <div className="text-center text-muted-foreground">
-            <ImageIcon className="mx-auto mb-4 h-12 w-12" />
-            <p className="text-sm">{emptyStateDescription}</p>
+          <div className="w-full h-full flex items-center justify-center text-center text-muted-foreground p-4">
+            <div>
+              <ImageIcon className="mx-auto mb-4 h-12 w-12" />
+              <p className="text-sm">{emptyStateDescription}</p>
+            </div>
           </div>
         )}
       </div>

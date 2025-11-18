@@ -6,9 +6,9 @@ export const modelSizeMapping: Record<string, string[]> = {
   'accounts/fireworks/models/playground-v2-1024px-aesthetic': ['1024x1024'],
   'accounts/fireworks/models/flux-1-dev-fp8': ['1024x1024'],
   
-  // FAL Models
+  // FAL Models - FAL FLUX models typically support square sizes
   'fal-ai/flux/dev': ['1024x1024'],
-  'fal-ai/flux/schnell': ['256x256'],
+  'fal-ai/flux/schnell': ['1024x1024'], // FAL FLUX Schnell supports 1024x1024, not 256x256
   'fal-ai/flux-pro/v1.1': ['1024x1024'],
   
   // OpenAI Models - Based on OpenAI API documentation
@@ -59,8 +59,16 @@ export function getDefaultSize(model: string): string {
 
 // Model options list
 export const modelOptions = [
+  // Fireworks Models (first)
+  { value: 'accounts/fireworks/models/stable-diffusion-xl-1024-v1-0', label: 'Fireworks/Stable Diffusion XL 1024 V1.0' },
+  { value: 'accounts/fireworks/models/playground-v2-1024px-aesthetic', label: 'Fireworks/Playground V2 1024px Aesthetic' },
+  { value: 'accounts/fireworks/models/flux-1-dev-fp8', label: 'Fireworks/FLUX 1 Dev FP8' },
+  
+  // FAL Models
   { value: 'fal-ai/flux/schnell', label: 'FAL/FLUX Schnell' },
-  { value: 'accounts/fireworks/models/stable-diffusion-xl-1024-v1-0', label: 'Fireworks/Stable Diffusion XL 1024 V1.0' },  
+  { value: 'fal-ai/flux/dev', label: 'FAL/FLUX Dev' },
+  { value: 'fal-ai/flux-pro/v1.1', label: 'FAL/FLUX Pro V1.1' },
+  
   // OpenAI Models (enabled)
   { value: 'dall-e-3', label: 'OpenAI/DALL-E 3' },
   { value: 'dall-e-2', label: 'OpenAI/DALL-E 2' },
@@ -79,13 +87,6 @@ export const modelOptions = [
   
   // Luma Models (enabled)
   { value: 'photon-1', label: 'Luma/Photon 1' },
-  { value: 'photon-flash-1', label: 'Luma/Photon Flash 1' },
-  
-  // TogetherAI Models (enabled)
-  { value: 'stabilityai/stable-diffusion-xl-base-1.0', label: 'TogetherAI/Stable Diffusion XL Base 1.0' },
-  { value: 'black-forest-labs/FLUX.1-dev', label: 'TogetherAI/FLUX.1 Dev' },
-  
-  // xAI Models (enabled)
-  { value: 'grok-2-image', label: 'xAI/Grok 2 Image' },
+  { value: 'photon-flash-1', label: 'Luma/Photon Flash 1' }
 ]
 
