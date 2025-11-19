@@ -203,7 +203,7 @@ export function AIImageGenerator({ config }: AIImageGeneratorProps) {
               hasError={!!error}
             />
 
-            <div className={`space-y-8 flex-shrink-0 ${error ? '' : 'mt-auto'}`}>
+            <div className={`space-y-5 flex-shrink-0 ${error ? '' : 'mt-auto'}`}>
               <ModelSelector
                 value={model}
                 onChange={setModel}
