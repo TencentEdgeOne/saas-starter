@@ -115,7 +115,8 @@ export function AIImageGenerator({ config }: AIImageGeneratorProps) {
 
       if (!response.ok) {
         const errorJson = await response.json().catch(() => null)
-        throw new Error(errorJson?.message || 'Request failed')
+        const errorMessage = errorJson?.message || errorJson?.error || `Request failed with status ${response.status}`
+        throw new Error(errorMessage)
       }
 
       const data = await response.json()
@@ -131,7 +132,9 @@ export function AIImageGenerator({ config }: AIImageGeneratorProps) {
       if ((err as DOMException)?.name === 'AbortError') {
         setError(config.errorDescription || 'Image generation timed out. Please try again.')
       } else {
-        setError(config.errorDescription)
+        // Extract specific error message from the error object
+        const errorMessage = (err as Error)?.message || (err as any)?.toString() || config.errorDescription
+        setError(errorMessage)
       }
     } finally {
       if (timeoutId) {

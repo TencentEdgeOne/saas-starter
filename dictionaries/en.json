@@ -859,7 +859,7 @@
       "promptPlaceholder": "e.g. Futuristic city skyline at sunset, cinematic lighting, ultra realistic",
       "generate": "Generate image",
       "generating": "Generating...",
-      "resultTitle": "Latest result",
+      "resultTitle": "Generation Result",
       "emptyStateTitle": "Start by describing an idea",
       "emptyStateDescription": "Your generated image will appear here. Use descriptive prompts for the best results.",
       "errorTitle": "Generation failed",

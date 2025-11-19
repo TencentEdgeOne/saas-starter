@@ -47,4 +47,5 @@ Thumbs.db
 .edgeone/*
 !.edgeone/project.json
 .tef_dist/*
+.cursor/
   

@@ -125,14 +125,21 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const { prompt, model, size } = body
 
+    console.log('Received model:', model);
+    console.log('Available models in map:', Object.keys(modelProviderMap));
+
     if (!prompt) {
       return createErrorResponse('PROMPT_REQUIRED', 'Prompt is required', 400, request)
     }
 
     const modelConfig = modelProviderMap[model as keyof typeof modelProviderMap]
     if (!modelConfig) {
-      return createErrorResponse('UNSUPPORTED_MODEL', 'Unsupported model', 400, request)
+      console.error('Model not found in map:', model);
+      console.error('Available models:', Object.keys(modelProviderMap));
+      return createErrorResponse('UNSUPPORTED_MODEL', `Unsupported model: ${model}. Available models: ${Object.keys(modelProviderMap).join(', ')}`, 400, request)
     }
+    
+    console.log('Model config found:', modelConfig.envName);
 
     // Check API key
     // Note: Configure environment variables in EdgeOne Pages console under Settings > Environment Variables
@@ -157,10 +164,18 @@ export async function POST(request: NextRequest) {
     // For FAL, use the model name as-is (SDK expects full "fal-ai/..." format)
     // The @ai-sdk/fal types show models like 'fal-ai/flux/schnell', not 'fal/flux/schnell'
     let modelNameForProvider = model
-    // No transformation needed for FAL models - use the exact model name from modelProviderMap
+    
+    // For Google Imagen models, use the model name as-is
+    if (model.startsWith('imagen-')) {
+      modelNameForProvider = model // Keep as-is: 'imagen-3.0-generate-002', etc.
+    }
+    
+    console.log('Model name for provider:', modelNameForProvider);
+    console.log('Provider type:', modelConfig.envName);
     
     // Get image model from provider - use type assertion for compatibility
     const imageModel = (provider as any).image(modelNameForProvider)
+    console.log('Image model created:', !!imageModel);
     
     // For FAL models, build the generateImage options
     // FAL models support size parameter, but we need to ensure it's in the correct format
@@ -200,7 +215,7 @@ export async function POST(request: NextRequest) {
     // Extract specific error information
     let errorMessage = 'Failed to generate image'
     
-    // Try multiple error formats
+    // Try multiple error formats (Google API specific)
     if (error?.data?.error?.message) {
       errorMessage = error.data.error.message
     } else if (error?.data?.message) {
@@ -209,6 +224,14 @@ export async function POST(request: NextRequest) {
       errorMessage = error.error.message
     } else if (error?.message) {
       errorMessage = error.message
+    } else if (error?.response?.data?.error?.message) {
+      // Google API error format
+      errorMessage = error.response.data.error.message
+    } else if (error?.response?.data?.error) {
+      // Google API error format (alternative)
+      errorMessage = typeof error.response.data.error === 'string' 
+        ? error.response.data.error 
+        : JSON.stringify(error.response.data.error)
     } else if (typeof error === 'string') {
       errorMessage = error
     }
