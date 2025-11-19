@@ -65,10 +65,8 @@ const modelProviderMap = {
   // xAI models
   'grok-2-image': { provider: createXai, envKey: 'XAI_API_KEY', envName: 'xAI' },
   
-  // FAL models
-  'fal-ai/flux/dev': { provider: createFal, envKey: 'FAL_API_KEY', envName: 'FAL' },
+  // FAL models - Use exact model names as defined in @ai-sdk/fal types
   'fal-ai/flux/schnell': { provider: createFal, envKey: 'FAL_API_KEY', envName: 'FAL' },
-  'fal-ai/flux-pro/v1.1': { provider: createFal, envKey: 'FAL_API_KEY', envName: 'FAL' },
   
   // Replicate models
   'stability-ai/stable-diffusion-3.5-medium': { provider: createReplicate, envKey: 'REPLICATE_API_TOKEN', envName: 'Replicate' },
@@ -116,10 +114,12 @@ function createErrorResponse(error: string, message: string, status = 400, reque
 // 强制动态渲染
 export const dynamic = 'force-dynamic'
 
+// 设置 API Route 的最大执行时间为 30 秒（与前端超时时间一致）
+// Next.js 默认超时时间根据部署环境不同，通常为 10-60 秒
+// 这里设置为 30 秒，确保与前端超时时间匹配
+export const maxDuration = 30 // 单位：秒
+
 export async function POST(request: NextRequest) {
-  console.log('--------------------------------');
-  console.log(12345);
-  console.log('--------------------------------');
   try {
     // Parse request body
     const body = await request.json()
@@ -137,10 +137,8 @@ export async function POST(request: NextRequest) {
     // Check API key
     // Note: Configure environment variables in EdgeOne Pages console under Settings > Environment Variables
     // For local development, create .env.local file with the required API keys
-    const apiKey = process.env[modelConfig.envKey]
-    console.log(apiKey);
-    console.log('--------------------------------');
-    console.log('--------------------------------');
+    const apiKey = process.env[modelConfig.envKey];
+
     if (!apiKey) {
       return createErrorResponse(
         'API_KEY_NOT_CONFIGURED',
@@ -156,27 +154,27 @@ export async function POST(request: NextRequest) {
       apiKey: apiKey
     })
     
-    // For FAL, the model name format might need adjustment
-    // FAL models use format like "fal-ai/flux/schnell" but the SDK might need just "flux/schnell"
+    // For FAL, use the model name as-is (SDK expects full "fal-ai/..." format)
+    // The @ai-sdk/fal types show models like 'fal-ai/flux/schnell', not 'fal/flux/schnell'
     let modelNameForProvider = model
-    if (modelConfig.envName === 'FAL' && model.startsWith('fal-ai/')) {
-      // Remove 'fal-ai/' prefix for FAL provider
-      modelNameForProvider = model.replace('fal-ai/', '')
-      console.log('FAL model name adjusted:', modelNameForProvider)
-    }
+    // No transformation needed for FAL models - use the exact model name from modelProviderMap
     
     // Get image model from provider - use type assertion for compatibility
     const imageModel = (provider as any).image(modelNameForProvider)
-    console.log('Provider:', modelConfig.envName)
-    console.log('Model:', model,)
-    console.log('Adjusted model:', modelNameForProvider)
-    console.log('Image model:', imageModel,)
-    console.log('Prompt:', prompt, 'Size:', size);
-    const imageResult = await generateImage({
+    
+    // For FAL models, build the generateImage options
+    // FAL models support size parameter, but we need to ensure it's in the correct format
+    const generateImageOptions: any = {
       model: imageModel,
       prompt: prompt,
-      size: size as '256x256' | '512x512' | '768x768' | '1024x1024' | '1024x1792' | '1792x1024', // Use frontend-provided size
-    })
+    }
+    
+    // Add size parameter if provided and model supports it
+    if (size) {
+      generateImageOptions.size = size as '256x256' | '512x512' | '768x768' | '1024x1024' | '1024x1792' | '1792x1024'
+    }
+    
+    const imageResult = await generateImage(generateImageOptions)
 
     // Unified response format - keep compatibility with frontend
     const imageUrl = `data:image/png;base64,${imageResult.image.base64}`

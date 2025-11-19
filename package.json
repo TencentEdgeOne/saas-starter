@@ -32,6 +32,7 @@
     "clsx": "^2.0.0",
     "contentful": "^10.6.13",
     "date-fns": "^2.30.0",
+    "framer-motion": "^12.23.24",
     "glob": "^11.0.3",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.516.0",

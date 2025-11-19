@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button'
 import { Download, Image as ImageIcon } from 'lucide-react'
+import { ImageLoading } from './image-loading'
 
 interface ImageResultProps {
   imageUrl: string | null
@@ -10,6 +11,8 @@ interface ImageResultProps {
   emptyStateDescription: string
   downloadText: string
   onDownload: () => void
+  isGenerating?: boolean
+  hasError?: boolean
 }
 
 export function ImageResult({
@@ -18,11 +21,13 @@ export function ImageResult({
   resultTitle,
   emptyStateDescription,
   downloadText,
-  onDownload
+  onDownload,
+  isGenerating = false,
+  hasError = false
 }: ImageResultProps) {
   return (
     <div className="h-full flex flex-col p-6 min-h-0">
-      <div className="mb-4 flex items-center justify-between h-6">
+      <div className="mb-4 flex items-center justify-between h-6 flex-shrink-0">
         <p className="text-sm font-medium text-foreground leading-6">
           {resultTitle}
         </p>
@@ -39,8 +44,10 @@ export function ImageResult({
         )}
       </div>
 
-      <div className="flex-1 rounded-xl border border-border/70 overflow-hidden min-h-0">
-        {imageUrl ? (
+      <div className="rounded-xl border border-border/70 overflow-hidden min-h-0 flex-1">
+        {isGenerating ? (
+          <ImageLoading />
+        ) : imageUrl ? (
           <div className="w-full h-full overflow-hidden">
             <img
               src={imageUrl}
@@ -49,10 +56,10 @@ export function ImageResult({
             />
           </div>
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-center text-muted-foreground p-4">
+          <div className={`w-full h-full flex items-center justify-center text-center p-4 ${hasError ? 'text-destructive' : 'text-muted-foreground'}`}>
             <div>
               <ImageIcon className="mx-auto mb-4 h-12 w-12" />
-              <p className="text-sm">{emptyStateDescription}</p>
+              {!hasError && <p className="text-sm">{emptyStateDescription}</p>}
             </div>
           </div>
         )}
