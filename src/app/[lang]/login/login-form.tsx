@@ -1,13 +1,13 @@
 "use client"
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, useEffect } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Toast } from '@/components/ui/toast'
 import { Dictionary } from '@/lib/dictionaries'
-import { Eye, EyeOff, Mail, Lock } from 'lucide-react'
+import { Eye, EyeOff, Mail, Lock, Github } from 'lucide-react'
 
 interface LoginFormProps {
   dict: Dictionary
@@ -19,9 +19,18 @@ export default function LoginForm({ dict, lang }: LoginFormProps) {
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [oauthLoading, setOauthLoading] = useState<string | null>(null)
   const [error, setError] = useState('')
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null)
   const router = useRouter()
+  const searchParams = useSearchParams()
+
+  useEffect(() => {
+    const errorParam = searchParams.get('error')
+    if (errorParam) {
+      setError(decodeURIComponent(errorParam))
+    }
+  }, [searchParams])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -51,6 +60,32 @@ export default function LoginForm({ dict, lang }: LoginFormProps) {
       setError('Network error. Please try again.')
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handleOAuthLogin = async (provider: 'google' | 'github', forceReauth: boolean = false) => {
+    setOauthLoading(provider)
+    setError('')
+
+    try {
+      const response = await fetch(`/api/auth/oauth/thirdpartysignin`,{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ provider, forceReauth }),
+      })
+      const data = await response.json()
+
+      if (response.ok && data.url) {
+        window.location.href = data.url
+      } else {
+        setError(data.error || `Failed to initiate ${provider} login`)
+        setOauthLoading(null)
+      }
+    } catch (error) {
+      setError(`Connection failed. Please try again.`)
+      setOauthLoading(null)
     }
   }
 
@@ -117,11 +152,52 @@ export default function LoginForm({ dict, lang }: LoginFormProps) {
             <Button
               type="submit"
               className="w-full"
-              disabled={loading}
+              disabled={loading || oauthLoading !== null}
             >
               {loading ? (dict.auth?.login?.signingIn || 'Signing in...') : (dict.auth?.login?.signInButton || 'Sign In')}
             </Button>
           </form>
+
+          <div className="mt-6 space-y-3">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-white text-gray-500">
+                  { 'Or continue with'}
+                </span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => handleOAuthLogin('google', true)}
+              disabled={loading || oauthLoading !== null}
+              className="w-full flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              <svg className="w-4 h-4" viewBox="0 0 24 24">
+                <text x="50%" y="50%" dominantBaseline="central" textAnchor="middle" fontSize="24" fontWeight="bold" fill="currentColor">
+                  G
+                </text>
+              </svg>
+              <span className="text-sm font-medium">
+                {oauthLoading === 'google' ? ( 'Connecting...') : ('Google')}
+              </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleOAuthLogin('github', true)}
+              disabled={loading || oauthLoading !== null}
+              className="w-full flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              <Github className="w-4 h-4" />
+              <span className="text-sm font-medium">
+                {oauthLoading === 'github' ? ('Connecting...') : ( 'GitHub')}
+              </span>
+            </button>
+          </div>
 
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">

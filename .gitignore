@@ -2,6 +2,7 @@
 /node_modules
 /.pnp
 .pnp.js
+package-lock.json
 
 # Testing
 /coverage
@@ -46,4 +47,5 @@ Thumbs.db
 .edgeone/*
 !.edgeone/project.json
 .tef_dist/*
+.cursor/
   

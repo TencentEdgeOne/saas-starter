@@ -556,9 +556,9 @@
         "enterprise": "Enterprise"
       },
       "planPricing": {
-        "starter": "$9/month",
-        "professional": "$29/month",
-        "enterprise": "$99/month"
+        "starter": "$80/month",
+        "professional": "$150/month",
+        "enterprise": "$300/month"
       },
       "features": [
         {
@@ -937,6 +937,103 @@
       "readTime": "{minutes} min read"
     }
   },
+  "ai": {
+    "pageTitle": "AI Image Generation",
+    "pageSubtitle": "Create stunning images with the power of artificial intelligence. Transform your ideas into visual reality.",
+    "hero": {
+      "heading": "EdgeOne AI Image Studio",
+      "subheading": "Vercel AI SDK powered text-to-image demo.",
+      "ctaText": "Start Creating",
+      "ctaSecondary": "View Examples"
+    },
+    "generator": {
+      "title": "Test AI Image Generation in Real Time",
+      "description": "Pick a model, describe your idea, and let the AI turn it into a visual concept.",
+      "modelLabel": "Choose a model",
+      "modelPlaceholder": "Select an AI image model",
+      "sizeLabel": "Image Size",
+      "sizePlaceholder": "Select image size",
+      "promptLabel": "Describe your image",
+      "promptPlaceholder": "e.g. Futuristic city skyline at sunset, cinematic lighting, ultra realistic",
+      "generate": "Generate image",
+      "generating": "Generating...",
+      "resultTitle": "Generation Result",
+      "emptyStateTitle": "Start by describing an idea",
+      "emptyStateDescription": "Your generated image will appear here. Use descriptive prompts for the best results.",
+      "errorTitle": "Generation failed",
+      "errorDescription": "We couldn't generate this prompt. Please refine your description and try again.",
+      "download": "Download image",
+      "retry": "Try again",
+      "safetyNote": "Generated content must follow provider policies. Avoid personal data or sensitive topics.",
+      "examplesTitle": "Quick prompt ideas",
+      "examples": [
+        {
+          "label": "Brand hero",
+          "prompt": "Minimalist SaaS dashboard hero, gradient lighting, holographic charts, premium UI kit, 32-bit render"
+        },
+        {
+          "label": "City concept",
+          "prompt": "Neo-Tokyo street market at blue hour, neon reflections, cinematic depth of field, volumetric fog"
+        },
+        {
+          "label": "Portrait",
+          "prompt": "Portrait of a confident product designer, studio lighting, colorful bokeh background, 85mm lens"
+        }
+      ]
+    },
+    "features": {
+      "title": "Powerful Features",
+      "subtitle": "Everything you need to create amazing images",
+      "items": [
+        {
+          "icon": "Zap",
+          "title": "Lightning Fast",
+          "description": "Generate high-quality images in seconds with our optimized AI models."
+        },
+        {
+          "icon": "Palette",
+          "title": "Multiple Styles",
+          "description": "Choose from various artistic styles including realistic, anime, oil painting, and more."
+        },
+        {
+          "icon": "Settings",
+          "title": "Customizable",
+          "description": "Fine-tune every aspect of your images with advanced parameters and controls."
+        },
+        {
+          "icon": "Shield",
+          "title": "Safe & Private",
+          "description": "Your images are processed securely and never shared without your permission."
+        }
+      ]
+    },
+    "howItWorks": {
+      "title": "How It Works",
+      "subtitle": "Create images in three simple steps",
+      "steps": [
+        {
+          "number": "1",
+          "title": "Enter Your Prompt",
+          "description": "Describe the image you want to create in natural language."
+        },
+        {
+          "number": "2",
+          "title": "Choose Your Style",
+          "description": "Select from various artistic styles and adjust parameters to match your vision."
+        },
+        {
+          "number": "3",
+          "title": "Generate & Download",
+          "description": "Watch as AI brings your idea to life, then download your masterpiece."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Ready to Create?",
+      "description": "Start generating amazing images with AI today. No credit card required.",
+      "buttonText": "Get Started Free"
+    }
+  },
   "metadata": {
     "siteName": "SaaS Starter",
     "defaultTitle": "SaaS Starter - Build Your Next SaaS Product",
@@ -1031,6 +1128,7 @@
     "browsePlans": "Browse Plans",
     "manage": "Manage",
     "cancel": "Cancel",
-    "trialEnds": "Trial ends"
+    "trialEnds": "Trial ends",
+    "creditsBalance":"Credits Balance"
   }
 } 

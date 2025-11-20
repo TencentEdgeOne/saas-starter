@@ -45,7 +45,7 @@ export function PricingComparison({
                   {comparison.tableHeaders?.starter || "Starter"}
                 </h3>
                 <p className="text-sm text-muted-foreground mt-1">
-                  {comparison.planPricing?.starter || "$9/month"}
+                  {comparison.planPricing?.starter || "$80/month"}
                 </p>
               </div>
               <div className="p-4 text-center relative">
@@ -58,7 +58,7 @@ export function PricingComparison({
                   {comparison.tableHeaders?.professional || "Professional"}
                 </h3>
                 <p className="text-sm text-muted-foreground mt-1">
-                  {comparison.planPricing?.professional || "$29/month"}
+                  {comparison.planPricing?.professional || "$150/month"}
                 </p>
               </div>
               <div className="p-4 text-center">
@@ -66,7 +66,7 @@ export function PricingComparison({
                   {comparison.tableHeaders?.enterprise || "Enterprise"}
                 </h3>
                 <p className="text-sm text-muted-foreground mt-1">
-                  {comparison.planPricing?.enterprise || "$99/month"}
+                  {comparison.planPricing?.enterprise || "$300/month"}
                 </p>
               </div>
             </div>

@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from 'react'
+import React, {  useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useAuth } from '@/contexts/AuthContext'
 import { getSubscriptions } from '@/lib/auth'
@@ -8,7 +8,7 @@ import { Subscription } from '@/types/subscription'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Loader2, User, Mail, Calendar, CreditCard, DollarSign, Settings, LogOut } from 'lucide-react'
+import { Loader2, User, Mail, Calendar, CreditCard, DollarSign, Settings, LogOut, Coins } from 'lucide-react'
 import { Dictionary } from '@/lib/dictionaries'
 import { formatDate } from '@/lib/utils'
 
@@ -22,6 +22,8 @@ export function ProfileContent({ dict, lang }: ProfileContentProps) {
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([])
   const [subscriptionsLoading, setSubscriptionsLoading] = useState(true)
   const [subscriptionsError, setSubscriptionsError] = useState<string | null>(null)
+  const [creditsBalance, setCreditsBalance] = useState<number>(0)
+  const [creditsLoading, setCreditsLoading] = useState(true)
 
   useEffect(() => {
     if (user) {
@@ -42,7 +44,26 @@ export function ProfileContent({ dict, lang }: ProfileContentProps) {
         }
       }
 
+      const fetchCreditsBalance = async () => {
+        try {
+          setCreditsLoading(true)
+          const response = await fetch('/api/credits/balance')
+          
+          if (response.ok) {
+            const data = await response.json()
+            setCreditsBalance(data.balance || 0)
+          } else {
+            setCreditsBalance(0)
+          }
+        } catch (err) {
+          console.error('Failed to fetch credits balance:', err)
+          setCreditsBalance(0)
+        } finally {
+          setCreditsLoading(false)
+        }
+      }
       fetchSubscriptions()
+      fetchCreditsBalance()
     }
   }, [user])
 
@@ -104,12 +125,26 @@ export function ProfileContent({ dict, lang }: ProfileContentProps) {
               </div>
             </div>
 
-            <div className="pt-4 border-t">
+            <div className="flex items-center space-x-3">
+              <Coins className="h-4 w-4 text-gray-500" />
+              <div>
+                <p className="text-sm font-medium">{dict?.profile?.creditsBalance ||'Credits Balance'}</p>
+                <p className="text-sm text-gray-600">
+                  {creditsLoading ? (
+                    <Loader2 className="h-4 w-4 inline animate-spin" />
+                  ) : (
+                    creditsBalance
+                  )}
+                </p>
+              </div>
+            </div>
+
+            {/* <div className="pt-4 border-t">
               <Button variant="outline" className="w-full">
                 <Settings className="h-4 w-4 mr-2" />
                 {dict?.profile?.editProfile || 'Edit Profile'}
               </Button>
-            </div>
+            </div> */}
           </CardContent>
         </Card>
       </div>
