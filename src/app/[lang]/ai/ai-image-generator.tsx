@@ -68,6 +68,12 @@ export function AIImageGenerator({ config }: AIImageGeneratorProps) {
   const [isGenerating, setIsGenerating] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [imageHistory, setImageHistory] = useState<Array<{ imageUrl: string; prompt: string }>>([])
+  const [creditsBalance, setCreditsBalance] = useState<number | null>(null)
+  const [isCheckingCredits, setIsCheckingCredits] = useState(false)
+  const [hasEnoughCredits, setHasEnoughCredits] = useState<boolean | null>(null)
+  const [balanceError, setBalanceError] = useState<string | null>(null)
+  const [creditCost, setCreditCost] = useState<number>(1)
+  const [isFetchingCost, setIsFetchingCost] = useState<boolean>(true)
 
   // Update available sizes when model changes
   useEffect(() => {
@@ -79,6 +85,82 @@ export function AIImageGenerator({ config }: AIImageGeneratorProps) {
       setSize(getDefaultSize(model))
     }
   }, [model]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    fetchCreditCost()
+    fetchCreditsBalance()
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    updateCreditAvailability(creditsBalance, creditCost)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [creditCost])
+
+  const updateCreditAvailability = (balance: number | null, cost: number) => {
+    if (balance === null) {
+      setHasEnoughCredits(null)
+      return
+    }
+
+    const enough = balance >= cost
+    setHasEnoughCredits(enough)
+
+    if (!enough) {
+      const message = 'Not enough credits to generate images. Please top up.'
+      setBalanceError(message)
+      setError(message)
+    } else {
+      setBalanceError(null)
+    }
+  }
+
+  const fetchCreditCost = async () => {
+    setIsFetchingCost(true)
+    try {
+      const response = await fetch(buildApiUrl('/ai/image-cost'))
+      if (!response.ok) {
+        throw new Error('Failed to fetch image cost.')
+      }
+      const data = await response.json()
+      const cost = typeof data.cost === 'number' && data.cost > 0 ? data.cost : 1
+      setCreditCost(cost)
+      updateCreditAvailability(creditsBalance, cost)
+    } catch (error) {
+      console.error('[AIImageGenerator] fetch cost error', error)
+      setBalanceError('Unable to load credit cost. Assuming default value.')
+    } finally {
+      setIsFetchingCost(false)
+    }
+  }
+
+  const fetchCreditsBalance = async () => {
+    setIsCheckingCredits(true)
+    try {
+      const response = await fetch(buildApiUrl('/credits/balance'), {
+        credentials: 'include',
+      })
+      if (!response.ok) {
+        const errorJson = await response.json().catch(() => null)
+        const message =
+          response.status === 401
+            ? 'Please sign in to use the AI generator.'
+            : errorJson?.error || 'Unable to fetch credits. Please try again.'
+        setBalanceError(message)
+        setHasEnoughCredits(false)
+        return
+      }
+      const data = await response.json()
+      const balance = typeof data.balance === 'number' ? data.balance : 0
+      setCreditsBalance(balance)
+      updateCreditAvailability(balance, creditCost)
+    } catch (fetchError) {
+      console.error('[AIImageGenerator] fetch credits error', fetchError)
+      setBalanceError('Unable to fetch credits. Please try again later.')
+      setHasEnoughCredits(false)
+    } finally {
+      setIsCheckingCredits(false)
+    }
+  }
 
   const handleGenerate = async (event: React.FormEvent) => {
     event.preventDefault()
@@ -100,7 +182,7 @@ export function AIImageGenerator({ config }: AIImageGeneratorProps) {
       : null
 
     try {
-      const response = await fetch(buildApiUrl('/ai'), {
+      const response = await fetch(buildApiUrl('/ai/generate'), {
         method: 'POST',
         headers: {
           'content-type': 'application/json'
@@ -121,6 +203,13 @@ export function AIImageGenerator({ config }: AIImageGeneratorProps) {
 
       const data = await response.json()
       setImageUrl(data.imageUrl)
+
+      if (typeof data?.credits?.balance === 'number') {
+        setCreditsBalance(data.credits.balance)
+        updateCreditAvailability(data.credits.balance, creditCost)
+      } else {
+        fetchCreditsBalance()
+      }
       
       // Add to history
       setImageHistory(prev => [
@@ -176,10 +265,58 @@ export function AIImageGenerator({ config }: AIImageGeneratorProps) {
         <div className="h-full flex flex-col p-6">
           <form className="flex-1 flex flex-col min-h-0" onSubmit={handleGenerate}>
             <div className="mb-4 flex items-center justify-between h-6 flex-shrink-0 gap-2">
-              <div className="flex items-center gap-2 flex-1 min-w-0">
+              <div className="flex items-center gap-3 flex-1 min-w-0">
                 <label className="text-sm font-medium text-foreground leading-6 flex-shrink-0">
                   {config.promptLabel}
                 </label>
+                {(() => {
+                  if (error) {
+                    return null
+                  }
+
+                  const insufficientBalance =
+                    typeof creditsBalance === 'number' && creditsBalance < creditCost
+                  const shouldHighlightDestructive =
+                    hasEnoughCredits === false ||
+                    insufficientBalance ||
+                    (balanceError && balanceError.toLowerCase().includes('not enough'))
+
+                  if (isCheckingCredits || isFetchingCost) {
+                    return (
+                      <span className="text-xs text-muted-foreground truncate">
+                        Checking credits...
+                      </span>
+                    )
+                  }
+
+                  if (shouldHighlightDestructive) {
+                    return (
+                      <span className="text-xs text-destructive truncate">
+                        {balanceError || 'Not enough credits to generate images.'}
+                      </span>
+                    )
+                  }
+
+                  if (creditsBalance !== null) {
+                    return (
+                      <span className="text-xs text-muted-foreground truncate">
+                        Credits:{' '}
+                        <span
+                          className="text-foreground"
+                        >
+                          {creditsBalance}
+                        </span>{' '}
+                        (Cost {creditCost})
+                      </span>
+                    )
+                  }
+
+                  return (
+                    <span className="text-xs text-muted-foreground truncate">
+                      {balanceError || 'Credits unavailable'}
+                    </span>
+                  )
+                })()}
                 <ErrorMessage message={error || ''} inline />
               </div>
               <Button
@@ -187,11 +324,21 @@ export function AIImageGenerator({ config }: AIImageGeneratorProps) {
                 size="sm"
                 variant="outline"
                 className="h-8 px-3 text-xs flex-shrink-0"
-                loading={isGenerating}
+                loading={isGenerating || isCheckingCredits || isFetchingCost}
                 icon={ImageIcon}
-                disabled={!prompt.trim() || isGenerating}
+                disabled={
+                  !prompt.trim() ||
+                  isGenerating ||
+                  isCheckingCredits ||
+                  isFetchingCost ||
+                  hasEnoughCredits === false
+                }
               >
-                {isGenerating ? config.generating : 'Generate'}
+                {isGenerating
+                  ? config.generating
+                  : isCheckingCredits || isFetchingCost
+                  ? 'Checking credits...'
+                  : 'Generate'}
               </Button>
             </div>
             
