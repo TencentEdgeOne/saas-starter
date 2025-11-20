@@ -1,3 +1,4 @@
+
 {
   "name": "saas-starter-template",
   "version": "1.0.0",
@@ -13,15 +14,26 @@
     "gen:seo": "SITE_URL=https://your-domain.com node scripts/gen-seo-files.js"
   },
   "dependencies": {
+    "@ai-sdk/deepinfra": "^1.0.28",
+    "@ai-sdk/fal": "^1.0.22",
+    "@ai-sdk/fireworks": "^1.0.28",
+    "@ai-sdk/google": "^2.0.34",
+    "@ai-sdk/luma": "^1.0.18",
+    "@ai-sdk/openai": "^2.0.68",
+    "@ai-sdk/replicate": "^1.0.18",
+    "@ai-sdk/togetherai": "^1.0.28",
+    "@ai-sdk/xai": "^2.0.33",
     "@contentful/rich-text-html-renderer": "^16.3.2",
     "@contentful/rich-text-types": "^16.3.2",
     "@radix-ui/react-select": "^2.2.5",
     "@supabase/ssr": "^0.7.0",
     "@supabase/supabase-js": "^2.57.4",
     "@types/react-syntax-highlighter": "^15.5.13",
+    "ai": "^5.0.93",
     "clsx": "^2.0.0",
     "contentful": "^10.6.13",
     "date-fns": "^2.30.0",
+    "framer-motion": "^12.23.24",
     "glob": "^11.0.3",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.516.0",
