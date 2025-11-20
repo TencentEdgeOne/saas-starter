@@ -263,7 +263,7 @@ const copyBillingDetailsToCustomer = async (
 export const manageSubscriptionStatusChange = async (
   subscriptionId: string,
   customerId: string,
-  createAction: boolean = false
+  createAction: string
 ) => {
   // Get customer's UUID from mapping table.
   const { data: customerData, error: noCustomerError } = await createSupabaseAdminClient()
@@ -271,7 +271,7 @@ export const manageSubscriptionStatusChange = async (
     .select('id')
     .eq('stripe_customer_id', customerId)
     .single();
-  console.log('C_C manageSubscriptionStatusChange_customers', customerData, noCustomerError);
+
   if (noCustomerError)
     throw new Error(`Customer lookup failed: ${noCustomerError.message}`);
 
@@ -297,13 +297,13 @@ export const manageSubscriptionStatusChange = async (
     canceled_at: subscription.canceled_at
       ? toDateTime(subscription.canceled_at).toISOString()
       : null,
-    current_period_start: toDateTime(
+    current_period_start: (subscription as any).current_period_start ? toDateTime(
       (subscription as any).current_period_start
-    ).toISOString(),
-    current_period_end: toDateTime(
+    ).toISOString() : null,
+    current_period_end: (subscription as any).current_period_end ? toDateTime(
       (subscription as any).current_period_end
-    ).toISOString(),
-    created: toDateTime(subscription.created).toISOString(),
+    ).toISOString() : null,
+    created:  toDateTime(subscription.created).toISOString(),
     ended_at: subscription.ended_at
       ? toDateTime(subscription.ended_at).toISOString()
       : null,
@@ -325,7 +325,7 @@ export const manageSubscriptionStatusChange = async (
   );
   
   // 如果是创建订阅，添加相应的积分
-  if(createAction) {
+  if(createAction === 'customer.subscription.created') {
     try {
       const priceId = subscription.items.data[0].price.id;
       const planName = await determinePlanName(priceId);
@@ -343,7 +343,7 @@ export const manageSubscriptionStatusChange = async (
 
   // For a new subscription copy the billing details to the customer object.
   // NOTE: This is a costly operation and should happen at the very end.
-  if (createAction && subscription.default_payment_method && uuid)
+  if (['customer.subscription.created','checkout.session.completed'].includes(createAction) && subscription.default_payment_method && uuid)
     //@ts-ignore
     await copyBillingDetailsToCustomer(
       uuid,
