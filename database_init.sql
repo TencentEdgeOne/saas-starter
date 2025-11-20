@@ -88,9 +88,9 @@ create table subscriptions (
   -- Time at which the subscription was created.
   created timestamp with time zone default timezone('utc'::text, now()) not null,
   -- Start of the current period that the subscription has been invoiced for.
-  current_period_start timestamp with time zone default timezone('utc'::text, now()) not null,
+  current_period_start timestamp with time zone default timezone('utc'::text, now()),
   -- End of the current period that the subscription has been invoiced for. At the end of this period, a new invoice will be created.
-  current_period_end timestamp with time zone default timezone('utc'::text, now()) not null,
+  current_period_end timestamp with time zone default timezone('utc'::text, now()),
   -- If the subscription has ended, the timestamp of the date the subscription ended.
   ended_at timestamp with time zone default timezone('utc'::text, now()),
   -- A date in the future at which the subscription will automatically get canceled.
