@@ -920,6 +920,7 @@
     "browsePlans": "浏览套餐",
     "manage": "管理",
     "cancel": "取消",
-    "trialEnds": "试用结束"
+    "trialEnds": "试用结束",
+    "creditsBalance":"积分余额"
   }
 } 

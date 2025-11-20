@@ -554,9 +554,9 @@
         "enterprise": "Enterprise"
       },
       "planPricing": {
-        "starter": "$9/month",
-        "professional": "$29/month",
-        "enterprise": "$99/month"
+        "starter": "$80/month",
+        "professional": "$150/month",
+        "enterprise": "$300/month"
       },
       "features": [
         {
@@ -932,6 +932,7 @@
     "browsePlans": "Browse Plans",
     "manage": "Manage",
     "cancel": "Cancel",
-    "trialEnds": "Trial ends"
+    "trialEnds": "Trial ends",
+    "creditsBalance":"Credits Balance"
   }
 } 

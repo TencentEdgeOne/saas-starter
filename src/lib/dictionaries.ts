@@ -461,6 +461,7 @@ export interface Dictionary {
     manage: string;
     cancel: string;
     trialEnds: string;
+    creditsBalance: string;
   };
 }
 
