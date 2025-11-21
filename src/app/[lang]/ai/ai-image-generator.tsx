@@ -32,6 +32,17 @@ interface GeneratorConfig {
   safetyNote: string
   examplesTitle?: string
   examples?: Array<{ label: string; prompt: string }>
+  checkingCredits?: string
+  credits?: string
+  cost?: string
+  creditsUnavailable?: string
+  notEnoughCredits?: string
+  pleaseSignIn?: string
+  unableToFetchCredits?: string
+  unableToFetchCost?: string
+  failedToFetchCost?: string
+  imageGenerationTimeout?: string
+  modelNotConfigured?: string
 }
 
 interface AIImageGeneratorProps {
@@ -106,7 +117,7 @@ export function AIImageGenerator({ config }: AIImageGeneratorProps) {
     setHasEnoughCredits(enough)
 
     if (!enough) {
-      const message = 'Not enough credits to generate images. Please top up.'
+      const message = config.notEnoughCredits || 'Not enough credits to generate images. Please top up.'
       setBalanceError(message)
       setError(message)
     } else {
@@ -119,7 +130,7 @@ export function AIImageGenerator({ config }: AIImageGeneratorProps) {
     try {
       const response = await fetch(buildApiUrl('/ai/image-cost'))
       if (!response.ok) {
-        throw new Error('Failed to fetch image cost.')
+        throw new Error(config.failedToFetchCost || 'Failed to fetch image cost.')
       }
       const data = await response.json()
       const cost = typeof data.cost === 'number' && data.cost > 0 ? data.cost : 1
@@ -127,7 +138,7 @@ export function AIImageGenerator({ config }: AIImageGeneratorProps) {
       updateCreditAvailability(creditsBalance, cost)
     } catch (error) {
       console.error('[AIImageGenerator] fetch cost error', error)
-      setBalanceError('Unable to load credit cost. Assuming default value.')
+      setBalanceError(config.unableToFetchCost || 'Unable to load credit cost. Assuming default value.')
     } finally {
       setIsFetchingCost(false)
     }
@@ -143,8 +154,8 @@ export function AIImageGenerator({ config }: AIImageGeneratorProps) {
         const errorJson = await response.json().catch(() => null)
         const message =
           response.status === 401
-            ? 'Please sign in to use the AI generator.'
-            : errorJson?.error || 'Unable to fetch credits. Please try again.'
+            ? config.pleaseSignIn || 'Please sign in to use the AI generator.'
+            : errorJson?.error || config.unableToFetchCredits || 'Unable to fetch credits. Please try again.'
         setBalanceError(message)
         setHasEnoughCredits(false)
         return
@@ -155,7 +166,7 @@ export function AIImageGenerator({ config }: AIImageGeneratorProps) {
       updateCreditAvailability(balance, creditCost)
     } catch (fetchError) {
       console.error('[AIImageGenerator] fetch credits error', fetchError)
-      setBalanceError('Unable to fetch credits. Please try again later.')
+      setBalanceError(config.unableToFetchCredits || 'Unable to fetch credits. Please try again later.')
       setHasEnoughCredits(false)
     } finally {
       setIsCheckingCredits(false)
@@ -219,7 +230,7 @@ export function AIImageGenerator({ config }: AIImageGeneratorProps) {
     } catch (err) {
       console.error('[AIImageGenerator] error', err)
       if ((err as DOMException)?.name === 'AbortError') {
-        setError(config.errorDescription || 'Image generation timed out. Please try again.')
+        setError(config.imageGenerationTimeout || config.errorDescription || 'Image generation timed out. Please try again.')
       } else {
         // Extract specific error message from the error object
         const errorMessage = (err as Error)?.message || (err as any)?.toString() || config.errorDescription
@@ -284,7 +295,7 @@ export function AIImageGenerator({ config }: AIImageGeneratorProps) {
                   if (isCheckingCredits || isFetchingCost) {
                     return (
                       <span className="text-xs text-muted-foreground truncate">
-                        Checking credits...
+                        {config.checkingCredits || 'Checking credits...'}
                       </span>
                     )
                   }
@@ -292,7 +303,7 @@ export function AIImageGenerator({ config }: AIImageGeneratorProps) {
                   if (shouldHighlightDestructive) {
                     return (
                       <span className="text-xs text-destructive truncate">
-                        {balanceError || 'Not enough credits to generate images.'}
+                        {balanceError || config.notEnoughCredits || 'Not enough credits to generate images.'}
                       </span>
                     )
                   }
@@ -300,20 +311,20 @@ export function AIImageGenerator({ config }: AIImageGeneratorProps) {
                   if (creditsBalance !== null) {
                     return (
                       <span className="text-xs text-muted-foreground truncate">
-                        Credits:{' '}
+                        {config.credits || 'Credits:'}{' '}
                         <span
                           className="text-foreground"
                         >
                           {creditsBalance}
                         </span>{' '}
-                        (Cost {creditCost})
+                        ({config.cost || 'Cost'} {creditCost})
                       </span>
                     )
                   }
 
                   return (
                     <span className="text-xs text-muted-foreground truncate">
-                      {balanceError || 'Credits unavailable'}
+                      {balanceError || config.creditsUnavailable || 'Credits unavailable'}
                     </span>
                   )
                 })()}
@@ -337,8 +348,8 @@ export function AIImageGenerator({ config }: AIImageGeneratorProps) {
                 {isGenerating
                   ? config.generating
                   : isCheckingCredits || isFetchingCost
-                  ? 'Checking credits...'
-                  : 'Generate'}
+                  ? (config.checkingCredits || 'Checking credits...')
+                  : config.generate}
               </Button>
             </div>
             
@@ -359,6 +370,7 @@ export function AIImageGenerator({ config }: AIImageGeneratorProps) {
                 onChange={setModel}
                 label={config.modelLabel}
                 placeholder={config.modelPlaceholder}
+                modelNotConfiguredText={config.modelNotConfigured}
               />
 
               <SizeSelector

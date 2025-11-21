@@ -471,6 +471,29 @@ export interface Dictionary {
         label: string;
         prompt: string;
       }>;
+      checkingCredits?: string;
+      credits?: string;
+      cost?: string;
+      creditsUnavailable?: string;
+      notEnoughCredits?: string;
+      pleaseSignIn?: string;
+      unableToFetchCredits?: string;
+      unableToFetchCost?: string;
+      failedToFetchCost?: string;
+      imageGenerationTimeout?: string;
+      modelNotConfigured?: string;
+    };
+    api?: {
+      userAuthenticationRequired: string;
+      invalidJsonBody: string;
+      promptRequired: string;
+      modelRequired: string;
+      unsupportedSize: string;
+      unsupportedModel: string;
+      notEnoughCredits: string;
+      apiKeyNotConfigured: string;
+      generationFailed: string;
+      creditsSpendFailed: string;
     };
     features: {
       title: string;

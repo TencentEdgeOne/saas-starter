@@ -19,6 +19,22 @@ export default async function AIPage({ params }: { params: Promise<{ lang: Local
   const dict = await getDictionary(lang);
   const aiConfig = dict.ai;
 
+  // Merge generator config with additional fields from dict
+  const generatorConfig = {
+    ...aiConfig.generator,
+    checkingCredits: aiConfig.generator.checkingCredits,
+    credits: aiConfig.generator.credits,
+    cost: aiConfig.generator.cost,
+    creditsUnavailable: aiConfig.generator.creditsUnavailable,
+    notEnoughCredits: aiConfig.generator.notEnoughCredits,
+    pleaseSignIn: aiConfig.generator.pleaseSignIn,
+    unableToFetchCredits: aiConfig.generator.unableToFetchCredits,
+    unableToFetchCost: aiConfig.generator.unableToFetchCost,
+    failedToFetchCost: aiConfig.generator.failedToFetchCost,
+    imageGenerationTimeout: aiConfig.generator.imageGenerationTimeout,
+    modelNotConfigured: aiConfig.generator.modelNotConfigured,
+  };
+
   return (
     <Layout dict={dict}>
       <div className="pt-8">
@@ -33,7 +49,7 @@ export default async function AIPage({ params }: { params: Promise<{ lang: Local
           headerClassName="mb-16"
           locale={lang}
         >
-          <AIImageGenerator config={aiConfig.generator} />
+          <AIImageGenerator config={generatorConfig} />
         </SectionLayout>
       </div>
     </Layout>
