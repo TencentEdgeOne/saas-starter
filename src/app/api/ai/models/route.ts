@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { modelOptions } from '@/lib/ai-models'
-import { modelProviderMap } from '@/app/api/ai/generate/route'
+import { modelProviderMap } from '@/lib/ai-models-config'
 
 export const dynamic = 'force-dynamic'
 
