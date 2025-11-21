@@ -8,7 +8,7 @@ export const modelSizeMapping: Record<string, string[]> = {
   
   // FAL Models - FAL FLUX models typically support square sizes
   'fal-ai/flux/dev': ['1024x1024'],
-  'fal-ai/flux/schnell': ['1024x1024'], // FAL FLUX Schnell supports 1024x1024, not 256x256
+  'fal-ai/flux/schnell': ['256x256', '1024x1024'], // FAL FLUX Schnell supports 256x256 and 1024x1024
   'fal-ai/flux-pro/v1.1': ['1024x1024'],
   
   // OpenAI Models - Based on OpenAI API documentation
