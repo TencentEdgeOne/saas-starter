@@ -1,8 +1,8 @@
 "use client"
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import * as Select from '@radix-ui/react-select'
-import { Check, ChevronDown } from 'lucide-react'
+import { Check, ChevronDown, AlertCircle } from 'lucide-react'
 import { modelOptions } from '@/lib/ai-models'
 
 interface ModelSelectorProps {
@@ -10,17 +10,71 @@ interface ModelSelectorProps {
   onChange: (value: string) => void
   label: string
   placeholder: string
+  modelNotConfiguredText?: string
 }
 
-export function ModelSelector({ value, onChange, label, placeholder }: ModelSelectorProps) {
+interface ModelStatus {
+  value: string
+  label: string
+  configured: boolean
+}
+
+// Use Next.js API Route in development, or Node Functions in production
+const buildApiUrl = (path: string) => {
+  const apiPath = path.startsWith('/') ? path : `/${path}`
+  const API_BASE = process.env.NEXT_PUBLIC_API_URL_DEV
+  if (API_BASE && API_BASE.trim() !== '') {
+    return `${API_BASE}${apiPath}`
+  }
+  return `/api${apiPath}`
+}
+
+export function ModelSelector({ value, onChange, label, placeholder, modelNotConfiguredText }: ModelSelectorProps) {
   const [open, setOpen] = useState(false)
+  const [modelStatuses, setModelStatuses] = useState<ModelStatus[]>([])
+  const [availableModels, setAvailableModels] = useState<Set<string>>(new Set())
+
+  useEffect(() => {
+    // Fetch model configuration status
+    fetch(buildApiUrl('/ai/models'))
+      .then(res => res.json())
+      .then(data => {
+        if (data.models) {
+          setModelStatuses(data.models)
+          setAvailableModels(new Set(data.available || []))
+        }
+      })
+      .catch(err => {
+        console.error('[ModelSelector] Failed to fetch model statuses:', err)
+        // Fallback: assume all models are available
+        const allModels = modelOptions.map(opt => ({ value: opt.value, label: opt.label, configured: true }))
+        setModelStatuses(allModels)
+        setAvailableModels(new Set(modelOptions.map(opt => opt.value)))
+      })
+  }, [])
+
+  // Create a map of model statuses for quick lookup
+  const modelStatusMap = new Map(modelStatuses.map(m => [m.value, m]))
   
+  // Use modelStatuses if available, otherwise fallback to modelOptions
+  const modelsToDisplay = modelStatuses.length > 0 
+    ? modelStatuses 
+    : modelOptions.map(opt => ({ value: opt.value, label: opt.label, configured: true }))
+
+  const handleValueChange = (newValue: string) => {
+    const isConfigured = availableModels.has(newValue)
+    if (isConfigured) {
+      onChange(newValue)
+    }
+    // If not configured, don't allow selection
+  }
+
   return (
     <div>
       <label className="mb-2 block text-sm font-medium text-foreground">
         {label}
       </label>
-      <Select.Root value={value} onValueChange={onChange} open={open} onOpenChange={setOpen}>
+      <Select.Root value={value} onValueChange={handleValueChange} open={open} onOpenChange={setOpen}>
         <Select.Trigger className="flex w-full items-center justify-between rounded-lg border border-border bg-background px-4 py-1.5 text-left text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary h-9">
           <Select.Value placeholder={placeholder} />
           <Select.Icon className="ml-2">
@@ -33,22 +87,42 @@ export function ModelSelector({ value, onChange, label, placeholder }: ModelSele
           sideOffset={2}
         >
           <Select.Viewport>
-            {modelOptions.map((option, index) => {
+            {modelsToDisplay.map((model, index) => {
               const isFirst = index === 0
-              const isLast = index === modelOptions.length - 1
+              const isLast = index === modelsToDisplay.length - 1
               const roundedClass = isFirst ? 'rounded-t-lg' : isLast ? 'rounded-b-lg' : ''
+              const isConfigured = availableModels.has(model.value) || model.configured
+              const isDisabled = !isConfigured
+              
               return (
                 <Select.Item
-                  key={option.value}
-                  value={option.value}
-                  className={`relative cursor-pointer select-none ${roundedClass} px-4 py-2 text-sm outline-none border-none data-[highlighted]:bg-primary/10 data-[highlighted]:text-primary data-[state=checked]:bg-primary/10 data-[state=checked]:text-primary`}
+                  key={model.value}
+                  value={model.value}
+                  disabled={isDisabled}
+                  className={`relative select-none ${roundedClass} px-4 py-2 text-sm outline-none border-none ${
+                    isDisabled 
+                      ? 'opacity-50 cursor-not-allowed' 
+                      : 'cursor-pointer data-[highlighted]:bg-primary/10 data-[highlighted]:text-primary data-[state=checked]:bg-primary/10 data-[state=checked]:text-primary'
+                  }`}
                 >
                   <Select.ItemText>
-                    <span className="font-medium">{option.label}</span>
+                    <div className="flex items-center justify-between">
+                      <span className={`font-medium ${isDisabled ? 'text-muted-foreground' : ''}`}>
+                        {model.label}
+                      </span>
+                      {isDisabled && (
+                        <span className="ml-2 text-xs text-muted-foreground flex items-center gap-1">
+                          <AlertCircle className="h-3 w-3" />
+                          {modelNotConfiguredText || 'Not configured'}
+                        </span>
+                      )}
+                    </div>
                   </Select.ItemText>
-                  <Select.ItemIndicator className="absolute inset-y-0 right-0 flex items-center pr-2 text-primary">
-                    <Check className="h-4 w-4" />
-                  </Select.ItemIndicator>
+                  {isConfigured && (
+                    <Select.ItemIndicator className="absolute inset-y-0 right-0 flex items-center pr-2 text-primary">
+                      <Check className="h-4 w-4" />
+                    </Select.ItemIndicator>
+                  )}
                 </Select.Item>
               )
             })}

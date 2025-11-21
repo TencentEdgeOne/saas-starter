@@ -716,7 +716,30 @@
           "label": "Portrait",
           "prompt": "Portrait of a confident product designer, studio lighting, colorful bokeh background, 85mm lens"
         }
-      ]
+      ],
+      "checkingCredits": "Checking credits...",
+      "credits": "Credits:",
+      "cost": "Cost",
+      "creditsUnavailable": "Credits unavailable",
+      "notEnoughCredits": "Not enough credits to generate images. Please top up.",
+      "pleaseSignIn": "Please sign in to use the AI generator.",
+      "unableToFetchCredits": "Unable to fetch credits. Please try again.",
+      "unableToFetchCost": "Unable to load credit cost. Assuming default value.",
+      "failedToFetchCost": "Failed to fetch image cost.",
+      "imageGenerationTimeout": "Image generation timed out. Please try again.",
+      "modelNotConfigured": "Model not configured"
+    },
+    "api": {
+      "userAuthenticationRequired": "User authentication required",
+      "invalidJsonBody": "Invalid JSON body",
+      "promptRequired": "Prompt is required",
+      "modelRequired": "Model is required",
+      "unsupportedSize": "Unsupported size option: {size}",
+      "unsupportedModel": "Unsupported model: {model}. Available models: {models}",
+      "notEnoughCredits": "Not enough credits. Required: {cost}, current balance: {balance}",
+      "apiKeyNotConfigured": "{provider} API key not configured",
+      "generationFailed": "Failed to generate image",
+      "creditsSpendFailed": "Failed to spend credits. Please try again later."
     },
     "features": {
       "title": "Powerful Features",
@@ -933,103 +956,6 @@
       "thanksMessage": "Thanks for reading! Share this article if you found it helpful.",
       "readMoreArticles": "Read More Articles",
       "readTime": "{minutes} min read"
-    }
-  },
-  "ai": {
-    "pageTitle": "AI Image Generation",
-    "pageSubtitle": "Create stunning images with the power of artificial intelligence. Transform your ideas into visual reality.",
-    "hero": {
-      "heading": "EdgeOne AI Image Studio",
-      "subheading": "Vercel AI SDK powered text-to-image demo.",
-      "ctaText": "Start Creating",
-      "ctaSecondary": "View Examples"
-    },
-    "generator": {
-      "title": "Test AI Image Generation in Real Time",
-      "description": "Pick a model, describe your idea, and let the AI turn it into a visual concept.",
-      "modelLabel": "Choose a model",
-      "modelPlaceholder": "Select an AI image model",
-      "sizeLabel": "Image Size",
-      "sizePlaceholder": "Select image size",
-      "promptLabel": "Describe your image",
-      "promptPlaceholder": "e.g. Futuristic city skyline at sunset, cinematic lighting, ultra realistic",
-      "generate": "Generate image",
-      "generating": "Generating...",
-      "resultTitle": "Generation Result",
-      "emptyStateTitle": "Start by describing an idea",
-      "emptyStateDescription": "Your generated image will appear here. Use descriptive prompts for the best results.",
-      "errorTitle": "Generation failed",
-      "errorDescription": "We couldn't generate this prompt. Please refine your description and try again.",
-      "download": "Download image",
-      "retry": "Try again",
-      "safetyNote": "Generated content must follow provider policies. Avoid personal data or sensitive topics.",
-      "examplesTitle": "Quick prompt ideas",
-      "examples": [
-        {
-          "label": "Brand hero",
-          "prompt": "Minimalist SaaS dashboard hero, gradient lighting, holographic charts, premium UI kit, 32-bit render"
-        },
-        {
-          "label": "City concept",
-          "prompt": "Neo-Tokyo street market at blue hour, neon reflections, cinematic depth of field, volumetric fog"
-        },
-        {
-          "label": "Portrait",
-          "prompt": "Portrait of a confident product designer, studio lighting, colorful bokeh background, 85mm lens"
-        }
-      ]
-    },
-    "features": {
-      "title": "Powerful Features",
-      "subtitle": "Everything you need to create amazing images",
-      "items": [
-        {
-          "icon": "Zap",
-          "title": "Lightning Fast",
-          "description": "Generate high-quality images in seconds with our optimized AI models."
-        },
-        {
-          "icon": "Palette",
-          "title": "Multiple Styles",
-          "description": "Choose from various artistic styles including realistic, anime, oil painting, and more."
-        },
-        {
-          "icon": "Settings",
-          "title": "Customizable",
-          "description": "Fine-tune every aspect of your images with advanced parameters and controls."
-        },
-        {
-          "icon": "Shield",
-          "title": "Safe & Private",
-          "description": "Your images are processed securely and never shared without your permission."
-        }
-      ]
-    },
-    "howItWorks": {
-      "title": "How It Works",
-      "subtitle": "Create images in three simple steps",
-      "steps": [
-        {
-          "number": "1",
-          "title": "Enter Your Prompt",
-          "description": "Describe the image you want to create in natural language."
-        },
-        {
-          "number": "2",
-          "title": "Choose Your Style",
-          "description": "Select from various artistic styles and adjust parameters to match your vision."
-        },
-        {
-          "number": "3",
-          "title": "Generate & Download",
-          "description": "Watch as AI brings your idea to life, then download your masterpiece."
-        }
-      ]
-    },
-    "cta": {
-      "title": "Ready to Create?",
-      "description": "Start generating amazing images with AI today. No credit card required.",
-      "buttonText": "Get Started Free"
     }
   },
   "metadata": {

@@ -12,8 +12,9 @@ import { createReplicate } from '@ai-sdk/replicate'
 import { withTokenRefresh } from '@/lib/auth-server'
 import { getUserCreditsBalance, spendCredits } from '@/lib/credits'
 import { getImageGenerationCreditCost } from '@/lib/ai-cost'
+import { getRequestDictionary } from '@/lib/api-i18n'
 
-const modelProviderMap = {
+export const modelProviderMap = {
   'dall-e-3': { provider: createOpenAI, envKey: 'OPENAI_API_KEY', envName: 'OpenAI' },
   'dall-e-2': { provider: createOpenAI, envKey: 'OPENAI_API_KEY', envName: 'OpenAI' },
   'imagen-3.0-generate-002': {
@@ -101,7 +102,17 @@ function getCorsHeaders(request: NextRequest) {
   return baseHeaders
 }
 
-function createErrorResponse(error: string, message: string, status = 400, request: NextRequest) {
+async function createErrorResponse(error: string, messageKey: string, status = 400, request: NextRequest, params?: Record<string, string>) {
+  const dict = await getRequestDictionary(request)
+  let message = (dict.ai?.api?.[messageKey as keyof NonNullable<typeof dict.ai.api>] as string) || messageKey
+  
+  // Replace placeholders like {cost}, {balance}, etc.
+  if (params) {
+    Object.entries(params).forEach(([key, value]) => {
+      message = message.replace(`{${key}}`, value)
+    })
+  }
+  
   return NextResponse.json(
     { error, message },
     {
@@ -125,10 +136,11 @@ interface ParsedRequestBody {
 class AiRouteError extends Error {
   constructor(
     public code: string,
-    message: string,
-    public status: number = 400
+    public messageKey: string,
+    public status: number = 400,
+    public params?: Record<string, string>
   ) {
-    super(message)
+    super(messageKey)
     this.name = 'AiRouteError'
   }
 }
@@ -137,25 +149,34 @@ export async function POST(request: NextRequest) {
   return withTokenRefresh(request, async (user) => {
     try {
       if (!user?.id) {
-        throw new AiRouteError('UNAUTHORIZED', 'User authentication required', 401)
+        return await createErrorResponse('UNAUTHORIZED', 'userAuthenticationRequired', 401, request)
       }
 
       const body = await safeParseJson(request)
-      const { prompt, model, size } = parseRequestBody(body)
-      const modelConfig = resolveModelConfig(model)
-      const balanceSnapshot = await ensureCredits(user.id)
-      const imageModel = buildImageModel(modelConfig, model)
+      const { prompt, model, size } = await parseRequestBody(body, request)
+      const modelConfig = await resolveModelConfig(model, request)
+      const balanceSnapshot = await ensureCredits(user.id, request)
+      const imageModel = await buildImageModel(modelConfig, model, request)
       const generateOptions = buildGenerationOptions(imageModel, prompt, size)
       const imageResult = await generateImage(generateOptions)
 
       return await finalizeGeneration(user.id, imageResult, balanceSnapshot, request)
     } catch (error) {
       if (error instanceof AiRouteError) {
-        return createErrorResponse(error.code, error.message, error.status, request)
+        return await createErrorResponse(error.code, error.messageKey, error.status, request, error.params)
       }
 
-      const fullErrorMessage = buildExternalProviderErrorMessage(error)
-      return createErrorResponse('GENERATION_FAILED', fullErrorMessage, 500, request)
+      // For external provider errors, return the original error message as-is
+      // Don't try to localize AI model provider errors since they can be in any language
+      const detailMessage = buildExternalProviderErrorMessage(error)
+      
+      return NextResponse.json(
+        { error: 'GENERATION_FAILED', message: detailMessage },
+        {
+          status: 500,
+          headers: getCorsHeaders(request),
+        }
+      )
     }
   })
 }
@@ -171,25 +192,25 @@ async function safeParseJson(request: NextRequest) {
   try {
     return await request.json()
   } catch {
-    throw new AiRouteError('INVALID_BODY', 'Invalid JSON body', 400)
+    throw new AiRouteError('INVALID_BODY', 'invalidJsonBody', 400)
   }
 }
 
-function parseRequestBody(body: any): ParsedRequestBody {
+async function parseRequestBody(body: any, request: NextRequest): Promise<ParsedRequestBody> {
   const prompt = body?.prompt
   const model = body?.model
   const size = body?.size
 
   if (!prompt || typeof prompt !== 'string') {
-    throw new AiRouteError('PROMPT_REQUIRED', 'Prompt is required', 400)
+    throw new AiRouteError('PROMPT_REQUIRED', 'promptRequired', 400)
   }
 
   if (!model || typeof model !== 'string') {
-    throw new AiRouteError('MODEL_REQUIRED', 'Model is required', 400)
+    throw new AiRouteError('MODEL_REQUIRED', 'modelRequired', 400)
   }
 
   if (size && !isValidSize(size)) {
-    throw new AiRouteError('INVALID_SIZE', `Unsupported size option: ${size}`, 400)
+    throw new AiRouteError('INVALID_SIZE', 'unsupportedSize', 400, { size })
   }
 
   return {
@@ -199,38 +220,41 @@ function parseRequestBody(body: any): ParsedRequestBody {
   }
 }
 
-function resolveModelConfig(model: string) {
+async function resolveModelConfig(model: string, request: NextRequest) {
   const config = modelProviderMap[model as keyof typeof modelProviderMap]
   if (!config) {
+    const availableModels = Object.keys(modelProviderMap).join(', ')
     throw new AiRouteError(
       'UNSUPPORTED_MODEL',
-      `Unsupported model: ${model}. Available models: ${Object.keys(modelProviderMap).join(', ')}`,
-      400
+      'unsupportedModel',
+      400,
+      { model, models: availableModels }
     )
   }
   return config
 }
 
-async function ensureCredits(userId: string) {
+async function ensureCredits(userId: string, request: NextRequest) {
   const balance = await getUserCreditsBalance(userId)
   const cost = getImageGenerationCreditCost()
 
   if (balance < cost) {
     throw new AiRouteError(
       'INSUFFICIENT_CREDITS',
-      `Not enough credits. Required: ${cost}, current balance: ${balance}`,
-      402
+      'notEnoughCredits',
+      402,
+      { cost: cost.toString(), balance: balance.toString() }
     )
   }
 
   return balance
 }
 
-function buildImageModel(modelConfig: (typeof modelProviderMap)[keyof typeof modelProviderMap], model: string) {
+async function buildImageModel(modelConfig: (typeof modelProviderMap)[keyof typeof modelProviderMap], model: string, request: NextRequest) {
   const apiKey = process.env[modelConfig.envKey]
 
   if (!apiKey) {
-    throw new AiRouteError('API_KEY_NOT_CONFIGURED', `${modelConfig.envName} API key not configured`, 500)
+    throw new AiRouteError('API_KEY_NOT_CONFIGURED', 'apiKeyNotConfigured', 500, { provider: modelConfig.envName })
   }
 
   const provider = modelConfig.provider({
@@ -262,7 +286,7 @@ async function finalizeGeneration(
   const cost = getImageGenerationCreditCost()
   const spendSuccess = await spendCredits(userId, cost, 'AI image generation')
   if (!spendSuccess) {
-    throw new AiRouteError('CREDITS_SPEND_FAILED', 'Failed to spend credits. Please try again later.', 500)
+    throw new AiRouteError('CREDITS_SPEND_FAILED', 'creditsSpendFailed', 500)
   }
 
   const imageUrl = `data:image/png;base64,${imageResult.image.base64}`
