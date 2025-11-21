@@ -1,14 +1,18 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { defaultLocale } from '@/lib/i18n'
 
 export default function AuthCallbackPage() {
   const router = useRouter()
+  const hasExecuted = useRef(false)
 
   useEffect(() => {
+    if (hasExecuted.current) return
+    hasExecuted.current = true
+
     const handleCallback = async () => {
       try {
         console.log('Auth callback page loaded')
@@ -73,6 +77,41 @@ export default function AuthCallbackPage() {
         } catch (err) {
           console.warn('Error saving session:', err)
         }
+
+        // 检查是否是通过 OAuth 登录，如果是则尝试添加新用户注册奖励
+        try {
+          const provider = session.user.identities?.[0]?.provider
+          if (provider && ['google', 'github'].includes(provider)) {
+            console.log(`User logged in via ${provider}, checking for signup reward...`)
+            const rewardResponse = await fetch('/api/auth/oauth/signup-reward', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                userId: session.user.id,
+                provider: provider,
+              }),
+            })
+
+            if (rewardResponse.ok) {
+              const rewardData = await rewardResponse.json()
+              if (rewardData.isNewUser && !rewardData.alreadyRewarded) {
+                console.log(
+                  `Signup reward applied: ${rewardData.creditsAdded} credits added`
+                )
+              } else if (rewardData.alreadyRewarded) {
+                console.log('User has already received signup reward')
+              } else {
+                console.log('User is not new, no signup reward applied')
+              }
+            } else {
+              console.warn('Failed to process signup reward:', await rewardResponse.json())
+            }
+          }
+        } catch (err) {
+          console.warn('Error processing signup reward:', err)
+        }
         
         // 创建或更新客户记录
         try {
@@ -119,6 +158,8 @@ export default function AuthCallbackPage() {
         console.error('Callback processing error:', error)
         router.push('/login?error=' + encodeURIComponent('Authentication failed'))
       }
+      hasExecuted.current = false
+
     }
 
     handleCallback()

@@ -45,11 +45,9 @@
   "header": {
     "navigation": [
       { "name": "首页", "href": "/" },
-      { "name": "功能特性", "href": "/features" },
-      { "name": "价格", "href": "/pricing" },
-      { "name": "关于我们", "href": "/about" },
-      { "name": "博客", "href": "/blog" },
       { "name": "AI", "href": "/ai" },
+      { "name": "价格", "href": "/pricing" },
+      { "name": "博客", "href": "/blog" },
       { "name": "案例", "href": "/cases" },
       { "name": "联系我们", "href": "/contact" },
       { "name": "组件", "href": "/blocks" }
@@ -1117,6 +1115,8 @@
     "manage": "管理",
     "cancel": "取消",
     "trialEnds": "试用结束",
-    "creditsBalance":"积分余额"
+    "creditsBalance":"积分余额",
+    "subscriptionSuccess": "您已购买成功，+",
+    "creditsReward": "积分"
   }
 } 

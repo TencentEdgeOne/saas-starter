@@ -515,6 +515,8 @@ export interface Dictionary {
     cancel: string;
     trialEnds: string;
     creditsBalance: string;
+    creditsReward:string
+    subscriptionSuccess:string
   };
 }
 

@@ -45,11 +45,9 @@
   "header": {
     "navigation": [
       { "name": "Home", "href": "/" },
-      { "name": "Features", "href": "/features" },
-      { "name": "Pricing", "href": "/pricing" },
-      { "name": "About", "href": "/about" },
-      { "name": "Blog", "href": "/blog" },
       { "name": "AI", "href": "/ai" },
+      { "name": "Pricing", "href": "/pricing" },
+      { "name": "Blog", "href": "/blog" },
       { "name": "Cases", "href": "/cases" },
       { "name": "Contact", "href": "/contact" },
       { "name": "Blocks", "href": "/blocks" }
@@ -1129,6 +1127,8 @@
     "manage": "Manage",
     "cancel": "Cancel",
     "trialEnds": "Trial ends",
-    "creditsBalance":"Credits Balance"
+    "creditsBalance":"Credits Balance",
+    "subscriptionSuccess": "Subscription successful, earned",
+    "creditsReward": "credits"
   }
 } 

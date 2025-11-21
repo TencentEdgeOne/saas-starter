@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button'
 import { Loader2, User, Mail, Calendar, CreditCard, DollarSign, Settings, LogOut, Coins } from 'lucide-react'
 import { Dictionary } from '@/lib/dictionaries'
 import { formatDate } from '@/lib/utils'
+import { CREDITS_CONFIG } from '@/lib/credits'
 
 interface ProfileContentProps {
   dict?: Dictionary
@@ -92,9 +93,16 @@ export function ProfileContent({ dict, lang }: ProfileContentProps) {
     )
   }
 
+  const getSubscriptionCredits = (subscription: Subscription) => {
+    const curPlan = subscription.prices?.products?.name?.toLowerCase() || ''
+    const creditsCount = CREDITS_CONFIG.PURCHASE_BONUS[curPlan as keyof typeof CREDITS_CONFIG.PURCHASE_BONUS] || 0
+
+    return `${dict?.profile?.subscriptionSuccess || 'Subscription successful, earned'} ${creditsCount} ${dict?.profile?.creditsReward || 'credits'}`
+  }
+
   return (
     <div className="grid gap-8 lg:grid-cols-3">
-      {/* Profile Information */}
+      {/* User Profile Information Section */}
       <div className="lg:col-span-1">
         <Card>
           <CardHeader>
@@ -139,6 +147,7 @@ export function ProfileContent({ dict, lang }: ProfileContentProps) {
               </div>
             </div>
 
+            {/* Edit Profile Button - Disabled for now */}
             {/* <div className="pt-4 border-t">
               <Button variant="outline" className="w-full">
                 <Settings className="h-4 w-4 mr-2" />
@@ -149,7 +158,7 @@ export function ProfileContent({ dict, lang }: ProfileContentProps) {
         </Card>
       </div>
 
-      {/* Subscriptions */}
+      {/* User Subscriptions Management Section */}
       <div className="lg:col-span-2">
         <Card>
           <CardHeader>
@@ -206,14 +215,14 @@ export function ProfileContent({ dict, lang }: ProfileContentProps) {
                     </div>
                     
                     <p className="text-sm text-gray-600 mb-3">
-                      {subscription.prices?.products?.description}
+                    {getSubscriptionCredits(subscription)}
                     </p>
                     
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-2">
                         <DollarSign className="h-4 w-4 text-gray-500" />
                         <span className="text-lg font-semibold">
-                          ${(subscription.prices?.unit_amount || 0) / 100}
+                          {(subscription.prices?.unit_amount || 0) / 100}
                         </span>
                         <span className="text-gray-500">
                           /{subscription.prices?.interval || 'month'}
