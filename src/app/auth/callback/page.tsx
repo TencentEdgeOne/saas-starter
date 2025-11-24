@@ -115,34 +115,28 @@ export default function AuthCallbackPage() {
         
         // 创建或更新客户记录
         try {
-          console.log('Creating/checking customer record for user:', session.user.id)
-          const { data: existingCustomer, error: queryError } = await supabase
-            .from('customers')
-            .select('*')
-            .eq('id', session.user.id)
-            .maybeSingle()
+          console.log('Creating/checking customer record for user:', session.user.id,session.user.email)
+          const customerResponse = await fetch('/api/auth/create-customer', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              userId: session.user.id,
+              email: session.user.email,
+            }),
+          })
 
-          if (queryError) {
-            console.warn('Failed to query customer:', queryError)
-          } else if (!existingCustomer) {
-            // 创建新的客户记录
-            console.log('Creating new customer record...')
-            const { error: createError } = await supabase
-              .from('customers')
-              .insert([
-                {
-                  id: session.user.id,
-                  stripe_customer_id: null,
-                }
-              ])
-
-            if (createError) {
-              console.warn('Failed to create customer record:', createError)
+          if (customerResponse.ok) {
+            const customerData = await customerResponse.json()
+            if (customerData.created) {
+              console.log('Customer record created successfully with Stripe ID:', customerData.stripeCustomerId)
             } else {
-              console.log('Customer record created successfully')
+              console.log('Customer record already exists')
             }
           } else {
-            console.log('Customer record already exists')
+            const errorData = await customerResponse.json()
+            console.warn('Failed to create customer record:', errorData)
           }
         } catch (err) {
           console.warn('Customer record creation error:', err)
