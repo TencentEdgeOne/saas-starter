@@ -21,12 +21,21 @@ export function AuthProvider({ children, initialUser }: AuthProviderProps) {
   const [loading, setLoading] = useState(!initialUser) // 如果有初始用户，不需要加载状态
 
   useEffect(() => {
-    // 如果没有初始用户，才去获取
+    // 总是获取最新的用户信息，确保登录状态是最新的
+    // 这对于注册后立即跳转的场景很重要
+    const fetchUser = async () => {
+      const { user: fetchedUser } = await getCurrentUser()
+      setUser(fetchedUser)
+      setLoading(false)
+    }
+
     if (!initialUser) {
-      getCurrentUser().then(({ user }) => {
-        setUser(user)
-        setLoading(false)
-      })
+      // 没有初始用户，立即获取
+      fetchUser()
+    } else {
+      // 有初始用户，也立即验证一下是否还有效
+      setLoading(false)
+      fetchUser()
     }
   }, [initialUser])
 

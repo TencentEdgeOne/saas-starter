@@ -34,6 +34,8 @@ export async function POST(request: NextRequest) {
       )
     }
 
+   
+
     let customer;
     try {
       customer = await createOrRetrieveCustomer({
@@ -77,10 +79,45 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    return NextResponse.json({
+     // 注册成功后，直接登录用户以获取 session
+     let sessionData = data.session
+     if (!sessionData && data.user) {
+       // 如果 signUp 没有返回 session，直接用密码登录
+       const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+         email,
+         password,
+       })
+       
+       if (signInError) {
+         console.warn('Failed to auto-login after signup:', signInError)
+         // 登录失败不影响注册流程，用户可以手动登录
+       } else {
+         sessionData = signInData.session
+       }
+     }
+
+    // 创建响应并设置 Supabase 会话 Cookie
+    const response = NextResponse.json({
       user: data.user,
-      message: 'User created successfully. Please check your email to verify your account.'
+      session: sessionData,
+      message: 'Account created successfully!'
     })
+
+    // 如果有 session，设置 Cookie 以保持登录状态
+    if (sessionData) {
+      response.cookies.set('auth-token', JSON.stringify({ 
+        access_token: sessionData.access_token, 
+        refresh_token: sessionData.refresh_token 
+      }), {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 60 * 60 * 24 * 7 // 7 days
+      })
+    }
+    
+
+    return response
 
   } catch (error) {
     return NextResponse.json(

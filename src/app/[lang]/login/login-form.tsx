@@ -50,8 +50,9 @@ export default function LoginForm({ dict, lang }: LoginFormProps) {
 
       if (response.ok) {
         setToast({ message: data.message || 'Signed in successfully!', type: 'success' })
+        // 使用 window.location.href 刷新页面，确保 AuthContext 能正确初始化
         setTimeout(() => {
-          router.push('/')
+          window.location.href = `/${lang}?auth=success`
         }, 1000)
       } else {
         setError(data.error || 'An error occurred')

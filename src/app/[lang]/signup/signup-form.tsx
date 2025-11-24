@@ -98,9 +98,17 @@ export default function SignupForm({ dict, lang }: SignupFormProps) {
 
       if (response.ok) {
         setToast({ message: data.message || 'Account created successfully!', type: 'success' })
-        setTimeout(() => {
-          router.push(`/${lang}/login`)
-        }, 2000)
+        if (data.session) {
+          // 有 session，等待 Cookie 设置完成后刷新页面以重新初始化 AuthContext
+          setTimeout(() => {
+            window.location.href = `/${lang}?auth=success`
+          }, 1500)
+        } else {
+          // 如果没有 session，跳转到登录页
+          setTimeout(() => {
+            router.push(`/${lang}/login`)
+          }, 2000)
+        }
       } else {
         setError(data.error || 'An error occurred')
       }
@@ -218,6 +226,27 @@ export default function SignupForm({ dict, lang }: SignupFormProps) {
               </div>
             )}
 
+           <Button
+              type="submit"
+              className="w-full"
+              disabled={loading}
+            >
+              {loading ? (dict.auth?.signup?.creating || 'Creating account...') : (dict.auth?.signup?.signUpButton || 'Sign Up')}
+            </Button>
+
+            
+          
+          <div className="mt-6 space-y-3">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-white text-gray-500">
+                  { 'Or continue with'}
+                </span>
+              </div>
+            </div>
            <button
               type="button"
               onClick={() => handleOAuthLogin('google', true)}
@@ -245,14 +274,8 @@ export default function SignupForm({ dict, lang }: SignupFormProps) {
                 {oauthLoading === 'github' ? ('Connecting...') : ( 'GitHub')}
               </span>
             </button>
-
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={loading}
-            >
-              {loading ? (dict.auth?.signup?.creating || 'Creating account...') : (dict.auth?.signup?.signUpButton || 'Sign Up')}
-            </Button>
+            </div>
+            
           </form>
 
 
