@@ -61,11 +61,40 @@ export async function POST(request: NextRequest) {
 
       const body = await safeParseJson(request)
       const { prompt, model, size } = await parseRequestBody(body, request)
+      
+      // Log request parameters
+      console.log('[AI Generate] Request params:', {
+        model,
+        size,
+        promptLength: prompt?.length || 0
+      })
+      
       const modelConfig = await resolveModelConfig(model, request)
       const balanceSnapshot = await ensureCredits(user.id, request)
       const imageModel = await buildImageModel(modelConfig, model, request)
       const generateOptions = buildGenerationOptions(imageModel, prompt, size)
+      
+      // Log SDK options before calling generateImage
+      console.log('[AI Generate] SDK options:', {
+        model: model,
+        size: generateOptions.size,
+        hasSize: !!generateOptions.size,
+        optionsKeys: Object.keys(generateOptions)
+      })
+      
+      // Record start time before calling AI SDK
+      const startTime = Date.now()
+      const startTimeISO = new Date().toISOString()
+      console.log('[AI Generate] Start time:', startTimeISO)
+      
       const imageResult = await generateImage(generateOptions)
+      
+      // Record end time after AI generation completes
+      const endTime = Date.now()
+      const endTimeISO = new Date().toISOString()
+      const duration = endTime - startTime
+      console.log('[AI Generate] End time:', endTimeISO)
+      console.log('[AI Generate] Duration:', `${duration}ms (${(duration / 1000).toFixed(2)}s)`)
 
       return await finalizeGeneration(user.id, imageResult, balanceSnapshot, request)
     } catch (error) {
@@ -85,13 +114,6 @@ export async function POST(request: NextRequest) {
         }
       )
     }
-  })
-}
-
-async function OPTIONS(request: NextRequest) {
-  return new NextResponse(null, {
-    status: 200,
-    headers: getCorsHeaders(request),
   })
 }
 
