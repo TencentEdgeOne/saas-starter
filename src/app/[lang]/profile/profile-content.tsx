@@ -100,6 +100,13 @@ export function ProfileContent({ dict, lang }: ProfileContentProps) {
     return `${dict?.profile?.subscriptionSuccess || 'Subscription successful, earned'} ${creditsCount} ${dict?.profile?.creditsReward || 'credits'}`
   }
 
+  const getPlanName = (subscription: Subscription) => {
+    const curPlan = subscription.prices?.products?.name?.toLowerCase() || '' ;
+    const CURPLANMAP = lang === 'zh' ? CREDITS_CONFIG.PLANS_ZH : CREDITS_CONFIG.PLANS;
+    const planName = CURPLANMAP[curPlan as keyof typeof CREDITS_CONFIG.PLANS] || 'Unknown Product'
+    return planName
+  }
+
   return (
     <div className="grid gap-8 lg:grid-cols-3">
       {/* User Profile Information Section */}
@@ -201,7 +208,7 @@ export function ProfileContent({ dict, lang }: ProfileContentProps) {
                   <div key={subscription.id} className="border rounded-lg p-4">
                     <div className="flex items-center justify-between mb-3">
                       <h4 className="font-semibold">
-                        {subscription.prices?.products?.name || 'Unknown Product'}
+                        { getPlanName(subscription)}
                       </h4>
                       <Badge 
                         variant={

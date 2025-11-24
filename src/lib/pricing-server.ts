@@ -25,8 +25,12 @@ export async function getPricingData(locale: Locale = 'en'): Promise<ProcessedPr
     // 获取国际化字典
     const dict = await getDictionary(locale)
     const pricingDict = dict.pricing
-
-    const pricing = data
+    const sortedData = data?.sort((a, b) => {
+      const priceA = a.prices[0]?.unit_amount || 0
+      const priceB = b.prices[0]?.unit_amount || 0
+      return priceA - priceB
+    }) ?? []
+    const pricing = sortedData
       ?.map((item: SupabaseProduct, index: number) => {
         // 根据产品名称映射到字典中的对应计划
         // 直接使用索引映射，因为 Supabase 数据已经按价格排序
@@ -48,7 +52,6 @@ export async function getPricingData(locale: Locale = 'en'): Promise<ProcessedPr
           popular:  planData?.popular || false,
         };
       })
-      .sort((a, b) => a.price - b.price) ?? [];
 
     return pricing;
   } catch (error) {

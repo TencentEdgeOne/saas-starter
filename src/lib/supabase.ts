@@ -10,7 +10,7 @@ const TRIAL_PERIOD_DAYS = 0;
 // 套餐价格到积分的映射
 const PLAN_CREDITS_MAPPING: Record<string, { price: number; credits: number }> = {
   'lite': { price: 80, credits: 100 },
-  'standard': { price: 150, credits: 200 },
+  'standard': { price: 150, credits: 300 },
   'pro': { price: 300, credits: 500 }
 };
 

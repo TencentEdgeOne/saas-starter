@@ -474,12 +474,9 @@
         "period": "per month",
         "description": "Perfect for individuals and small projects getting started",
         "features": [
-          "Up to 5 projects",
-          "10GB storage",
-          "Basic analytics",
-          "Email support",
-          "Standard templates",
-          "Basic integrations"
+          "100 credits",
+          "All premium models",
+          "Technical Support"
         ],
         "limitations": [
           "Advanced analytics",
@@ -496,14 +493,9 @@
         "period": "per month",
         "description": "Ideal for growing businesses and professional teams",
         "features": [
-          "Unlimited projects",
-          "100GB storage",
-          "Advanced analytics",
-          "Priority support",
-          "Custom templates",
-          "All integrations",
-          "Team collaboration",
-          "Custom branding"
+         "300 credits",
+          "All premium models",
+          "Technical Support"
         ],
         "limitations": [
           "White-label solution",
@@ -518,15 +510,9 @@
         "period": "per month",
         "description": "For large organizations with advanced requirements",
         "features": [
-          "Everything in Professional",
-          "Unlimited storage",
-          "White-label solution",
-          "Dedicated account manager",
-          "Custom integrations",
-          "SLA guarantee",
-          "Advanced security",
-          "API access",
-          "Custom training"
+          "500 credits",
+          "All premium models",
+          "Technical Support"
         ],
         "limitations": [],
         "popular": false,

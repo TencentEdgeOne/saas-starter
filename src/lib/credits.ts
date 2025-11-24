@@ -9,9 +9,19 @@ export const CREDITS_CONFIG = {
   // 购买套餐奖励
   PURCHASE_BONUS: {
     pro: 500,
-    standard: 200,
+    standard: 300,
     lite: 100,
   },
+  PLANS_ZH:{
+    pro: '企业版',
+    standard: '专业版',
+    lite: '入门版'
+  },
+  PLANS:{
+    pro: 'Pro',
+    standard: 'Standard',
+    lite: 'Lite'
+  }
 }
 
 /**
