@@ -85,50 +85,22 @@ export async function signOut(): Promise<{ error: string | null }> {
   }
 }
 
-export async function getCurrentUser(retries = 5, delay = 800): Promise<{ user: User | null; error: string | null }> {
-  try {
-    for (let attempt = 1; attempt <= retries; attempt++) {
-      console.log(`Getting current user (attempt ${attempt}/${retries})`)
+export async function getCurrentUser(): Promise<{ user: User | null; error: string | null }> {
       
-      try {
-        const response = await fetch('/api/auth/user', {
-          cache: 'no-store',
-          headers: {
-            'Cache-Control': 'no-store, no-cache, must-revalidate',
-          },
-        })
-        const data = await response.json()
+  try {
+      const response = await fetch('/api/auth/user')
+      const data = await response.json()
 
-        console.log(`Response status: ${response.status}`, data)
+      console.log(`Response status: ${response.status}`, data, response)
 
-        // 202 表示 session 还未完全保存，需要重试
-        if (response.status === 202 && attempt < retries) {
-          console.log(`Session not yet available, retrying in ${delay}ms... (attempt ${attempt}/${retries})`)
-          await new Promise(resolve => setTimeout(resolve, delay))
-          continue
-        }
-
-        if (!response.ok) {
-          console.error(`Failed to get user: ${data.error}`)
-          return { user: null, error: data.error || 'Failed to get user' }
-        }
-
-        console.log('User retrieved successfully:', data.user?.email)
-        return { user: data.user, error: null }
-      } catch (fetchError) {
-        console.error(`Fetch error on attempt ${attempt}:`, fetchError)
-        if (attempt < retries) {
-          await new Promise(resolve => setTimeout(resolve, delay))
-          continue
-        }
-        throw fetchError
+        
+      if (!response.ok) {
+        console.error(`Failed to get user: ${data.error}`)
+        return { user: null, error: data.error || 'Failed to get user' }
       }
-    }
 
-    return { 
-      user: null, 
-      error: 'Failed to get user after multiple retries' 
-    }
+      console.log('User retrieved successfully:', data.user?.email)
+      return { user: data.user, error: null }
   } catch (error) {
     console.error('getCurrentUser error:', error)
     return { 

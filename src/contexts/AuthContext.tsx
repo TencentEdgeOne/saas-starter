@@ -32,11 +32,8 @@ export function AuthProvider({ children, initialUser }: AuthProviderProps) {
     if (!initialUser) {
       // 没有初始用户，立即获取
       fetchUser()
-    } else {
-      // 有初始用户，也立即验证一下是否还有效
-      setLoading(false)
-      fetchUser()
     }
+    
   }, [initialUser])
 
 
