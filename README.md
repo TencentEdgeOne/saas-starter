@@ -1,7 +1,6 @@
-# SaaS Starter Template
+# SaaS AI Template
 
-A modern, production-ready SaaS starter template built with Next.js 14, TypeScript, and Tailwind CSS. 
-
+A modern, production-ready SaaS AI template built with Next.js 14, TypeScript, and Tailwind CSS.
 ![SaaS Starter](https://img.shields.io/badge/Next.js-14-black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.3-38B2AC)
@@ -9,21 +8,24 @@ A modern, production-ready SaaS starter template built with Next.js 14, TypeScri
 ## ✨ Features
 
 ### 🎨 **Beautiful Design System**
+
 - Clean, modern UI
 - Fully responsive design
 - Dark/Light mode support
 - Customizable color schemes
-- Beautiful animations and transitions
 
 ### 🔧 **Essential SaaS Components**
+
 - **Authentication**: Login, register, password reset
-- **Landing Pages**: Hero, features, pricing, testimonials, FAQ
+- **Third-party Login**: Google, GitHub OAuth integration
+- **Credits System**: Complete credit management with earning, spending, and history
+- **AI Image Generation**: Multi-model AI image generation capabilities
 - **Blog System**: Markdown-based blog with frontmatter
 - **Case Studies**: Showcase your success stories
-- **Dashboard**: User dashboard and analytics
 - **Payment Integration**: Stripe-ready payment system
 
 ### 🛠 **Developer Experience**
+
 - **TypeScript**: Full type safety
 - **Next.js 14**: Latest App Router with SSG support
 - **Tailwind CSS**: Utility-first CSS framework
@@ -31,27 +33,107 @@ A modern, production-ready SaaS starter template built with Next.js 14, TypeScri
 - **ESLint & Prettier**: Code formatting and linting
 - **Responsive Design**: Mobile-first approach
 
-### 📊 **Content Management**
-- **Markdown Blog**: Easy content creation with frontmatter
-- **Case Studies**: Showcase client work and results
-- **SEO Optimized**: Meta tags, structured data
-- **Fast Performance**: Optimized for speed and SEO
+## 🚀 Core Features Overview
+
+### 💳 Credits System
+
+Complete credit management system supporting user credit earning, spending, and history tracking:
+
+**Features:**
+
+- New user signup bonus: 50 credits
+- Purchase plan rewards: Different credits based on plan tier
+- Credit spending: AI image generation and other features consume credits
+- Credit history: Complete record of credit earning and spending
+- Balance inquiry: Real-time current credit balance
+
+### 🔐 Third-party Authentication
+
+Support for mainstream OAuth providers for quick login:
+
+**Supported Providers:**
+
+- Google OAuth 2.0
+- GitHub OAuth
+
+**Features:**
+
+- One-click login/registration
+- Automatic account linking
+- Secure callback handling
+- New user signup credit rewards
+
+**Configuration Required:**
+
+```bash
+# Supabase Configuration
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+
+# App Configuration
+NEXT_PUBLIC_APP_URL=your-app-url
+```
+
+### 🎨 AI Image Generation
+
+Multi-model AI image generation capabilities:
+
+**Supported Models:**
+
+- OpenAI DALL-E 3
+- Stability AI (Stable Diffusion)
+- Other compatible models
+
+**Features:**
+
+- Multiple image sizes: 256x256, 512x512, 768x768, 1024x1024, 1024x1792, 1792x1024
+- Credit billing system
+- Real-time balance checking
+- Image preview and download
+- Multi-language prompt support
+- Error handling and retry mechanism
+
+**Usage Flow:**
+
+1. User inputs prompt
+2. Select model and size
+3. System checks credit balance
+4. Call AI model to generate image
+5. Deduct corresponding credits
+6. Return generated image
+
+**Environment Variables:**
+
+```bash
+# OpenAI
+OPENAI_API_KEY=your-openai-api-key
+
+# Stability AI
+STABILITY_API_KEY=your-stability-api-key
+
+# Other AI Providers
+# Add corresponding API keys as needed
+```
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js 18+ 
+
+- Node.js 18+
 - npm or yarn
 
 ### Installation
 
 1. **Clone the repository**
+
 ```bash
 git clone https://github.com/your-username/saas-starter-template.git
 cd saas-starter-template
 ```
 
 2. **Install dependencies**
+
 ```bash
 npm install
 # or
@@ -59,12 +141,13 @@ yarn install
 ```
 
 3. **Start development server**
+
 ```bash
 edgeone pages dev
 ```
 
 4. **Open your browser**
-Visit [http://localhost:8088](http://localhost:8088) to see your app.
+   Visit [http://localhost:8088](http://localhost:8088) to see your app.
 
 ## 📁 Project Structure
 
@@ -72,7 +155,7 @@ Visit [http://localhost:8088](http://localhost:8088) to see your app.
 saas-starter-template/
 ├── src/
 │   ├── app/                 # Next.js App Router
-│   │   ├── about/          # About page
+│   │   ├── ai/             # AI image generation pages
 │   │   ├── blog/           # Blog pages
 │   │   ├── cases/          # Case studies
 │   │   ├── globals.css     # Global styles
@@ -101,7 +184,7 @@ The template uses CSS custom properties for theming. You can customize colors in
 
 ```css
 :root {
-  --primary: 142 76% 36%;        /* Green primary color */
+  --primary: 142 76% 36%; /* Green primary color */
   --primary-foreground: 355 7% 97%;
   --secondary: 240 4.8% 95.9%;
   /* ... more variables */
@@ -117,9 +200,11 @@ All components are built with TypeScript and Tailwind CSS. They're located in `s
 - `sections/` - Page sections (Hero, Features, Pricing, etc.)
 
 ### AI Assistance
+
 You can modify the code through dialogue in Cursor.
 
 Here are some example Prompts:
+
 - Change the theme color: Change the project's primary color to pink
 - Add language support: Add French support to the project
 - Modify the page: Modify the homepage, removing the xx module
@@ -127,6 +212,7 @@ Here are some example Prompts:
 ### Local Content Management
 
 #### Blog Posts
+
 Create new blog posts in `content/blog/` with frontmatter:
 
 ```markdown
@@ -145,25 +231,28 @@ Write your content here in Markdown...
 ```
 
 #### Case Studies
-Create new case studies in `content/cases/`
 
+Create new case studies in `content/cases/`
 
 ### Contentful Integration
 
 #### Quick Setup
+
 1. **Import data structure to your Contentful space**:
+
    ```bash
    # Install Contentful CLI
    npm install -g contentful-cli
-   
+
    # Login to Contentful
    contentful login
-   
+
    # Import provided data models
    contentful space import --config cms/contentful/contentful-models-config.json
    ```
 
 2. **Configure environment variables**:
+
    ```bash
    # In your .env file
    CONTENTFUL_SPACE_ID=your_space_id
@@ -172,13 +261,12 @@ Create new case studies in `content/cases/`
    NEXT_PUBLIC_SUPABASE_URL=your-supabse-url
    NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
    SUPABASE_SERVICE_ROLE_KEY=your-supabase-anon-service-role-key
-   
+
    STRIPE_WEBHOOK_SECRET=your-stripe-webhooksecret
    STRIPE_SECRET_KEY=your-stripe-secret-key
    STRIPE_CALLBACK_URL=site-url
-   
-   NEXT_PUBLIC_APP_URL=site-url
 
+   NEXT_PUBLIC_APP_URL=site-url
    ```
 
 3. **Export content to local markdown**:
@@ -187,6 +275,7 @@ Create new case studies in `content/cases/`
    ```
 
 **What's included**:
+
 - **Data Models**: Pre-configured Blog and Case content types
 - **Multi-language**: Support for English (`en-US`) and Chinese (`zh-CN`)
 - **Rich Content**: RichText conversion to Markdown
@@ -194,6 +283,7 @@ Create new case studies in `content/cases/`
 - **Language Mapping**: `en` → `en-US`, `zh` → `zh-CN`
 
 **Output structure**:
+
 ```
 content/
 ├── en/blog/*.md        # English blog posts
@@ -201,28 +291,22 @@ content/
 public/images/contentful/  # Downloaded images
 ```
 
-For detailed setup and configuration, see `cms/contentful/README.md`. 
-
+For detailed setup and configuration, see `cms/contentful/README.md`.
 
 ### Internationalization
+
 Our project supports multiple languages, you can find all the translation files in the `dictionaries/` directory. For detailed internationalization setup and configuration, please see `dictionaries/README.md`.
 
 ### Data Analytics
+
 The project has built-in support for Google Analytics data analytics.
 
 1. Sign up for [Google Analytics](https://developers.google.com/analytics?hl=en-US) to get the tracking code
 2. Set the tracking code in the environment variables
+
 ```
 NEXT_PUBLIC_GA_ID=G-xxxxx
 ```
-
-## 📱 Pages Included
-
-- **Homepage** (`/`) - Complete landing page with all sections
-- **About** (`/about`) - About page with team and company info
-- **Blog** (`/blog`) - Blog listing and individual post pages
-- **Cases** (`/cases`) - Case studies and success stories
-- **Pricing** - Included in homepage with anchor links
 
 ## 🎯 SEO Features
 
@@ -234,11 +318,13 @@ NEXT_PUBLIC_GA_ID=G-xxxxx
 - Mobile-first responsive design
 
 ### robot.txt and sitemap.xml
+
 The project provides scripts to automatically generate robot.txt and sitemap.xml.
 You only need to modify the SITE_URL in the gen:seo command in package.json to your own site address, then run:
 `npm run gen:seo` to generate them.
 
-## Deploy
+## 🚀 Deploy
+
 [![Deploy with EdgeOne Pages](https://cdnstatic.tencentcs.com/edgeone/pages/deploy.svg)](https://edgeone.ai/pages/new?template=saas-starter)
 
 ## 🤝 Contributing
@@ -259,7 +345,6 @@ This project is licensed under the MIT License - see the [LICENSE](https://githu
 - Styled with [Tailwind CSS](https://tailwindcss.com/)
 - Icons from [Lucide React](https://lucide.dev/)
 
-
 ---
 
-**Happy building! 🚀** 
+**Happy building! 🚀**
