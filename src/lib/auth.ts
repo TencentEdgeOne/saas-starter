@@ -86,21 +86,25 @@ export async function signOut(): Promise<{ error: string | null }> {
 }
 
 export async function getCurrentUser(): Promise<{ user: User | null; error: string | null }> {
-      
   try {
-      const response = await fetch('/api/auth/user')
-      const data = await response.json()
+    const response = await fetch('/api/auth/user', {
+      cache: 'no-store',
+      headers: {
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+      },
+    })
+    const data = await response.json()
 
-      console.log(`Response status: ${response.status}`, data, response)
+    console.log(`Response status: ${response.status}`, data, response)
 
         
-      if (!response.ok) {
-        console.error(`Failed to get user: ${data.error}`)
-        return { user: null, error: data.error || 'Failed to get user' }
-      }
+    if (!response.ok) {
+      console.error(`Failed to get user: ${data.error}`)
+      return { user: null, error: data.error || 'Failed to get user' }
+    }
 
-      console.log('User retrieved successfully:', data.user?.email)
-      return { user: data.user, error: null }
+    console.log('User retrieved successfully:', data.user?.email)
+    return { user: data.user, error: null }
   } catch (error) {
     console.error('getCurrentUser error:', error)
     return { 
@@ -112,7 +116,7 @@ export async function getCurrentUser(): Promise<{ user: User | null; error: stri
 
 // 监听认证状态变化 - 使用 Supabase 客户端
 export function onAuthStateChange(callback: (user: User | null) => void) {
-  return supabase.auth.onAuthStateChange((event, session) => {
+  return supabase.auth.onAuthStateChange((_event, session) => {
     callback(session?.user as User || null)
   })
 }

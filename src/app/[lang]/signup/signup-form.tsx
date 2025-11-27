@@ -100,11 +100,13 @@ export default function SignupForm({ dict, lang }: SignupFormProps) {
         setToast({ message: data.message || 'Account created successfully!', type: 'success' })
         if (data.session) {
           // 有 session，等待 Cookie 设置完成后刷新页面以重新初始化 AuthContext
+          console.log('Registration successful with session, redirecting...')
           setTimeout(() => {
             window.location.href = `/${lang}?auth=success`
           }, 1500)
         } else {
-          // 如果没有 session，跳转到登录页
+          // 其他情况，跳转到登录页
+          console.log('Registration successful but no session, redirecting to login...')
           setTimeout(() => {
             router.push(`/${lang}/login`)
           }, 2000)
