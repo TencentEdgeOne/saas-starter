@@ -1,0 +1,1046 @@
+{
+  "site": {
+    "name": "SaaS Starter",
+    "description": "The complete SaaS starter template to help you build and launch your next product faster than ever before.",
+    "url": "https://saas-starter.edgeone.app",
+    "email": "hello@saas-starter.edgeone.app",
+    "author": "SaaS Starter Team",
+    "logo": "SaaS Starter",
+    "copyright": "SaaS Starter. All rights reserved.",
+    "tagline": "Made with ❤️ for developers worldwide"
+  },
+  "social": [
+    {
+      "name": "GitHub",
+      "url": "https://github.com",
+      "icon": "Github"
+    },
+    {
+      "name": "Twitter",
+      "url": "https://twitter.com",
+      "icon": "Twitter"
+    },
+    {
+      "name": "LinkedIn",
+      "url": "https://linkedin.com",
+      "icon": "Linkedin"
+    },
+    {
+      "name": "Email",
+      "url": "mailto:hello@saas-starter.com",
+      "icon": "Mail"
+    }
+  ],
+  "nav": {
+    "home": "Home",
+    "features": "Features",
+    "pricing": "Pricing",
+    "blog": "Blog",
+    "about": "About",
+    "contact": "Contact",
+    "cases": "Cases",
+    "blocks": "Blocks",
+    "ai": "AI"
+  },
+  "header": {
+    "navigation": [
+      { "name": "Home", "href": "/" },
+      { "name": "AI", "href": "/ai" },
+      { "name": "Pricing", "href": "/pricing" },
+      { "name": "Blog", "href": "/blog" },
+      { "name": "Cases", "href": "/cases" },
+      { "name": "Contact", "href": "/contact" },
+      { "name": "Blocks", "href": "/blocks" }
+    ],
+    "cta": {
+      "text": "Get Started",
+      "href": "/pricing"
+    }
+  },
+  "footer": {
+    "sections": [
+      {
+        "title": "Product",
+        "links": [
+          { "name": "Features", "href": "/features" },
+          { "name": "Pricing", "href": "/pricing" },
+          { "name": "Blocks", "href": "/blocks" },
+          { "name": "Case Studies", "href": "/cases" },
+          { "name": "Blog", "href": "/blog" }
+        ]
+      },
+      {
+        "title": "Company",
+        "links": [
+          { "name": "About", "href": "/about" },
+          { "name": "Contact", "href": "/contact" }
+        ]
+      }
+    ]
+  },
+  "common": {
+    "buttons": {
+      "documentation": "Documentation",
+      "documentationUrl": "https://saas-starter-docs.edgeone.app/en",
+    "learnMore": "Learn More",
+    "getStarted": "Get Started",
+    "readMore": "Read More",
+    "contactSales": "Contact Sales",
+    "startFreeTrial": "Start Free Trial",
+      "viewDocumentation": "View Documentation",
+      "scheduleDemo": "Schedule Demo",
+      "getStartedFree": "Get Started Free",
+      "getStartedNow": "Get Started Now",
+      "getStartedToday": "Get Started Today",
+      "viewDemo": "View Demo",
+      "sendMessage": "Send Message"
+    },
+    "navigation": {
+      "backToHome": "Back to Home",
+      "backToCases": "Back to Cases"
+    },
+    "states": {
+      "loading": "Loading...",
+      "sending": "Sending...",
+      "error": "Something went wrong"
+    },
+    "pricing": {
+    "perMonth": "per month",
+    "perYear": "per year",
+    "unlimited": "Unlimited",
+      "popular": "Popular"
+    },
+    "common": {
+    "yes": "Yes",
+    "no": "No",
+    "switchLanguage": "Switch language",
+    "toggleTheme": "Toggle theme"
+    }
+  },
+  "shared": {
+    "heroFeatures": [
+      {
+        "icon": "Zap",
+        "title": "Lightning Fast",
+        "description": "Built for speed with optimized performance and instant loading times"
+      },
+      {
+        "icon": "Shield",
+        "title": "Enterprise Security",
+        "description": "Bank-grade security with end-to-end encryption and compliance"
+      },
+      {
+        "icon": "Globe",
+        "title": "Global Scale",
+        "description": "Worldwide CDN and infrastructure for seamless global delivery"
+      },
+      {
+        "icon": "BarChart3",
+        "title": "Advanced Analytics",
+        "description": "Deep insights and real-time data to drive your business forward"
+      }
+    ],
+    "formSubjects": [
+      "General Inquiry",
+      "Technical Support",
+      "Sales Question",
+      "Partnership",
+      "Bug Report",
+      "Feature Request",
+      "Other"
+    ],
+    "supportSubjects": [
+      "Technical Issue",
+      "Billing Question",
+      "Feature Request",
+      "Bug Report",
+      "Account Problem",
+      "Other"
+    ],
+    "commonFaqs": [
+      {
+        "question": "Is there a free trial available?",
+        "answer": "Yes, we offer a 14-day free trial for all plans. No credit card required to start."
+      },
+      {
+        "question": "What payment methods do you accept?",
+        "answer": "We accept all major credit cards, PayPal, and bank transfers for Enterprise plans."
+      },
+      {
+        "question": "Can I cancel my subscription anytime?",
+        "answer": "Absolutely. You can cancel your subscription at any time with no cancellation fees."
+      },
+      {
+        "question": "Is my data secure?",
+        "answer": "Yes, we use enterprise-grade security measures including encryption, regular backups, and SOC 2 compliance."
+      }
+    ],
+    "companyStats": [
+      { "value": "250+", "label": "Happy Customers" },
+      { "value": "50+", "label": "Countries Served" },
+      { "value": "99%", "label": "Satisfaction Rate" },
+      { "value": "24/7", "label": "Support" }
+    ]
+  },
+  "root": {
+    "detectingLanguage": "Detecting language..."
+  },
+  "contact": {
+    "pageTitle": "Contact Our Team",
+    "pageSubtitle": "Have questions about our SaaS starter template? Need technical support? Want to discuss a custom solution? We're here to help!",
+    "getInTouch": "Get in touch",
+    "description": "We're here to help and answer any questions you might have. We look forward to hearing from you!",
+    "quickLinks": {
+      "title": "Quick Links",
+      "description": "Find answers to common questions",
+      "viewFeatures": "View All Features",
+      "viewPricing": "See Pricing Plans",
+      "browseComponents": "Browse Components"
+    },
+    "socialProof": {
+      "title": "Join 10,000+ Developers",
+      "description": "Building amazing products with our SaaS starter template"
+    },
+    "bottomCta": {
+      "title": "Ready to Get Started?",
+      "description": "Don't let technical complexity slow you down. Get your SaaS up and running in hours, not months.",
+      "viewDocs": "View Documentation"
+    },
+    "info": {
+      "email": {
+        "title": "Email Us",
+        "description": "Send us an email anytime"
+      },
+      "phone": {
+        "title": "Call Us",
+        "description": "Mon-Fri from 8am to 6pm"
+      },
+      "address": {
+        "title": "Visit Us",
+        "description": "Come say hello at our office"
+      },
+      "hours": {
+        "title": "Business Hours",
+        "description": "Our team is available"
+      }
+    },
+    "form": {
+      "title": "Get in Touch",
+      "description": "We'd love to hear from you. Send us a message and we'll respond as soon as possible.",
+      "thankYouMessage": "Thank you! We've received your message and will get back to you within 24 hours.",
+      "errorMessage": "Sorry, there was an error sending your message. Please try again."
+    }
+  },
+  "form": {
+    "labels": {
+      "fullName": "Full Name",
+      "emailAddress": "Email Address",
+      "company": "Company",
+      "subject": "Subject",
+      "message": "Message"
+    },
+    "placeholders": {
+      "fullName": "Your full name",
+      "email": "your@email.com",
+      "company": "Your company name",
+      "selectSubject": "Select a subject",
+      "message": "Tell us how we can help you..."
+    },
+    "optional": "(Optional)",
+    "required": "*"
+  },
+  "hero": {
+    "badge": "🚀 Ship Your SaaS in Hours, Not Months",
+    "title": "Build Your Next SaaS Product with Our Starter Template",
+    "subtitle": "A complete SaaS starter template all the components you need to launch fast.",
+    "socialProof": {
+      "trustedByDevelopers": "Trusted by 250+ developers",
+      "readyComponents": "30+ Ready Components",
+      "shipInMinutes": "Ship in 5 Minutes"
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "Build Your SaaS Product Faster",
+      "subtitle": "A modern, responsive, and feature-rich SaaS website template to kickstart your next project."
+    },
+    "bottomCta": {
+      "title": "Ready to Ship Your SaaS?",
+      "description": "Join thousands of developers who have successfully launched their SaaS products. Get started today and ship your first version in hours, not months.",
+      "trustIndicators": [
+        "Instant Download",
+        "30-Day Money Back",
+        "Lifetime Updates"
+      ]
+    }
+  },
+  "features": {
+    "title": "Everything You Need to Ship Fast",
+    "description": "Our SaaS starter template comes packed with all the features and components you need to build and launch your product quickly.",
+    "andMoreText": "And much more...",
+    "componentsLinkText": "30+ Components Ready to Use",
+    "page": {
+      "badge": "Features",
+      "title": "Everything You Need to Succeed",
+      "subtitle": "Powerful features designed to streamline your workflow and accelerate your business growth.",
+      "supportBadge": "Support & Success",
+      "supportTitle": "We're Here to Help You Succeed",
+      "supportSubtitle": "Comprehensive support and resources to ensure your success",
+      "statsTitle": "Trusted by Industry Leaders",
+      "statsDescription": "Numbers that speak for themselves",
+      "stats": [
+        { "value": "99.9", "suffix": "%", "label": "Uptime Guarantee" },
+        { "value": "10", "suffix": "M+", "label": "Active Users" },
+        { "value": "150", "suffix": "+", "label": "Countries Served" },
+        { "value": "24/7", "label": "Expert Support" }
+      ],
+      "ctaTitle": "Ready to Experience These Features?",
+      "ctaDescription": "Start your free trial today and see how our features can transform your business.",
+      "featureCategories": [
+        {
+          "category": "Core Platform",
+          "description": "Essential features that power your business",
+          "features": [
+            {
+              "icon": "Database",
+              "title": "Smart Data Management",
+              "description": "Intelligent data organization with automated backups and real-time sync across all devices.",
+              "benefits": ["Automated backups", "Real-time sync", "Data encryption", "Version control"]
+            },
+            {
+              "icon": "Users",
+              "title": "Team Collaboration",
+              "description": "Seamless collaboration tools with role-based permissions and real-time editing.",
+              "benefits": ["Role-based access", "Real-time editing", "Comment system", "Activity tracking"]
+            },
+            {
+              "icon": "Settings",
+              "title": "Workflow Automation",
+              "description": "Automate repetitive tasks and create custom workflows to boost productivity.",
+              "benefits": ["Custom workflows", "Task automation", "Trigger conditions", "Integration rules"]
+            },
+            {
+              "icon": "BarChart3",
+              "title": "Advanced Analytics",
+              "description": "Comprehensive analytics dashboard with custom reports and data visualization.",
+              "benefits": ["Custom dashboards", "Real-time metrics", "Export reports", "Data insights"]
+            }
+          ]
+        },
+        {
+          "category": "User Experience",
+          "description": "Features designed for the best user experience",
+          "features": [
+            {
+              "icon": "Smartphone",
+              "title": "Mobile Responsive",
+              "description": "Perfect experience across all devices with native mobile app support.",
+              "benefits": ["Responsive design", "Mobile apps", "Offline support", "Touch optimized"]
+            },
+            {
+              "icon": "Palette",
+              "title": "Customizable Interface",
+              "description": "Personalize your workspace with themes, layouts, and custom branding options.",
+              "benefits": ["Custom themes", "Layout options", "Brand colors", "Logo upload"]
+            },
+            {
+              "icon": "Globe",
+              "title": "Multi-language Support",
+              "description": "Support for 50+ languages with automatic translation and localization.",
+              "benefits": ["50+ languages", "Auto translation", "RTL support", "Currency formats"]
+            },
+            {
+              "icon": "Clock",
+              "title": "Real-time Updates",
+              "description": "Instant notifications and live updates keep everyone in sync.",
+              "benefits": ["Live notifications", "Real-time sync", "Status updates", "Activity feeds"]
+            }
+          ]
+        },
+        {
+          "category": "Security & Compliance",
+          "description": "Enterprise-grade security and compliance features",
+          "features": [
+            {
+              "icon": "Shield",
+              "title": "Advanced Security",
+              "description": "Multi-layer security with encryption, 2FA, and advanced threat protection.",
+              "benefits": ["End-to-end encryption", "Two-factor auth", "Threat detection", "Audit logs"]
+            },
+            {
+              "icon": "Lock",
+              "title": "Access Control",
+              "description": "Granular permissions and role-based access control for maximum security.",
+              "benefits": ["Role-based access", "Permission levels", "IP restrictions", "Session management"]
+            },
+            {
+              "icon": "Target",
+              "title": "Compliance Ready",
+              "description": "Built-in compliance features for GDPR, HIPAA, SOC 2, and other standards.",
+              "benefits": ["GDPR compliance", "HIPAA ready", "SOC 2 certified", "Data residency"]
+            }
+          ]
+        },
+        {
+          "category": "Integration & Development",
+          "description": "Connect and extend with powerful integration options",
+          "features": [
+            {
+              "icon": "Code",
+              "title": "API & Webhooks",
+              "description": "Robust REST API and webhooks for seamless integration with your existing tools.",
+              "benefits": ["REST API", "Webhooks", "SDK libraries", "API documentation"]
+            },
+            {
+              "icon": "Layers",
+              "title": "Third-party Integrations",
+              "description": "Pre-built integrations with popular tools and services you already use.",
+              "benefits": ["100+ integrations", "Zapier support", "Custom connectors", "Data sync"]
+            },
+            {
+              "icon": "Rocket",
+              "title": "Developer Tools",
+              "description": "Comprehensive developer tools including sandbox environment and testing suite.",
+              "benefits": ["Sandbox environment", "Testing tools", "Code samples", "Developer support"]
+            }
+          ]
+        }
+      ],
+      "supportFeatures": [
+        {
+          "icon": "Headphones",
+          "title": "24/7 Support",
+          "description": "Round-the-clock support from our expert team"
+        },
+        {
+          "icon": "Rocket",
+          "title": "Onboarding",
+          "description": "Guided setup and personalized onboarding experience"
+        },
+        {
+          "icon": "Target",
+          "title": "Training",
+          "description": "Comprehensive training materials and certification programs"
+        }
+      ]
+    },
+    "main": [
+      {
+        "icon": "Zap",
+        "title": "Lightning Fast",
+        "description": "Built with Next.js 14 and optimized for maximum performance. Your users will love the speed."
+      },
+      {
+        "icon": "Shield",
+        "title": "Secure by Default",
+        "description": "Authentication, authorization, and security best practices built-in from day one."
+      },
+      {
+        "icon": "Palette",
+        "title": "Fully Customizable",
+        "description": "Easy theming system with light/dark mode support. Make it match your brand perfectly."
+      },
+      {
+        "icon": "Code",
+        "title": "Developer Friendly",
+        "description": "Clean code, TypeScript support, and comprehensive documentation to get you started quickly."
+      },
+      {
+        "icon": "Globe",
+        "title": "SEO Optimized",
+        "description": "Built-in SEO optimization, meta tags, and structured data for better search rankings."
+      },
+      {
+        "icon": "Smartphone",
+        "title": "Mobile First",
+        "description": "Responsive design that works beautifully on all devices and screen sizes."
+      }
+    ]
+  },
+  "pricing": {
+    "badge": "Pricing Plans",
+    "title": "Simple, Transparent Pricing",
+    "description": "Choose the perfect plan for your needs. No hidden fees, no surprises.",
+    "mostPopular": "Most Popular",
+    "ctaTitle": "Ready to Get Started?",
+    "ctaDescription": "Join thousands of satisfied customers and start your free trial today.",
+    "pageSubtitle": "Start free and scale as you grow. All plans include our core features with no hidden fees.",
+    "monthlyBilling": "Monthly billing",
+    "annualBilling": "Annual billing",
+    "discount": "Save 20%",
+    "plans": [
+      {
+        "name": "Lite",
+        "period": "per month",
+        "description": "Perfect for individuals and small projects getting started",
+        "features": [
+          "100 credits",
+          "All premium models",
+          "Technical Support"
+        ],
+        "limitations": [
+          "Advanced analytics",
+          "Priority support",
+          "Custom branding",
+          "API access"
+        ],
+        "popular": false,
+        "buttonText": "Get Started",
+        "buttonVariant": "outline"
+      },
+      {
+        "name": "Standard",
+        "period": "per month",
+        "description": "Ideal for growing businesses and professional teams",
+        "features": [
+         "300 credits",
+          "All premium models",
+          "Technical Support"
+        ],
+        "limitations": [
+          "White-label solution",
+          "Dedicated account manager"
+        ],
+        "popular": true,
+        "buttonText": "Get Started",
+        "buttonVariant": "default"
+      },
+      {
+        "name": "Pro",
+        "period": "per month",
+        "description": "For large organizations with advanced requirements",
+        "features": [
+          "500 credits",
+          "All premium models",
+          "Technical Support"
+        ],
+        "limitations": [],
+        "popular": false,
+        "buttonText": "Get Started",
+        "buttonVariant": "outline"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Can I change my plan at any time?",
+        "answer": "Yes, you can upgrade or downgrade your plan at any time. Changes will be reflected in your next billing cycle."
+      },
+      {
+        "question": "Do you offer discounts for annual billing?",
+        "answer": "Yes, we offer 20% discount when you pay annually instead of monthly."
+      }
+    ],
+    "comparison": {
+      "title": "Compare Key Features",
+      "description": "See the main differences between plans",
+      "tableHeaders": {
+        "features": "Features",
+        "starter": "Starter",
+        "professional": "Professional", 
+        "enterprise": "Enterprise"
+      },
+      "planPricing": {
+        "starter": "$80/month",
+        "professional": "$150/month",
+        "enterprise": "$300/month"
+      },
+      "features": [
+        {
+          "category": "Core Features",
+          "items": [
+            {
+              "name": "Projects",
+              "starter": "Up to 5",
+              "professional": "Unlimited",
+              "enterprise": "Unlimited"
+            },
+            {
+              "name": "Storage",
+              "starter": "10GB",
+              "professional": "100GB",
+              "enterprise": "Unlimited"
+            },
+            {
+              "name": "Team Members",
+              "starter": "1 user",
+              "professional": "Up to 10",
+              "enterprise": "Unlimited"
+            }
+          ]
+        },
+        {
+          "category": "Features & Support",
+          "items": [
+            {
+              "name": "Advanced Analytics",
+              "starter": false,
+              "professional": true,
+              "enterprise": true
+            },
+            {
+              "name": "Priority Support",
+              "starter": false,
+              "professional": true,
+              "enterprise": true
+            },
+            {
+              "name": "API Access",
+              "starter": false,
+              "professional": true,
+              "enterprise": true
+            },
+            {
+              "name": "Custom Integrations",
+              "starter": false,
+              "professional": false,
+              "enterprise": true
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "about": {
+    "pageTitle": "About SaaS Starter",
+    "pageSubtitle": "We're a team of passionate developers and designers who understand the challenges of building SaaS products from scratch. That's why we created this comprehensive starter template to help you skip the boring stuff and focus on what matters most - your unique product features.",
+    "heroTitle": "About",
+    "heroHighlight": "SaaS Starter",
+    "storyTitle": "Our Story",
+    "storyContent": [
+      "It all started when our founder, Alex, spent months building the same authentication, payment, and dashboard components for the third time. He realized that every SaaS product needs the same foundational features, yet developers keep rebuilding them from scratch.",
+      "That's when the idea for SaaS Starter was born. We wanted to create a comprehensive, production-ready template that would save developers months of work and help them launch their products faster.",
+      "Today, we're proud to have helped over 250+ developers and teams launch their SaaS products successfully. Our template has been battle-tested in production and continues to evolve with the latest best practices."
+    ],
+    "valuesTitle": "Our Values",
+    "valuesSubtitle": "The principles that guide everything we do.",
+    "values": [
+      {
+        "title": "Mission Driven",
+        "description": "Our mission is to empower developers to build and launch their SaaS products faster than ever before."
+      },
+      {
+        "title": "Community First",
+        "description": "We believe in building a strong community of developers who support and learn from each other."
+      },
+      {
+        "title": "Innovation",
+        "description": "We constantly innovate and improve our tools to stay ahead of the latest technologies and trends."
+      },
+      {
+        "title": "Quality",
+        "description": "We are committed to delivering high-quality, production-ready code that you can trust."
+      }
+    ],
+    "teamTitle": "Meet Our Team",
+    "teamSubtitle": "The people behind SaaS Starter.",
+    "team": [
+      {
+        "name": "Alex Johnson",
+        "role": "Founder & CEO",
+        "avatar": "/images/people/people1.png",
+        "bio": "Full-stack developer with 10+ years of experience building SaaS products."
+      },
+      {
+        "name": "Sarah Chen",
+        "role": "Lead Designer",
+        "avatar": "/images/people/people1.png",
+        "bio": "UI/UX expert passionate about creating beautiful and intuitive user experiences."
+      },
+      {
+        "name": "Marcus Rodriguez",
+        "role": "Technical Lead",
+        "avatar": "/images/people/people1.png",
+        "bio": "DevOps engineer focused on scalability, security, and performance optimization."
+      },
+      {
+        "name": "Emily Davis",
+        "role": "Community Manager",
+        "avatar": "/images/people/people1.png",
+        "bio": "Dedicated to building and nurturing our developer community worldwide."
+      }
+    ]
+  },
+  "ai": {
+    "pageTitle": "AI Image Generation",
+    "pageSubtitle": "Create stunning images with the power of artificial intelligence. Transform your ideas into visual reality.",
+    "hero": {
+      "heading": "EdgeOne AI Image Studio",
+      "subheading": "Vercel AI SDK powered text-to-image demo.",
+      "ctaText": "Start Creating",
+      "ctaSecondary": "View Examples"
+    },
+    "generator": {
+      "title": "Test AI Image Generation in Real Time",
+      "description": "Pick a model, describe your idea, and let the AI turn it into a visual concept.",
+      "modelLabel": "Choose a model",
+      "modelPlaceholder": "Select an AI image model",
+      "sizeLabel": "Image Size",
+      "sizePlaceholder": "Select image size",
+      "promptLabel": "Describe your image",
+      "promptPlaceholder": "e.g. Futuristic city skyline at sunset, cinematic lighting, ultra realistic",
+      "generate": "Generate image",
+      "generating": "Generating...",
+      "resultTitle": "Generation Result",
+      "emptyStateTitle": "Start by describing an idea",
+      "emptyStateDescription": "Your generated image will appear here. Use descriptive prompts for the best results.",
+      "errorTitle": "Generation failed",
+      "errorDescription": "We couldn't generate this prompt. Please refine your description and try again.",
+      "download": "Download image",
+      "retry": "Try again",
+      "safetyNote": "Generated content must follow provider policies. Avoid personal data or sensitive topics.",
+      "examplesTitle": "Quick prompt ideas",
+      "examples": [
+        {
+          "label": "Brand hero",
+          "prompt": "Minimalist SaaS dashboard hero, gradient lighting, holographic charts, premium UI kit, 32-bit render"
+        },
+        {
+          "label": "City concept",
+          "prompt": "Neo-Tokyo street market at blue hour, neon reflections, cinematic depth of field, volumetric fog"
+        },
+        {
+          "label": "Portrait",
+          "prompt": "Portrait of a confident product designer, studio lighting, colorful bokeh background, 85mm lens"
+        }
+      ],
+      "checkingCredits": "Checking credits...",
+      "credits": "Credits:",
+      "cost": "Cost",
+      "creditsUnavailable": "Credits unavailable",
+      "notEnoughCredits": "Not enough credits to generate images. Please top up.",
+      "pleaseSignIn": "Please sign in to use the AI generator.",
+      "unableToFetchCredits": "Unable to fetch credits. Please try again.",
+      "unableToFetchCost": "Unable to load credit cost. Assuming default value.",
+      "failedToFetchCost": "Failed to fetch image cost.",
+      "imageGenerationTimeout": "Image generation timed out. Please try again.",
+      "modelNotConfigured": "Model not configured"
+    },
+    "api": {
+      "userAuthenticationRequired": "User authentication required",
+      "invalidJsonBody": "Invalid JSON body",
+      "promptRequired": "Prompt is required",
+      "modelRequired": "Model is required",
+      "unsupportedSize": "Unsupported size option: {size}",
+      "unsupportedModel": "Unsupported model: {model}. Available models: {models}",
+      "notEnoughCredits": "Not enough credits. Required: {cost}, current balance: {balance}",
+      "apiKeyNotConfigured": "{provider} API key not configured",
+      "generationFailed": "Failed to generate image",
+      "creditsSpendFailed": "Failed to spend credits. Please try again later."
+    },
+    "features": {
+      "title": "Powerful Features",
+      "subtitle": "Everything you need to create amazing images",
+      "items": [
+        {
+          "icon": "Zap",
+          "title": "Lightning Fast",
+          "description": "Generate high-quality images in seconds with our optimized AI models."
+        },
+        {
+          "icon": "Palette",
+          "title": "Multiple Styles",
+          "description": "Choose from various artistic styles including realistic, anime, oil painting, and more."
+        },
+        {
+          "icon": "Settings",
+          "title": "Customizable",
+          "description": "Fine-tune every aspect of your images with advanced parameters and controls."
+        },
+        {
+          "icon": "Shield",
+          "title": "Safe & Private",
+          "description": "Your images are processed securely and never shared without your permission."
+        }
+      ]
+    },
+    "howItWorks": {
+      "title": "How It Works",
+      "subtitle": "Create images in three simple steps",
+      "steps": [
+        {
+          "number": "1",
+          "title": "Enter Your Prompt",
+          "description": "Describe the image you want to create in natural language."
+        },
+        {
+          "number": "2",
+          "title": "Choose Your Style",
+          "description": "Select from various artistic styles and adjust parameters to match your vision."
+        },
+        {
+          "number": "3",
+          "title": "Generate & Download",
+          "description": "Watch as AI brings your idea to life, then download your masterpiece."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Ready to Create?",
+      "description": "Start generating amazing images with AI today. No credit card required.",
+      "buttonText": "Get Started Free"
+    }
+  },
+  "cases": {
+    "pageTitle": "Success Stories",
+    "heroTitle": "Success",
+    "heroHighlight": "Stories",
+    "pageSubtitle": "See how our SaaS Starter template has helped companies build and launch successful products faster than ever before.",
+    "shareYourStory": "Share Your Success Story",
+    "shareSubtitle": "Have a project you'd like to showcase? We'd love to feature your success story.",
+    "submitYourCase": "Submit Your Case",
+    "viewDetails": "View Details",
+    "keyResult": "Key Result",
+    "ctaTitle": "Ready to Build Your Success Story?",
+    "ctaSubtitle": "Join these successful companies and launch your SaaS product with our proven template.",
+    "discussYourProject": "Discuss Your Project",
+    "detail": {
+      "theChallenge": "The Challenge",
+      "ourSolution": "Our Solution",
+      "keyResults": "Key Results",
+      "technologiesUsed": "Technologies Used",
+      "cta": {
+        "title": "Ready to Start Your Project?",
+        "description": "Let's discuss how we can help you achieve similar results for your business.",
+        "getInTouch": "Get In Touch",
+        "viewMoreCases": "View More Cases"
+      }
+    }
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "description": "Everything you need to know about our SaaS starter template.",
+    "stillHaveQuestions": "Still have questions? We're here to help!",
+    "contactSupport": "Contact Support →",
+    "faqs": [
+      {
+        "question": "What is included in the SaaS Starter Template?",
+        "answer": "Our template includes a complete Next.js application with authentication, payment processing, dashboard components, landing pages, email templates, and much more. You get everything you need to launch your SaaS product."
+      },
+      {
+        "question": "Do I need to pay monthly fees?",
+        "answer": "No! This is a one-time purchase with lifetime access. You can build unlimited projects with no recurring fees or restrictions."
+      },
+      {
+        "question": "Can I customize the design and branding?",
+        "answer": "Absolutely! The template is fully customizable. You can easily change colors, fonts, layouts, and add your own branding. We include a comprehensive design system to make customization simple."
+      },
+      {
+        "question": "What payment methods are supported?",
+        "answer": "The template comes with Stripe integration out of the box, supporting credit cards, digital wallets, and international payments. You can also integrate other payment providers if needed."
+      },
+      {
+        "question": "Is the code production-ready?",
+        "answer": "Yes! The code follows industry best practices, includes proper error handling, security measures, and is optimized for production deployment. Many customers have successfully launched with this template."
+      },
+      {
+        "question": "Do you provide support and updates?",
+        "answer": "Yes, we provide regular updates with new features, bug fixes, and security improvements. Support is available via email and our community Discord server."
+      },
+      {
+        "question": "Can I use this for client projects?",
+        "answer": "Yes, you can use this template for both personal and client projects. The license allows commercial use without restrictions."
+      },
+      {
+        "question": "What if I need help with setup?",
+        "answer": "We provide comprehensive documentation, video tutorials, and setup guides. For Enterprise customers, we also offer 1-on-1 setup calls to get you started quickly."
+      }
+    ]
+  },
+  "testimonials": {
+    "title": "Loved by Developers Worldwide",
+    "description": "Join thousands of developers who have successfully launched their SaaS products using our starter template.",
+    "testimonials": [
+      {
+        "name": "Sarah Chen",
+        "role": "Founder at TechFlow",
+        "avatar": "/images/people/people1.png",
+        "content": "This template saved us months of development time. We launched our SaaS product in just 2 weeks instead of 6 months!",
+        "rating": 5
+      },
+      {
+        "name": "Marcus Rodriguez",
+        "role": "CTO at DataSync",
+        "avatar": "/images/people/people1.png",
+        "content": "The code quality is exceptional. Clean, well-documented, and follows all the best practices. Highly recommended!",
+        "rating": 5
+      },
+      {
+        "name": "Emily Johnson",
+        "role": "Solo Developer",
+        "avatar": "/images/people/people1.png",
+        "content": "As a solo developer, this template gave me everything I needed to compete with larger teams. The components are beautiful!",
+        "rating": 5
+      },
+      {
+        "name": "David Kim",
+        "role": "Startup Founder",
+        "avatar": "/images/people/people1.png",
+        "content": "The authentication and payment integration worked flawlessly. We were able to start accepting payments on day one.",
+        "rating": 5
+      },
+      {
+        "name": "Lisa Wang",
+        "role": "Product Manager",
+        "avatar": "/images/people/people1.png",
+        "content": "The design system is incredibly consistent and the dark mode implementation is perfect. Our users love it!",
+        "rating": 5
+      },
+      {
+        "name": "Alex Thompson",
+        "role": "Full-stack Developer",
+        "avatar": "/images/people/people1.png",
+        "content": "Best investment I made this year. The template is constantly updated and the support is fantastic.",
+        "rating": 5
+      }
+    ],
+    "stats": [
+      {
+        "value": "250+",
+        "label": "Happy Customers"
+      },
+      {
+        "value": "4.9/5",
+        "label": "Average Rating"
+      },
+      {
+        "value": "100%",
+        "label": "Satisfaction Rate"
+      }
+    ]
+  },
+  "stats": {
+    "businessMetrics": [
+      { "value": "500", "suffix": "K+", "label": "Active Users", "color": "primary" },
+      { "value": "150", "suffix": "+", "label": "Integrations", "color": "secondary" },
+      { "value": "99.9", "suffix": "%", "label": "Uptime", "color": "success" },
+      { "value": "24/7", "label": "Support", "color": "primary" }
+    ],
+    "productStats": {
+      "title": "Trusted by thousands",
+      "stats": [
+        { "value": "1M+", "label": "Downloads" },
+        { "value": "4.9", "suffix": "/5", "label": "User Rating" },
+        { "value": "150+", "label": "Countries" },
+        { "value": "99%", "label": "Uptime" }
+      ]
+    }
+  },
+  "blog": {
+    "pageTitle": "Our Blog",
+    "pageSubtitle": "Insights, tutorials, and updates from the SaaS Starter team. Learn how to build better SaaS products and grow your business.",
+    "noPosts": {
+      "title": "No blog posts yet",
+      "description": "We're working on some great content. Check back soon!",
+      "instructions": {
+        "line1": "To add blog posts, create markdown files in the",
+        "directory": "content/blog",
+        "line2": "directory.",
+        "line3": "Each file should have frontmatter with title, date, excerpt, author, and tags."
+      }
+    },
+    "article": {
+      "thanksMessage": "Thanks for reading! Share this article if you found it helpful.",
+      "readMoreArticles": "Read More Articles",
+      "readTime": "{minutes} min read"
+    }
+  },
+  "metadata": {
+    "siteName": "SaaS Starter",
+    "defaultTitle": "SaaS Starter - Build Your Next SaaS Product",
+    "titleTemplate": "%s | SaaS Starter",
+    "description": "A modern SaaS starter template with all the components you need to build your next product.",
+    "keywords": "SaaS, Next.js, React, TypeScript, Tailwind CSS",
+    "author": "SaaS Starter",
+    "creator": "SaaS Starter",
+    "twitterCreator": "@saas_starter"
+  },
+  "highlights": {
+    "keywords": [
+      { "key": "SaaS", "value": "SaaS" },
+      { "key": "Developers", "value": "Developers" },
+      { "key": "Questions", "value": "Questions" },
+      { "key": "Pricing", "value": "Pricing" },
+      { "key": "Ship Fast", "value": "Ship Fast" },
+      { "key": "Next.js", "value": "Next.js" },
+      { "key": "Features", "value": "Features" },
+      { "key": "Analytics", "value": "Analytics" },
+      { "key": "Dashboard", "value": "Dashboard" },
+      { "key": "Product", "value": "Product" },
+      { "key": "Solution", "value": "Solution" },
+      { "key": "Technology", "value": "Technology" },
+      { "key": "Innovation", "value": "Innovation" },
+      { "key": "Performance", "value": "Performance" },
+      { "key": "Security", "value": "Security" },
+      { "key": "Scalability", "value": "Scalability" },
+      { "key": "Efficiency", "value": "Efficiency" },
+      { "key": "Succeed", "value": "Succeed" },
+      { "key": "Blog", "value": "Blog" }
+    ]
+  },
+  "auth": {
+    "login": {
+      "title": "Sign in to your account",
+      "subtitle": "Welcome back! Please sign in to continue.",
+      "formTitle": "Sign In",
+      "formDescription": "Enter your credentials to access your account",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "Enter your email",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "signInButton": "Sign In",
+      "signingIn": "Signing in...",
+      "noAccount": "Don't have an account?",
+      "signUpLink": "Sign up here"
+    },
+    "signup": {
+      "title": "Create your account",
+      "subtitle": "Join us today and get started with your journey.",
+      "formTitle": "Sign Up",
+      "formDescription": "Create your account to get started",
+      "fullNameLabel": "Full Name",
+      "fullNamePlaceholder": "Enter your full name",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "Enter your email",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "confirmPasswordLabel": "Confirm Password",
+      "confirmPasswordPlaceholder": "Confirm your password",
+      "signUpButton": "Sign Up",
+      "creating": "Creating account...",
+      "hasAccount": "Already have an account?",
+      "signInLink": "Sign in here"
+    },
+    "user": {
+      "welcome": "Welcome back",
+      "signOut": "Sign Out",
+      "profile": "Profile",
+      "dashboard": "Dashboard"
+    }
+  },
+  "profile": {
+    "title": "Profile",
+    "description": "Manage your profile and subscription information.",
+    "loading": "Loading profile...",
+    "notLoggedIn": "Not Logged In",
+    "pleaseSignIn": "Please sign in to view your profile.",
+    "personalInfo": "Personal Information",
+    "personalInfoDescription": "Your account details and preferences",
+    "email": "Email",
+    "memberSince": "Member Since",
+    "editProfile": "Edit Profile",
+    "subscriptions": "Subscriptions",
+    "subscriptionsDescription": "Manage your active subscriptions and billing",
+    "loadingSubscriptions": "Loading subscriptions...",
+    "subscriptionsError": "Error",
+    "tryAgain": "Try Again",
+    "noSubscriptions": "No Active Subscriptions",
+    "noSubscriptionsDescription": "You don't have any active subscriptions yet.",
+    "browsePlans": "Browse Plans",
+    "manage": "Manage",
+    "cancel": "Cancel",
+    "trialEnds": "Trial ends",
+    "creditsBalance":"Credits Balance",
+    "subscriptionSuccess": "Subscription successful, earned",
+    "creditsReward": "credits"
+  }
+} 

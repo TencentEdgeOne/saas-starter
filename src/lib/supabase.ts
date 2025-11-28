@@ -1,0 +1,447 @@
+import { createClient, SupabaseClient } from '@supabase/supabase-js'
+import { createStripe, createStripeCustomer } from './stripe'
+import Stripe from 'stripe'
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co'
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key'
+
+const TRIAL_PERIOD_DAYS = 0;
+
+// 套餐价格到积分的映射
+const PLAN_CREDITS_MAPPING: Record<string, { price: number; credits: number }> = {
+  'lite': { price: 80, credits: 100 },
+  'standard': { price: 150, credits: 300 },
+  'pro': { price: 300, credits: 500 }
+};
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true,
+  },
+})
+
+
+// Server-side Supabase client for API routes
+export const createServerClient = () => {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+  
+  if (!url || !serviceKey) {
+    throw new Error('Supabase configuration is missing. Please set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY environment variables.')
+  }
+  
+  return createClient(url, serviceKey)
+}
+
+// Server-side Supabase client with user authentication
+export const createAuthenticatedClient = (accessToken: string) => {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  
+  if (!url || !anonKey) {
+    throw new Error('Supabase configuration is missing. Please set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY environment variables.')
+  }
+  
+  return createClient(url, anonKey, {
+    global: {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    },
+  })
+}
+
+let supabaseAdmin: SupabaseClient | null = null
+// 创建管理员客户端（使用服务角色密钥）
+export const createSupabaseAdminClient = () => {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+  
+  if (!url || !serviceKey) {
+    throw new Error('Supabase configuration is missing. Please set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY environment variables.')
+  }
+
+  return createClient(url, serviceKey)
+}
+export const toDateTime = (secs: number) => {
+  var t = new Date(+0); // Unix epoch start.
+  t.setSeconds(secs);
+  return t;
+};
+
+
+export const upsertCustomer = async (uuid: string, customerId: string) => {
+  const { error: upsertError } = await createSupabaseAdminClient()
+    .from('customers')
+    .upsert([{ id: uuid, stripe_customer_id: customerId }]);
+
+  if (upsertError)
+    throw new Error(`Supabase customer record creation failed: ${upsertError.message}`);
+
+  return customerId;
+};
+
+
+export const createOrRetrieveCustomer = async ({
+  email,
+  uuid
+}: {
+  email: string,
+  uuid: string
+}) => {
+  // Check if the customer already exists in Supabase
+  const stripe = createStripe();
+  const { data: existingSupabaseCustomer, error: queryError } =
+    await createSupabaseAdminClient()
+      .from('customers')
+      .select('*')
+      .eq('id', uuid)
+      .maybeSingle();
+  // console.log('createOrRetrieveCustomer2', queryError);
+
+  if (queryError) {
+    throw new Error(`Supabase customer lookup failed: ${queryError.message}`);
+  }
+  console.log('prepare stripe id');
+  // Retrieve the Stripe customer ID using the Supabase customer ID, with email fallback
+  let stripeCustomerId;
+  if (existingSupabaseCustomer?.stripe_customer_id) {
+    const existingStripeCustomer = await stripe.customers.retrieve(
+      existingSupabaseCustomer.stripe_customer_id
+    );
+    stripeCustomerId = existingStripeCustomer.id;
+  } else {
+    // If Stripe ID is missing from Supabase, try to retrieve Stripe customer ID by email
+    const stripeCustomers = await stripe.customers.list({ email: email });
+    stripeCustomerId =
+      stripeCustomers.data.length > 0 ? stripeCustomers.data[0].id : undefined;
+  }
+  // If still no stripeCustomerId, create a new customer in Stripe
+  const stripeIdToInsert = stripeCustomerId
+    ? stripeCustomerId
+    : await createStripeCustomer(email, uuid);
+  if (!stripeIdToInsert) throw new Error('Stripe customer creation failed.');
+  console.log('prepare stripe id finished', stripeIdToInsert);
+
+  if (existingSupabaseCustomer && stripeCustomerId) {
+    // If Supabase has a record but doesn't match Stripe, update Supabase record
+    if (existingSupabaseCustomer.stripe_customer_id !== stripeCustomerId) {
+      const { error: updateError } = await createSupabaseAdminClient()
+        .from('customers')
+        .update({ stripe_customer_id: stripeCustomerId })
+        .eq('id', uuid);
+
+      if (updateError)
+        throw new Error(
+          `Supabase customer record update failed: ${updateError.message}`
+        );
+      console.warn(
+        `Supabase customer record mismatched Stripe ID. Supabase record updated.`
+      );
+    }
+    // If Supabase has a record and matches Stripe, return Stripe customer ID
+    return stripeCustomerId;
+  } else {
+    console.warn(
+      `Supabase customer record was missing. A new record was created.`
+    );
+    console.log(`Stripe customer ID: ${stripeIdToInsert}, uuid: ${uuid}`);
+
+    // If Supabase has no record, create a new record and return Stripe customer ID
+    const upsertedStripeCustomer = await upsertCustomer(
+      uuid,
+      stripeIdToInsert
+    );
+    if (!upsertedStripeCustomer)
+      throw new Error('Supabase customer record creation failed.');
+
+    return upsertedStripeCustomer;
+  }
+};
+
+/**
+ * 根据价格ID确定套餐名称
+ * @param priceId Stripe价格ID
+ */
+const determinePlanName = async (priceId: string): Promise<string | null> => {
+  const stripe = createStripe();
+  
+  try {
+    const price = await stripe.prices.retrieve(priceId);
+    const product = await stripe.products.retrieve(price.product as string);
+    
+    // 根据产品名称或价格确定套餐类型
+    const productName = product.name.toLowerCase();
+    
+    if (productName.includes('lite') || price.unit_amount === 8000) {
+      return 'lite';
+    } else if (productName.includes('standard') || price.unit_amount === 15000) {
+      return 'standard';
+    } else if (productName.includes('pro') || price.unit_amount === 30000) {
+      return 'pro';
+    }
+    
+    return null;
+  } catch (error) {
+    console.error('Failed to determine plan name:', error);
+    return null;
+  }
+};
+
+/**
+ * 根据购买的套餐为用户添加积分
+ * @param userId 用户ID
+ * @param priceId 价格ID
+ * @param planName 套餐名称
+ */
+export const addCreditsForPurchase = async (
+  userId: string, 
+  priceId: string, 
+  planName: string
+) => {
+  // 根据套餐名称获取对应的积分数量
+  const creditsAmount = PLAN_CREDITS_MAPPING[planName]?.credits;
+  
+  if (!creditsAmount) {
+    throw new Error(`Invalid plan name: ${planName}`);
+  }
+  
+  // 生成唯一交易号
+  const transNo = `purchase_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  
+  // 插入积分记录
+  const { error } = await createSupabaseAdminClient()
+    .from('credits')
+    .insert({
+      trans_no: transNo,
+      user_id: userId,
+      trans_type: 'purchase_bonus',
+      credits: creditsAmount,
+      plan_name: planName,
+      description: `购买 ${planName} 套餐获得的积分奖励`
+    });
+  
+  if (error) {
+    throw new Error(`Failed to add credits: ${error.message}`);
+  }
+  
+  console.log(`Added ${creditsAmount} credits for user ${userId} for ${planName} plan`);
+  return creditsAmount;
+};
+
+/**
+ * Copies the billing details from the payment method to the customer object.
+ */
+const copyBillingDetailsToCustomer = async (
+  uuid: string,
+  payment_method: any
+) => {
+  //Todo: check this assertion
+  const customer = payment_method.customer;
+  const { name, phone, address } = payment_method.billing_details;
+  if (!name || !phone || !address) return;
+  //@ts-ignore
+  await stripe.customers.update(customer, { name, phone, address });
+  const { error: updateError } = await createSupabaseAdminClient()
+    .from('users')
+    .update({
+      billing_address: { ...address },
+      payment_method: { ...payment_method[payment_method.type] }
+    })
+    .eq('id', uuid);
+  if (updateError) throw new Error(`Customer update failed: ${updateError.message}`);
+};
+
+/**
+ * Manage subscription status change from Stripe webhook
+ * @param subscriptionId 
+ * @param customerId 
+ * @param createAction 
+ */
+export const manageSubscriptionStatusChange = async (
+  subscriptionId: string,
+  customerId: string,
+  createAction: string
+) => {
+  // Get customer's UUID from mapping table.
+  const { data: customerData, error: noCustomerError } = await createSupabaseAdminClient()
+    .from('customers')
+    .select('id')
+    .eq('stripe_customer_id', customerId)
+    .single();
+
+  if (noCustomerError)
+    throw new Error(`Customer lookup failed: ${noCustomerError.message}`);
+
+  const { id: uuid } = customerData;
+  const stripe = createStripe();
+  const subscription = await stripe.subscriptions.retrieve(subscriptionId, {
+    expand: ['default_payment_method']
+  }) as Stripe.Subscription;
+  // Upsert the latest status of the subscription object.
+  const subscriptionData = {
+    id: subscription.id,
+    user_id: uuid,
+    metadata: subscription.metadata,
+    status: subscription.status,
+    price_id: subscription.items.data[0].price.id,
+    //TODO check quantity on subscription
+    // @ts-ignore
+    quantity: subscription.quantity,
+    cancel_at_period_end: subscription.cancel_at_period_end,
+    cancel_at: subscription.cancel_at
+      ? toDateTime(subscription.cancel_at).toISOString()
+      : null,
+    canceled_at: subscription.canceled_at
+      ? toDateTime(subscription.canceled_at).toISOString()
+      : null,
+    current_period_start: (subscription as any).current_period_start ? toDateTime(
+      (subscription as any).current_period_start
+    ).toISOString() : null,
+    current_period_end: (subscription as any).current_period_end ? toDateTime(
+      (subscription as any).current_period_end
+    ).toISOString() : null,
+    created:  toDateTime(subscription.created).toISOString(),
+    ended_at: subscription.ended_at
+      ? toDateTime(subscription.ended_at).toISOString()
+      : null,
+    trial_start: subscription.trial_start
+      ? toDateTime(subscription.trial_start).toISOString()
+      : null,
+    trial_end: subscription.trial_end
+      ? toDateTime(subscription.trial_end).toISOString()
+      : null
+  };
+
+  const { error: upsertError } = await createSupabaseAdminClient()
+    .from('subscriptions')
+    .upsert([subscriptionData]);
+  if (upsertError)
+    throw new Error(`Subscription insert/update failed: ${upsertError.message}`);
+  console.log(
+    `Inserted/updated subscription [${subscription.id}] for user [${uuid}]`
+  );
+  
+  // 如果是创建订阅，添加相应的积分
+  if(createAction === 'customer.subscription.created') {
+    try {
+      const priceId = subscription.items.data[0].price.id;
+      const planName = await determinePlanName(priceId);
+      
+      if (planName) {
+        await addCreditsForPurchase(uuid, priceId, planName);
+      } else {
+        console.warn(`Could not determine plan name for price ID: ${priceId}`);
+      }
+    } catch (error) {
+      console.error('Failed to add credits for purchase:', error);
+      // 不中断订阅流程，只记录错误
+    }
+  }
+
+  // For a new subscription copy the billing details to the customer object.
+  // NOTE: This is a costly operation and should happen at the very end.
+  if (['customer.subscription.created','checkout.session.completed'].includes(createAction) && subscription.default_payment_method && uuid)
+    //@ts-ignore
+    await copyBillingDetailsToCustomer(
+      uuid,
+      subscription.default_payment_method
+    );
+};
+
+
+/**
+ * Upsert product to Supabase from Stripe webhook
+ * @param product 
+ */
+export const upsertProduct = async (product: Stripe.Product) => {
+  const productData = {
+    id: product.id,
+    active: product.active,
+    name: product.name,
+    description: product.description ?? null,
+    image: product.images?.[0] ?? null,
+    metadata: product.metadata,
+    marketing_features: product.marketing_features ?? null,
+  };
+
+  const { error: upsertError } = await createSupabaseAdminClient()
+    .from('products')
+    .upsert([productData]);
+  if (upsertError)
+    throw new Error(`Product insert/update failed: ${upsertError.message}`);
+  console.log(`Product inserted/updated: ${product.id}`);
+};
+
+/**
+ * Upsert price to Supabase from Stripe webhook
+ * @param price 
+ * @param retryCount 
+ * @param maxRetries 
+ */
+export const upsertPrice = async (
+  price: Stripe.Price,
+  retryCount = 0,
+  maxRetries = 3
+) => {
+  const priceData = {
+    id: price.id,
+    product_id: typeof price.product === 'string' ? price.product : '',
+    active: price.active,
+    currency: price.currency,
+    type: price.type,
+    unit_amount: price.unit_amount ?? null,
+    interval: price.recurring?.interval ?? null,
+    interval_count: price.recurring?.interval_count ?? null,
+    trial_period_days: price.recurring?.trial_period_days ?? TRIAL_PERIOD_DAYS
+  };
+
+  const { error: upsertError } = await createSupabaseAdminClient()
+    .from('prices')
+    .upsert([priceData]);
+
+  if (upsertError?.message.includes('foreign key constraint')) {
+    if (retryCount < maxRetries) {
+      console.log(`Retry attempt ${retryCount + 1} for price ID: ${price.id}`);
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await upsertPrice(price, retryCount + 1, maxRetries);
+    } else {
+      throw new Error(
+        `Price insert/update failed after ${maxRetries} retries: ${upsertError.message}`
+      );
+    }
+  } else if (upsertError) {
+    throw new Error(`Price insert/update failed: ${upsertError.message}`);
+  } else {
+    console.log(`Price inserted/updated: ${price.id}`);
+  }
+};
+
+/**
+ * Delete product from Supabase from Stripe webhook
+ * @param product 
+ */
+export const deleteProduct = async (product: Stripe.Product) => {
+  const { error: deletionError } = await createSupabaseAdminClient()
+    .from('products')
+    .delete()
+    .eq('id', product.id);
+  if (deletionError)
+    throw new Error(`Product deletion failed: ${deletionError.message}`);
+  console.log(`Product deleted: ${product.id}`);
+};
+
+/**
+ * Delete price from Supabase from Stripe webhook
+ * @param price 
+ */
+export const deletePrice = async (price: Stripe.Price) => {
+  const { error: deletionError } = await createSupabaseAdminClient()
+    .from('prices')
+    .delete()
+    .eq('id', price.id);
+  if (deletionError) throw new Error(`Price deletion failed: ${deletionError.message}`);
+  console.log(`Price deleted: ${price.id}`);
+};

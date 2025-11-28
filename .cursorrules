@@ -1,0 +1,374 @@
+# Cursor Rules for SaaS Starter Template
+
+## 🎯 Core Principle: REUSE EXISTING COMPONENTS FIRST
+
+**ALWAYS prioritize using existing components over creating new ones. Only create new components when absolutely necessary and existing components cannot be extended or configured to meet the requirements.**
+
+---
+
+## 📋 Component Inventory & Usage Guidelines
+
+### 🧱 UI Components (src/components/ui/)
+
+**MUST USE these existing UI components before creating alternatives:**
+
+#### Buttons & Actions
+- `Button` - Primary component with variants: `default`, `destructive`, `outline`, `secondary`, `ghost`, `link`, `gradient`, `primary`, `success`, `warning`
+- `PrimaryButton`, `GradientButton`, `LinkButton` - Preset button combinations
+- **Usage**: Always use `Button` with appropriate variant instead of creating custom button components
+
+#### Cards & Layout
+- `Card`, `CardContent`, `CardDescription`, `CardHeader`, `CardTitle` - Standard card components
+- `Badge` - For tags, status indicators, labels with variants: `default`, `secondary`, `destructive`, `outline`, `primary`, `success`, `warning`
+- **Usage**: Use these for any card-based layouts or information containers
+
+#### Content Display
+- `BlogCard` - For blog post previews (variants: `default`, `wide`)
+- `FeatureCard`, `FeatureCardDetailed` - For feature showcases
+- `SupportCard` - For support/help content
+- `CaseShowcaseGrid` - For case studies and project showcases
+- `TestimonialsGrid` - For customer testimonials with avatar support
+- **Usage**: These handle specific content types - extend props rather than create new components
+
+#### Forms & Input
+- `ContactForm`, `CompactContactForm`, `MinimalContactForm`, `SupportContactForm` - Various contact form layouts
+- **Usage**: Use existing form components and customize via props
+
+#### Data & Stats
+- `StatsSection` - Statistics display with variants: `default`, `cards`, `minimal`, `highlight`
+- `CompanyStats`, `BusinessMetrics`, `ProductStats` - Preset stat combinations
+- **Usage**: For any numerical data display
+
+#### Interactive Elements
+- `FAQList` - Collapsible FAQ component
+- `FeaturesGrid` - Grid layout for features
+- `PricingTable` - Pricing comparison tables
+- `Toast` - Notification system with variants: `success`, `error`, `info`
+- `CodeHighlighter` - Syntax-highlighted code display
+- **Usage**: Use these for interactive content display
+
+### 🏗️ Section Components (src/components/sections/)
+
+**MUST USE these section-level components for page layouts:**
+
+- `Hero` - Hero sections with layout variants: `left`, `center`, `right`
+- `Features` - Feature showcase sections
+- `CTASection`, `PrimaryCTA`, `GradientCTA`, `MinimalCTA` - Call-to-action sections
+- `ContentSection` - Text + image content blocks with layout options
+- `FAQ` - FAQ sections with collapsible items
+- `PricingComparison` - Pricing tables and comparisons
+- `Testimonials` - Customer testimonial sections
+
+### 🎨 Layout Components (src/components/layout/)
+
+- `Layout` - Main page wrapper
+- `Header` - Site header with navigation
+- `Footer` - Site footer
+- `SectionLayout` - Consistent section spacing and styling
+
+---
+
+## 🔧 Development Rules
+
+### 1. Component Reuse Priority
+```
+1. FIRST: Use existing component as-is
+2. SECOND: Extend existing component with new props
+3. THIRD: Create variant of existing component
+4. LAST RESORT: Create entirely new component
+```
+
+### 2. Before Creating New Components
+**Ask yourself these questions:**
+- Can I use an existing component with different props?
+- Can I extend an existing component's interface?
+- Can I create a preset/variant of an existing component?
+- Is this truly a unique use case that requires a new component?
+
+### 3. Component Extension Guidelines
+When extending existing components:
+```typescript
+// ✅ GOOD: Extend existing component
+interface ExtendedButtonProps extends ButtonProps {
+  newProp?: string;
+}
+
+// ❌ AVOID: Creating new component when Button exists
+interface CustomButtonProps {
+  // ... duplicate Button functionality
+}
+```
+
+### 4. Styling Consistency
+- Use existing Tailwind classes and design tokens
+- Follow the established color palette: `primary`, `secondary`, `accent`, `muted`
+- Maintain consistent spacing using the established scale
+- Use existing animation classes: `animate-float`, `animate-pulse`, etc.
+
+### 5. TypeScript Best Practices
+- Extend existing interfaces when possible
+- Use the established type patterns from existing components
+- Import and reuse existing type definitions
+
+---
+
+## 📁 File Organization Rules
+
+### Component Location Guidelines
+- **UI Components**: `src/components/ui/` - Reusable, generic components
+- **Section Components**: `src/components/sections/` - Page-level sections
+- **Layout Components**: `src/components/layout/` - Layout and navigation
+
+### Naming Conventions
+- Use PascalCase for component names
+- Use descriptive, specific names
+- Group related components (e.g., `ContactForm`, `CompactContactForm`)
+
+---
+
+## 🚫 What NOT to Do
+
+### ❌ Don't Create These (Use Existing Instead)
+- Custom button components → Use `Button` with variants
+- Custom card layouts → Use `Card` components
+- Custom form components → Extend existing form components  
+- Custom modal/dialog → Use existing patterns
+- Custom loading states → Use existing loading patterns
+- Custom grid layouts → Use existing grid components
+
+### ❌ Don't Duplicate Functionality
+- Don't recreate existing component logic
+- Don't copy-paste component code
+- Don't create similar components with different names
+
+---
+
+## ✅ Preferred Patterns
+
+### Component Composition
+```typescript
+// ✅ GOOD: Compose existing components
+function CustomSection() {
+  return (
+    <ContentSection title="Title">
+      <FeatureCard {...props} />
+      <Button variant="primary">Action</Button>
+    </ContentSection>
+  );
+}
+```
+
+### Props Extension
+```typescript
+// ✅ GOOD: Extend existing component props
+interface CustomCardProps extends CardProps {
+  customProp?: string;
+}
+```
+
+### Variant Creation
+```typescript
+// ✅ GOOD: Create variants of existing components
+export const SpecialButton = (props) => (
+  <Button variant="gradient" size="lg" {...props} />
+);
+```
+
+---
+
+## 🎨 Design System Adherence
+
+### Colors
+Use established color tokens:
+- `primary` - Main brand color
+- `secondary` - Secondary actions
+- `accent` - Highlights and emphasis
+- `muted` - Subtle text and backgrounds
+- `destructive` - Errors and warnings
+
+### Typography
+Follow existing typography scale and use established text classes.
+
+### Spacing
+Use consistent spacing patterns from existing components.
+
+---
+
+## 📖 Documentation Requirements
+
+When extending or modifying components:
+1. Document new props and their usage
+2. Provide usage examples
+3. Explain when to use vs. existing alternatives
+4. Update component stories/examples if applicable
+
+---
+
+## 🔍 Code Review Checklist
+
+Before submitting code:
+- [ ] Checked if existing component can be used instead
+- [ ] Extended existing interfaces when possible
+- [ ] Followed established naming conventions
+- [ ] Used consistent styling patterns
+- [ ] Added proper TypeScript types
+- [ ] Documented new functionality
+
+---
+
+## 🌍 Adding New Languages (Internationalization)
+
+### Step-by-Step Process for Adding a New Language
+
+When adding a new language (e.g., Japanese `ja`, French `fr`, Spanish `es`), follow these steps in order:
+
+#### 1. **Create Translation Files in `dictionaries/`**
+```bash
+# Create main dictionary file
+dictionaries/[locale].json          # e.g., ja.json, fr.json
+
+# Create blocks dictionary file  
+dictionaries/blocks-[locale].json   # e.g., blocks-ja.json, blocks-fr.json
+```
+
+**File Structure Requirements:**
+- Copy existing `en.json` and `blocks-en.json` as templates
+- Translate all text values while keeping the same JSON structure
+- Maintain the same key names (only translate values)
+- Ensure all nested objects and arrays have the same structure
+- CRITICAL: keep and translate all data
+
+#### 2. **Update `src/lib/i18n.ts`**
+```typescript
+// Add new locale to the locales array
+export const locales = ['en', 'zh', 'ja'] as const;  // Add 'ja'
+
+// Add locale display name
+export const localeNames: Record<Locale, string> = {
+  en: 'English',
+  zh: '中文', 
+  ja: '日本語',  // Add new language name
+};
+```
+
+#### 3. **Update `src/lib/dictionaries.ts`**
+```typescript
+// Add new dictionary import in dictionaries object
+const dictionaries = {
+  en: () => import('../../dictionaries/en.json').then((module) => module.default),
+  zh: () => import('../../dictionaries/zh.json').then((module) => module.default),
+  ja: () => import('../../dictionaries/ja.json').then((module) => module.default), // Add new
+};
+
+// Add new blocks dictionary import
+const blocksDictionaries = {
+  en: () => import("../../dictionaries/blocks-en.json").then((module) => module.default),
+  zh: () => import("../../dictionaries/blocks-zh.json").then((module) => module.default),
+  ja: () => import("../../dictionaries/blocks-ja.json").then((module) => module.default), // Add new
+};
+```
+
+#### 4. **Update `contentful2md.js`**
+In `cms/contentful/contentful2md.js`, you can modify:
+
+```javascript
+// Language mapping: local language -> Contentful language code
+const LANG_MAPPING = {
+  'en': 'en-US',    // Local English → Contentful English
+  'zh': 'zh-CN'     // Local Chinese → Contentful Chinese
+  // Add new language mappings
+};
+
+const LANGS = Object.keys(LANG_MAPPING); // Supported local languages
+const CONTENT_TYPE = 'blog'; // Contentful content model ID
+```
+
+#### 5. **Test the New Language**
+- Visit `http://localhost:3000/[locale]` (e.g., `/ja`)
+- Test language switcher functionality
+- Verify all pages render correctly
+- Check that all text is translated
+- Ensure fallback to English works if translations are missing
+
+### 📋 Translation Checklist
+
+Before completing a new language addition:
+
+- [ ] Created `dictionaries/[locale].json` with complete translations
+- [ ] Created `dictionaries/blocks-[locale].json` with component translations
+- [ ] Updated `locales` array in `src/lib/i18n.ts`
+- [ ] Updated `localeNames` in `src/lib/i18n.ts`
+- [ ] Added dictionary import in `src/lib/dictionaries.ts`
+- [ ] Added blocks dictionary import in `src/lib/dictionaries.ts`
+- [ ] Added highlights configuration in dictionary files (no text-highlight.ts changes needed)
+- [ ] Created `dictionaries/case-[locale].json` with translated case studies data
+- [ ] Tested all pages in the new language
+- [ ] Verified language switcher works correctly
+- [ ] Confirmed fallback behavior works
+
+### 🎯 Translation Quality Guidelines
+
+- **Consistency**: Use consistent terminology across all files
+- **Context**: Consider context when translating (technical vs. marketing copy)
+- **Cultural Adaptation**: Adapt content for local culture when appropriate
+- **Technical Terms**: Keep technical terms in English when commonly used (e.g., "API", "SaaS")
+- **Length**: Be mindful of text length changes affecting UI layout
+- **Testing**: Always test the UI with translated content
+
+### ⚠️ CRITICAL: Icon Consistency Rule
+
+**ALL translation files MUST use the SAME icon names across all languages to prevent component rendering errors.**
+
+#### Icon Consistency Requirements:
+- **NEVER change icon names** when translating content
+- **ALWAYS copy icon names exactly** from the English version (`en.json`)
+- **ONLY translate text content**, never icon references
+- **Verify icon mapping** exists in component files (e.g., `features-grid.tsx`)
+
+#### ❌ WRONG - Different icons per language:
+```json
+// en.json
+{ "icon": "Zap", "title": "Fast Performance" }
+
+// ja.json  
+{ "icon": "Lightning", "title": "高速パフォーマンス" }  // ❌ Wrong icon name
+```
+
+#### ✅ CORRECT - Same icons, translated text:
+```json
+// en.json
+{ "icon": "Zap", "title": "Fast Performance" }
+
+// ja.json
+{ "icon": "Zap", "title": "高速パフォーマンス" }  // ✅ Same icon, translated title
+```
+
+#### Supported Icon Names (must match exactly):
+```typescript
+// From src/components/ui/features-grid.tsx iconMap
+"Zap", "Shield", "Palette", "Code", "Database", "Globe", 
+"Smartphone", "BarChart3", "Lock", "Users", "Settings", 
+"Clock", "Target", "Layers", "Rocket", "Headphones", 
+"CreditCard", "Receipt", "BookOpen", "Mail"
+```
+
+#### When Adding New Icons:
+1. **First**: Add the icon to the component's `iconMap` (e.g., `features-grid.tsx`)
+2. **Then**: Use the same icon name in ALL language files
+3. **Test**: Verify the icon renders correctly in all languages
+
+#### Error Prevention:
+- **Component Error**: `Element type is invalid: expected a string... but got: undefined`
+- **Root Cause**: Icon name mismatch between translation files and component iconMap
+- **Solution**: Ensure all translation files use identical icon names from the supported list
+
+### 🔧 Maintenance
+
+- **Updates**: When adding new features, update all language files
+- **Validation**: Use tools to validate JSON structure consistency
+- **Documentation**: Update translation guides when adding new languages
+- **Community**: Consider involving native speakers for quality assurance
+
+---
+
+**Remember: The goal is to maintain a consistent, maintainable codebase by maximizing component reuse and following established patterns.** 

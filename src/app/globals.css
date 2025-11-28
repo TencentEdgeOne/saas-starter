@@ -1,0 +1,218 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+@layer base {
+  :root {
+    /* Background color variables */
+    --background: 0 0% 100%; /* Default background color */
+    --background-dark: 240 10% 3.9%; /* Dark theme background color */
+    /* Foreground color variables */
+    --foreground: 0 0% 13%; /* Primary text color #212121 */
+    --foreground-dark: 0 0% 100%; /* Dark theme foreground color #FFFFFF */
+    /* Theme color variables */
+    --primary: 260 51% 48%; /* Primary color #673AB7 */
+    --primary-dark: 257 59% 60%; /* Dark primary #512DA8 */
+    --primary-foreground: 0 0% 100%; /* Text/icon color #FFFFFF */
+    --primary-foreground-dark: 0 0% 100%; /* Dark theme text/icon color */
+    --secondary: 257 44% 85%; /* Light primary #D1C4E9 */
+    --secondary-dark: 240 3.7% 15.9%; /* Dark theme secondary */
+    --secondary-foreground: 0 0% 13%; /* Primary text on secondary */
+    --secondary-foreground-dark: 0 0% 98%; /* Dark theme secondary text */
+    --muted: 0 0% 96%; /* Light muted background */
+    --muted-dark: 240 3.7% 15.9%; /* Dark theme muted */
+    --muted-foreground: 0 0% 46%; /* Secondary text #757575 */
+    --muted-foreground-dark: 0 0% 65%; /* Dark theme muted text */
+    --accent: 257 100% 65%; /* Accent color #7C4DFF */
+    --accent-dark: 257 100% 65%; /* Dark theme accent */
+    --accent-foreground: 0 0% 100%; /* Accent text color */
+    --accent-foreground-dark: 0 0% 100%; /* Dark theme accent text */
+    --destructive: 0 84.2% 60.2%; /* Default destructive color */
+    --destructive-dark: 0 62.8% 30.6%; /* Dark theme destructive color */
+    --border: 0 0% 74%; /* Divider color #BDBDBD */
+    --border-dark: 240 3.7% 36.5%; /* Dark theme border color */
+    --input: 0 0% 90%; /* Input border color */
+    --input-dark: 240 3.7% 15.9%; /* Dark theme input color */
+    --ring: 260 51% 48%; /* Focus ring color */
+    --ring-dark: 257 59% 42%; /* Dark theme ring color */
+    --radius: 0.5rem; /* Default border radius */
+    --popover-background: 0 0% 100%; /* Popover background color */
+    --popover-background-dark: 240 3.7% 15.9%; /* Dark theme popover background color */
+  }
+
+  .dark {
+    /* Dark theme color overrides */
+    --background: var(--background-dark);
+    --foreground: var(--foreground-dark);
+    --primary: var(--primary-dark);
+    --primary-foreground: var(--primary-foreground-dark);
+    --secondary: var(--secondary-dark);
+    --secondary-foreground: var(--secondary-foreground-dark);
+    --muted: var(--muted-dark);
+    --muted-foreground: var(--muted-foreground-dark);
+    --accent: var(--accent-dark);
+    --accent-foreground: var(--accent-foreground-dark);
+    --destructive: var(--destructive-dark);
+    --border: var(--border-dark);
+    --input: var(--input-dark);
+    --ring: var(--ring-dark);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom Gradient Backgrounds */
+.gradient-bg {
+  background: linear-gradient(135deg, #673AB7 0%, #512DA8 100%);
+}
+
+.gradient-bg-light {
+  background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+}
+
+.gradient-bg-dark {
+  background: linear-gradient(135deg, #4527a0 0%, #311b92 100%);
+}
+
+/* Grid Pattern Background */
+.bg-grid-pattern {
+  background-image: 
+    linear-gradient(rgba(103, 58, 183, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(103, 58, 183, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  background-position: 0 0, 0 0;
+}
+
+/* Radial Gradient for Grid Transparency */
+.bg-gradient-radial {
+  background: radial-gradient(
+    circle at center,
+    transparent 0%,
+    transparent 30%,
+    hsla(var(--background), 0.3) 50%,
+    hsla(var(--background), 0.6) 70%,
+    hsla(var(--background), 0.8) 85%,
+    hsla(var(--background), 0.95) 100%
+  );
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+.float-animation {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes drift {
+  0% { transform: translate(0, 0) scale(1); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translate(100px, -100px) scale(0.5); opacity: 0; }
+}
+
+@keyframes drift-reverse {
+  0% { transform: translate(0, 0) scale(1); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translate(-100px, -100px) scale(0.5); opacity: 0; }
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+.animate-drift {
+  animation: drift 8s ease-in-out infinite;
+}
+
+.animate-drift-reverse {
+  animation: drift-reverse 10s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+/* Scroll Animations */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
+
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Custom Button Styles */
+.btn-gradient {
+  background: linear-gradient(135deg, #673AB7 0%, #512DA8 100%);
+  transition: all 0.3s ease;
+}
+
+.btn-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(103, 58, 183, 0.3);
+}
+
+/* Content Sections */
+.section-padding {
+  @apply py-16 lg:py-24;
+}
+
+.container-padding {
+  @apply px-4 sm:px-6 lg:px-8;
+}
+
+/* Code blocks */
+pre {
+  @apply p-4 rounded-lg bg-muted overflow-x-auto;
+}
+
+code {
+  @apply px-1 py-0.5 rounded bg-muted text-sm;
+}
+
+/* Responsive text */
+.text-responsive-xl {
+  @apply text-3xl sm:text-4xl lg:text-5xl xl:text-6xl;
+}
+
+.text-responsive-lg {
+  @apply text-2xl sm:text-3xl lg:text-4xl xl:text-5xl;
+}
+
+.text-responsive-md {
+  @apply text-xl sm:text-2xl lg:text-3xl;
+} 
+
+select {
+  -moz-appearance: none;
+  /* Firefox */
+  -webkit-appearance: none;
+  /* Safari and Chrome */
+  appearance: none;
+}

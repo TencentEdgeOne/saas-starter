@@ -1,0 +1,254 @@
+{
+  "blocks": {
+    "title": "组件库",
+    "description": "浏览和预览所有可重用组件",
+    "preview": "预览",
+    "code": "代码",
+    "copy": "复制",
+    "copySuccess": "复制成功",
+    "copyFailed": "复制失败",
+    "viewInSeparateWindow": "在新标签页打开",
+    "documentation": "文档",
+    "codeExample": "代码示例",
+    "componentPreview": "组件预览",
+    "usageInstructions": "使用说明",
+    "usageDescription": "此组件可以直接复制到您的项目中使用。确保您已安装相关依赖包并正确导入所需组件。",
+    "noPreviewAvailable": "此组件没有预览页面",
+    "categories": [
+      {
+        "name": "UI 元素",
+        "id": "ui-elements",
+        "components": [
+          {
+            "id": "button",
+            "name": "按钮",
+            "description": "具有多种变体的交互式按钮组件",
+            "category": "ui-elements",
+            "previewUrl": "/blocks/preview/button",
+            "preview": {
+              "title": "按钮组件",
+              "description": "具有多种变体和尺寸的多功能按钮组件",
+              "code": "import { Button, PrimaryButton, GradientButton, LinkButton } from \"@/components/ui/button\";\nimport { Users, Globe, Star, TrendingUp } from \"lucide-react\";\n\nexport function ButtonExample() {\n  return (\n    <div className=\"p-8 bg-background min-h-screen\">\n      <div className=\"space-y-6\">\n        {/* 默认按钮变体 */}\n        <div>\n          <h3 className=\"text-lg font-semibold mb-4 text-foreground\">默认按钮变体</h3>\n          <div className=\"flex flex-wrap gap-4\">\n            <PrimaryButton>主要按钮</PrimaryButton>\n            <GradientButton>渐变按钮</GradientButton>\n      <LinkButton>链接按钮</LinkButton>\n          </div>\n        </div>\n\n        {/* 标准变体 */}\n        <div>\n          <h3 className=\"text-lg font-semibold mb-4 text-foreground\">标准变体</h3>\n          <div className=\"flex flex-wrap gap-4\">\n            <Button variant=\"default\">默认</Button>\n            <Button variant=\"primary\">主要</Button>\n            <Button variant=\"secondary\">次要</Button>\n            <Button variant=\"outline\">轮廓</Button>\n            <Button variant=\"ghost\">幽灵</Button>\n            <Button variant=\"link\">链接</Button>\n          </div>\n        </div>\n\n        {/* 特殊变体 */}\n        <div>\n          <h3 className=\"text-lg font-semibold mb-4 text-foreground\">特殊变体</h3>\n          <div className=\"flex flex-wrap gap-4\">\n            <Button variant=\"gradient\">渐变</Button>\n            <Button variant=\"success\">成功</Button>\n            <Button variant=\"warning\">警告</Button>\n            <Button variant=\"destructive\">危险</Button>\n          </div>\n        </div>\n\n        {/* 尺寸变体 */}\n        <div>\n          <h3 className=\"text-lg font-semibold mb-4 text-foreground\">尺寸变体</h3>\n          <div className=\"flex flex-wrap items-center gap-4\">\n            <Button size=\"sm\">小号</Button>\n            <Button size=\"default\">默认</Button>\n            <Button size=\"lg\">大号</Button>\n            <Button size=\"xl\">超大号</Button>\n          </div>\n        </div>\n\n        {/* 图标按钮 */}\n        <div>\n          <h3 className=\"text-lg font-semibold mb-4 text-foreground\">图标按钮</h3>\n          <div className=\"flex flex-wrap gap-4\">\n            <Button icon={Users} iconPosition=\"left\">左侧图标</Button>\n            <Button icon={Star} iconPosition=\"right\">右侧图标</Button>\n            <Button variant=\"outline\" icon={TrendingUp}>轮廓带图标</Button>\n            <Button size=\"icon\" icon={Globe} />\n          </div>\n        </div>\n      </div>\n    </div>\n  );\n}"
+            }
+          },
+          {
+            "id": "card",
+            "name": "卡片",
+            "description": "灵活的内容容器",
+            "category": "ui-elements",
+            "previewUrl": "/blocks/preview/card",
+            "preview": {
+              "title": "卡片组件",
+              "description": "用于显示内容的灵活卡片组件",
+              "code": "import { Card, CardContent, CardDescription, CardHeader, CardTitle } from \"@/components/ui/card\";\n\nexport function CardExample() {\n  return (\n    <div className=\"p-8 bg-background min-h-screen\">\n      <div className=\"grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl\">\n        <Card>\n          <CardHeader>\n            <CardTitle>卡片标题</CardTitle>\n            <CardDescription>卡片描述内容</CardDescription>\n          </CardHeader>\n          <CardContent>\n            <p>这是卡片内容区域，您可以在此放置任何内容。</p>\n          </CardContent>\n        </Card>\n        <Card>\n          <CardHeader>\n            <CardTitle>另一个卡片</CardTitle>\n          </CardHeader>\n          <CardContent>\n            <p>卡片非常灵活，可以包含各种类型的内容。</p>\n          </CardContent>\n        </Card>\n      </div>\n    </div>\n  );\n}"
+            }
+          },
+          {
+            "id": "badge",
+            "name": "徽章",
+            "description": "小型状态指示器和标签",
+            "category": "ui-elements",
+            "previewUrl": "/blocks/preview/badge",
+            "preview": {
+              "title": "徽章组件",
+              "description": "带有不同变体的小型状态指示器和标签",
+              "code": "import { Badge } from \"@/components/ui/badge\";\n\nexport function BadgeExample() {\n  return (\n    <div className=\"p-8 bg-background min-h-screen\">\n      <div className=\"flex flex-wrap gap-4\">\n        <Badge>默认</Badge>\n        <Badge variant=\"secondary\">次要</Badge>\n        <Badge variant=\"outline\">轮廓</Badge>\n        <Badge variant=\"destructive\">危险</Badge>\n      </div>\n    </div>\n  );\n}"
+            }
+          },
+          {
+            "id": "contact-form",
+            "name": "联系表单",
+            "description": "带验证的完整联系表单",
+            "category": "ui-elements",
+            "previewUrl": "/blocks/preview/contact-form",
+            "preview": {
+              "title": "联系表单组件",
+              "description": "包含姓名、邮箱、公司和消息字段的完整联系表单",
+              "code": "import { ContactForm, CompactContactForm, MinimalContactForm, SupportContactForm, ContactFormData } from \"@/components/ui/contact-form\";\n\nexport function ContactFormExample() {\n  const handleFormSubmit = async (formData: ContactFormData) => {\n    console.log(\"表单提交:\", formData);\n    alert(`感谢您 ${formData.name}！您的消息已发送。`);\n  };\n\n  return (\n    <div className=\"p-8 bg-background min-h-screen\">\n      <div className=\"space-y-12\">\n        {/* 默认联系表单 */}\n        <div>\n          <h3 className=\"text-xl font-semibold mb-6 text-foreground\">默认联系表单</h3>\n          <div className=\"max-w-2xl\">\n            <ContactForm onSubmit={handleFormSubmit} />\n          </div>\n        </div>\n\n        {/* 紧凑联系表单 */}\n        <div>\n          <h3 className=\"text-xl font-semibold mb-6 text-foreground\">紧凑联系表单</h3>\n          <div className=\"max-w-lg\">\n            <CompactContactForm onSubmit={handleFormSubmit} />\n          </div>\n        </div>\n\n        {/* 支持联系表单 */}\n        <div>\n          <h3 className=\"text-xl font-semibold mb-6 text-foreground\">支持联系表单</h3>\n          <div className=\"max-w-2xl\">\n            <SupportContactForm onSubmit={handleFormSubmit} />\n          </div>\n        </div>\n\n        {/* 简洁联系表单 */}\n        <div>\n          <h3 className=\"text-xl font-semibold mb-6 text-foreground\">简洁联系表单</h3>\n          <div className=\"max-w-2xl\">\n            <MinimalContactForm onSubmit={handleFormSubmit} />\n          </div>\n        </div>\n      </div>\n    </div>\n  );\n}"
+            }
+          },
+          {
+            "id": "blog-card",
+            "name": "博客卡片",
+            "description": "用于显示博客文章的卡片组件",
+            "category": "ui-elements",
+            "previewUrl": "/blocks/preview/blog-card",
+            "preview": {
+              "title": "博客卡片组件",
+              "description": "用于显示博客文章信息的卡片组件，包含作者和元数据",
+              "code": "import { BlogCard } from \"@/components/ui/blog-card\";\n\nexport function BlogCardExample() {\n  return (\n    <div className=\"p-8 bg-background min-h-screen\">\n      <div className=\"max-w-4xl mx-auto space-y-8\">\n        <div>\n          <h3 className=\"text-lg font-semibold mb-4\">默认变体</h3>\n          <div className=\"max-w-md\">\n            <BlogCard\n              post={{\n                slug: \"default-example\",\n                title: \"Next.js 入门指南\",\n                excerpt: \"学习如何使用 Next.js 构建现代 Web 应用程序。本指南涵盖基础知识和最佳实践。\",\n                author: \"张三\",\n                date: \"2024-01-15\",\n                readTime: \"5 分钟阅读\",\n                tags: [\"Next.js\", \"React\", \"Web 开发\"]\n              }}\n              variant=\"default\"\n            />\n          </div>\n        </div>\n\n        <div>\n          <h3 className=\"text-lg font-semibold mb-4\">宽版变体</h3>\n          <BlogCard\n            post={{\n              slug: \"wide-example\",\n              title: \"使用 TypeScript 构建可扩展的 SaaS 应用程序\",\n              excerpt: \"了解如何使用 TypeScript 创建强大且可维护的 SaaS 应用程序。这个综合指南涵盖架构模式、最佳实践和真实世界的示例。\",\n              author: \"李四\",\n              date: \"2024-01-20\",\n              readTime: \"8 分钟阅读\",\n              tags: [\"TypeScript\", \"SaaS\", \"架构\", \"最佳实践\", \"可扩展性\"]\n            }}\n            variant=\"wide\"\n          />\n        </div>\n      </div>\n    </div>\n  );\n}"
+            }
+          },
+          {
+            "id": "feature-card",
+            "name": "功能卡片",
+            "description": "展示产品功能的简单卡片",
+            "category": "ui-elements",
+            "previewUrl": "/blocks/preview/feature-card",
+            "preview": {
+              "title": "功能卡片组件",
+              "description": "简单的功能卡片，包含图标、标题和描述",
+              "code": "import { FeatureCard, HeroFeatureCard, DetailedFeatureCard, CompactFeatureCard, MinimalFeatureCard } from \"@/components/ui/feature-card\";\nimport { Users, Globe, Clock, Star, TrendingUp, Shield, Zap, Database, Settings, Rocket, Lock, Code } from \"lucide-react\";\n\nexport function FeatureCardExample() {\n  return (\n    <div className=\"p-8 bg-background min-h-screen\">\n      <div className=\"space-y-12\">\n        {/* 英雄变体 */}\n        <div>\n          <h3 className=\"text-xl font-semibold mb-6 text-foreground\">英雄变体</h3>\n          <div className=\"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6\">\n            <HeroFeatureCard \n              feature={{\n                icon: Zap,\n                title: \"闪电般快速\",\n                description: \"专为速度而构建，具有优化的性能和即时加载时间\",\n                link: { href: \"#\", text: \"了解更多\" }\n              }}\n            />\n            <HeroFeatureCard \n              feature={{\n                icon: Shield,\n                title: \"企业级安全\",\n                description: \"银行级安全性，具有端到端加密和合规性\"\n              }}\n            />\n            <HeroFeatureCard \n              feature={{\n                icon: Globe,\n                title: \"全球规模\",\n                description: \"全球 CDN 和基础设施，实现无缝全球交付\"\n              }}\n            />\n            <HeroFeatureCard \n              feature={{\n                icon: Database,\n                title: \"智能数据\",\n                description: \"智能数据组织，具有自动备份功能\"\n              }}\n            />\n          </div>\n        </div>\n\n        {/* 详细变体 */}\n        <div>\n          <h3 className=\"text-xl font-semibold mb-6 text-foreground\">详细变体（默认）</h3>\n          <div className=\"grid grid-cols-1 md:grid-cols-2 gap-6\">\n            <DetailedFeatureCard \n              feature={{\n                icon: Database,\n                title: \"智能数据管理\",\n                description: \"智能数据组织，具有自动备份和跨所有设备的实时同步功能。\",\n                benefits: [\"自动备份\", \"实时同步\", \"数据加密\", \"版本控制\"],\n                link: { href: \"#\", text: \"探索功能\" }\n              }}\n            />\n            <DetailedFeatureCard \n              feature={{\n                icon: Settings,\n                title: \"工作流自动化\",\n                description: \"自动化重复性任务并创建自定义工作流以提高生产力。\",\n                benefits: [\"自定义工作流\", \"任务自动化\", \"触发条件\", \"集成规则\"]\n              }}\n            />\n          </div>\n        </div>\n\n        {/* 紧凑变体 */}\n        <div>\n          <h3 className=\"text-xl font-semibold mb-6 text-foreground\">紧凑变体</h3>\n          <div className=\"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4\">\n            <CompactFeatureCard \n              feature={{\n                icon: Rocket,\n                title: \"快速设置\",\n                description: \"通过我们的引导设置过程几分钟内开始使用\"\n              }}\n            />\n            <CompactFeatureCard \n              feature={{\n                icon: Lock,\n                title: \"安全访问\",\n                description: \"多因素身份验证和基于角色的权限\"\n              }}\n            />\n            <CompactFeatureCard \n              feature={{\n                icon: Code,\n                title: \"开发者友好\",\n                description: \"RESTful API 和全面的文档\"\n              }}\n            />\n          </div>\n        </div>\n\n        {/* 简洁变体 */}\n        <div>\n          <h3 className=\"text-xl font-semibold mb-6 text-foreground\">简洁变体</h3>\n          <div className=\"grid grid-cols-1 md:grid-cols-3 gap-8\">\n            <MinimalFeatureCard \n              feature={{\n                icon: Star,\n                title: \"24/7 支持\",\n                description: \"我们专家团队提供全天候支持\",\n                link: { href: \"#\", text: \"联系我们\" }\n              }}\n            />\n            <MinimalFeatureCard \n              feature={{\n                icon: TrendingUp,\n                title: \"分析\",\n                description: \"具有实时洞察的全面分析仪表板\"\n              }}\n            />\n            <MinimalFeatureCard \n              feature={{\n                icon: Users,\n                title: \"团队协作\",\n                description: \"为您的整个团队提供无缝协作工具\"\n              }}\n            />\n          </div>\n        </div>\n      </div>\n    </div>\n  );\n}"
+            }
+          },
+          {
+            "id": "feature-card-detailed",
+            "name": "详细功能卡片",
+            "description": "带有优势列表的详细卡片",
+            "category": "ui-elements",
+            "previewUrl": "/blocks/preview/feature-card-detailed",
+            "preview": {
+              "title": "详细功能卡片组件",
+              "description": "详细的功能卡片，包含图标、标题、描述和优势列表",
+              "code": "import { FeatureCardDetailed } from \"@/components/ui/feature-card-detailed\";\nimport { Database, Users, Settings, BarChart3 } from \"lucide-react\";\n\nexport function FeatureCardDetailedExample() {\n  return (\n    <div className=\"p-8 bg-background min-h-screen\">\n      <div className=\"max-w-6xl mx-auto\">\n        <div className=\"mb-12 text-center\">\n          <h1 className=\"text-3xl font-bold mb-4\">详细功能卡片</h1>\n          <p className=\"text-muted-foreground\">\n            详细的功能卡片，包含图标、标题、描述和优势列表\n          </p>\n        </div>\n\n        <div className=\"grid grid-cols-1 md:grid-cols-2 gap-8\">\n          <FeatureCardDetailed\n            icon={Database}\n            title=\"智能数据管理\"\n            description=\"智能数据组织，具有自动备份和跨所有设备的实时同步功能。\"\n            benefits={[\n              \"自动备份\",\n              \"实时同步\", \n              \"数据加密\",\n              \"版本控制\"\n            ]}\n          />\n          <FeatureCardDetailed\n            icon={Users}\n            title=\"团队协作\"\n            description=\"无缝协作工具，具有基于角色的权限和实时编辑功能。\"\n            benefits={[\n              \"基于角色的访问\",\n              \"实时编辑\",\n              \"评论系统\",\n              \"活动跟踪\"\n            ]}\n          />\n          <FeatureCardDetailed\n            icon={Settings}\n            title=\"工作流自动化\"\n            description=\"自动化重复性任务并创建自定义工作流以提高生产力。\"\n            benefits={[\n              \"自定义工作流\",\n              \"任务自动化\",\n              \"触发条件\",\n              \"集成规则\"\n            ]}\n          />\n          <FeatureCardDetailed\n            icon={BarChart3}\n            title=\"高级分析\"\n            description=\"具有自定义报告和数据可视化的全面分析仪表板。\"\n            benefits={[\n              \"自定义仪表板\",\n              \"实时指标\",\n              \"导出报告\",\n              \"数据洞察\"\n            ]}\n          />\n        </div>\n      </div>\n    </div>\n  );\n}"
+            }
+          },
+          {
+            "id": "support-card",
+            "name": "支持卡片",
+            "description": "支持功能卡片",
+            "category": "ui-elements",
+            "previewUrl": "/blocks/preview/support-card",
+            "preview": {
+              "title": "支持卡片组件",
+              "description": "居中对齐的卡片，用于显示支持服务和功能",
+              "code": "import { SupportCard } from \"@/components/ui/support-card\";\nimport { Headphones, Rocket, Target, BookOpen, Users, Zap } from \"lucide-react\";\n\nexport function SupportCardExample() {\n  return (\n    <div className=\"p-8 bg-background min-h-screen\">\n      <div className=\"max-w-6xl mx-auto\">\n        <div className=\"mb-12 text-center\">\n          <h1 className=\"text-3xl font-bold mb-4\">支持卡片</h1>\n          <p className=\"text-muted-foreground\">\n            居中对齐的卡片，用于显示支持服务和功能\n          </p>\n        </div>\n\n        <div className=\"grid grid-cols-1 md:grid-cols-3 gap-8\">\n          <SupportCard\n            icon={Headphones}\n            title=\"24/7 支持\"\n            description=\"我们专家团队提供全天候支持\"\n          />\n          <SupportCard\n            icon={Rocket}\n            title=\"入门指导\"\n            description=\"引导式设置和个性化入门体验\"\n          />\n          <SupportCard\n            icon={Target}\n            title=\"培训\"\n            description=\"全面的培训材料和认证计划\"\n          />\n        </div>\n      </div>\n    </div>\n  );\n}"
+            }
+          },
+          {
+            "id": "case-showcase-grid",
+            "name": "案例展示网格",
+            "description": "用于显示案例研究的交互式网格",
+            "category": "ui-elements",
+            "previewUrl": "/blocks/preview/case-showcase-grid",
+            "preview": {
+              "title": "案例展示网格组件",
+              "description": "用于显示案例研究的交互式展示网格，支持外部链接和悬停效果",
+              "code": "import { CaseShowcaseGrid } from \"@/components/ui/case-showcase-grid\";\n const sampleCases = [{\n   slug: \"youphoto-ai\",\n   title: \"YouPhoto AI - Your One-Click AI Photo Editor\",\n   description: \"AI-powered photo editor for reStyles, emoji, avatar, memes & more! Transform photos with advanced AI technology.\",\n   image: \"/images/cases/case1.png\",\n   externalUrl: \"https://youphoto.ai\",\n   tags: [\"AI\", \"Photo Editor\", \"SaaS\"]\n }]   \n\n\n export default function CaseShowcaseGridExample() {\n   return (\n     <div>\n       <h3 className=\"text-xl font-semibold mb-6 text-foreground\">\n         Case Showcase Grid\n       </h3>\n       <p className=\"text-muted-foreground mb-8\">\n         Interactive showcase grid for displaying case studies with external\n         links. Each card opens the external URL in a new tab when clicked.\n       </p>\n       <CaseShowcaseGrid cases={sampleCases} lang=\"en\" dict={sampleDict} />\n     </div>\n   );\n }"
+            }
+          },
+          {
+            "id": "pricing",
+            "name": "价格表",
+            "description": "定价计划和比较",
+            "category": "ui-elements",
+            "previewUrl": "/blocks/preview/pricing",
+            "preview": {
+              "title": "价格表",
+              "description": "显示定价计划与功能比较",
+              "code": " import { Pricing } from \"@/components/ui/pricing\";\n\n export default function PricingPage() {\n   return (\n     <div className=\"bg-background min-h-screen py-10\">\n       <Pricing dict={{\n         pricing: {\n           mostPopular: \"Most Chosen\",\n           plans: [\n             {\n               name: \"Basic\",\n               description: \"For small teams and individual users\",\n               price: \"$10\",\n               period: \"month\",\n               popular: false,\n               features: [\"1000 API calls\", \"1000 API calls\", \"1000 API calls\", \"1000 API calls\", \"1000 API calls\"],\n               buttonText: \"Get Started\"\n             },\n             {\n               name: \"Pro\",\n               description: \"For large teams and enterprise users\",\n               price: \"$100\",\n               period: \"month\",\n               popular: true,\n               features: [\"1000 API calls\", \"1000 API calls\", \"1000 API calls\", \"1000 API calls\", \"1000 API calls\"],\n               buttonText: \"Get Started\"\n             }\n           ]\n         }\n       }} />\n     </div>\n   );\n }\n"
+            }
+          }
+        ]
+      },
+      {
+        "name": "布局",
+        "id": "layout",
+        "components": [
+          {
+            "id": "header",
+            "name": "页头",
+            "description": "带有徽标和菜单的导航页头",
+            "category": "layout",
+            "previewUrl": "/blocks/preview/header",
+            "preview": {
+              "title": "页头组件",
+              "description": "带有徽标、菜单项和操作按钮的导航页头",
+              "code": "import { Header } from \"@/components/layout/header\";\n\nexport function HeaderExample() {\n  return (\n    <div className=\"bg-background min-h-screen\">\n      <Header />\n      <div className=\"pt-20 p-8\">\n        <p className=\"text-muted-foreground\">这是Header组件的实际预览。</p>\n      </div>\n    </div>\n  );\n}"
+            }
+          },
+          {
+            "id": "footer",
+            "name": "页脚",
+            "description": "带有链接和信息的网站页脚",
+            "category": "layout",
+            "previewUrl": "/blocks/preview/footer",
+            "preview": {
+              "title": "页脚组件",
+              "description": "带有组织化链接和公司信息的网站页脚",
+              "code": "import { Footer } from \"@/components/layout/footer\";\n\nexport function FooterExample() {\n  return (\n    <div className=\"bg-background min-h-screen flex flex-col\">\n      <div className=\"flex-1 p-8\">\n        <p className=\"text-muted-foreground\">这是Footer组件的预览。</p>\n      </div>\n      <Footer />\n    </div>\n  );\n}"
+            }
+          }
+        ]
+      },
+      {
+        "name": "区块",
+        "id": "sections",
+        "components": [
+          {
+            "id": "hero",
+            "name": "主要区块",
+            "description": "带有行动号召的落地页主要区块",
+            "category": "sections",
+            "previewUrl": "/blocks/preview/hero",
+            "preview": {
+              "title": "主要区块",
+              "description": "带有行动号召的引人注目的落地页主要区块",
+              "code": "import { Hero } from \"@/components/sections/hero\";\n\nexport function HeroExample() {\n  return (\n    <div className=\"bg-background min-h-screen\">\n      <Hero />\n    </div>\n  );\n}"
+            }
+          },
+          {
+            "id": "testimonials",
+            "name": "推荐区块",
+            "description": "客户推荐和评价",
+            "category": "sections",
+            "previewUrl": "/blocks/preview/testimonials",
+            "preview": {
+              "title": "推荐区块",
+              "description": "显示客户推荐和评价",
+              "code": "import { TestimonialsGrid } from \"@/components/ui/testimonials-grid\";\n\nexport default function TestimonialsGridExample() {\n  return (\n    <div className=\"bg-background min-h-screen\">\n      <TestimonialsGrid \n          testimonials={[\n           {\n             rating: 5,\n             content: \"This product has completely transformed our workflow. The team is more productive than ever!\",\n             avatar: \"https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face&auto=format\",\n             name: \"John Doe\",\n             role: \"CEO, TechCorp\"\n           },\n           {\n             rating: 5,\n              content: \"Amazing customer support and intuitive design. Highly recommend to anyone looking for quality.\",\n             avatar: \"https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face&auto=format\",\n             name: \"Sarah Johnson\",\n             role: \"Product Manager\"\n           },\n           {\n             rating: 4,\n             content: \"Great value for money. The features are exactly what we needed for our growing business.\",\n             avatar: \"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face&auto=format\",\n             name: \"Mike Chen\",\n             role: \"Startup Founder\"\n           }\n         ]} \n       />\n    </div>\n  );\n}\n"
+            }
+          },
+          {
+            "id": "cta-section",
+            "name": "行动号召区块",
+            "description": "带按钮的行动号召区块",
+            "category": "sections",
+            "previewUrl": "/blocks/preview/cta-section",
+            "preview": {
+              "title": "行动号召区块组件",
+              "description": "带有可自定义按钮和信任指标的行动号召区块",
+              "code": "import { CTASection, PrimaryCTA, GradientCTA, MinimalCTA } from \"@/components/sections/cta-section\";\n\nexport function CTASectionExample() {\n  return (\n    <div className=\"bg-background min-h-screen space-y-0\">\n      {/* 主要CTA */}\n      <PrimaryCTA\n        title=\"准备开始了吗？\"\n        description=\"加入数千名满意的客户，立即转型您的业务\"\n        primaryText=\"开始免费试用\"\n        secondaryText=\"了解更多\"\n      />\n      \n      {/* 渐变CTA */}\n      <GradientCTA\n        title=\"体验不同之处\"\n        description=\"了解我们的平台如何革新您的工作流程并提高生产力\"\n        primaryText=\"开始免费试用\"\n        secondaryText=\"安排演示\"\n      />\n      \n      {/* 简洁CTA */}\n      <MinimalCTA\n        title=\"简单而有效\"\n        description=\"适合不会让用户感到压力的微妙转化\"\n        buttonText=\"开始使用\"\n      />\n      \n      {/* 自定义多按钮CTA */}\n      <CTASection\n        title=\"自定义配置\"\n        description=\"完全可自定义，具有多个按钮和操作\"\n        variant=\"primary\"\n        buttons={[\n          { text: \"主要操作\", variant: \"secondary\" },\n          { text: \"次要操作\", variant: \"outline\" },\n          { text: \"了解更多\", variant: \"ghost\" }\n        ]}\n      />\n    </div>\n  );\n}"
+            }
+          },
+          {
+            "id": "stats-section",
+            "name": "统计区块",
+            "description": "统计数据显示区块",
+            "category": "sections",
+            "previewUrl": "/blocks/preview/stats-section",
+            "preview": {
+              "title": "统计区块组件",
+              "description": "在吸引人的网格布局中显示统计数据和指标",
+              "code": "import { StatsSection, CompanyStats, BusinessMetrics, ProductStats } from \"@/components/ui/stats-section\";\nimport { Users, Globe, Clock, Star, TrendingUp } from \"lucide-react\";\n\nexport function StatsSectionExample() {\n  return (\n    <div className=\"bg-background min-h-screen space-y-0\">\n      {/* 公司统计（默认） */}\n      <div className=\"py-8\">\n        <h3 className=\"text-xl font-semibold mb-6 text-center\">公司统计（默认）</h3>\n        <CompanyStats />\n      </div>\n      \n      {/* 业务指标（卡片） */}\n      <div className=\"py-8\">\n        <h3 className=\"text-xl font-semibold mb-6 text-center\">业务指标（卡片）</h3>\n        <BusinessMetrics />\n      </div>\n      \n      {/* 产品统计（高亮） */}\n      <div className=\"py-8\">\n        <h3 className=\"text-xl font-semibold mb-6 text-center\">产品统计（高亮）</h3>\n        <ProductStats />\n      </div>\n      \n      {/* 带图标的自定义统计 */}\n      <div className=\"py-8\">\n        <h3 className=\"text-xl font-semibold mb-6 text-center\">带图标的自定义统计</h3>\n        <StatsSection\n          title=\"平台性能\"\n          description=\"重要的实时指标\"\n          variant=\"cards\"\n          columns={4}\n          stats={[\n            { value: \"250万\", suffix: \"+\", label: \"全球用户\", icon: Users, color: \"primary\" },\n            { value: \"180\", suffix: \"+\", label: \"国家\", icon: Globe, color: \"secondary\" },\n            { value: \"99.9\", suffix: \"%\", label: \"正常运行时间\", icon: Clock, color: \"success\" },\n            { value: \"4.9\", suffix: \"/5\", label: \"用户评分\", icon: Star, color: \"warning\" }\n          ]}\n        />\n      </div>\n    </div>\n  );\n}"
+            }
+          },
+          {
+            "id": "content-section",
+            "name": "内容区块",
+            "description": "文本和图像内容区块",
+            "category": "sections",
+            "previewUrl": "/blocks/preview/content-section",
+            "preview": {
+              "title": "内容区块组件",
+              "description": "灵活的内容区块，具有文本和可选图像布局",
+              "code": "import { ContentSection, AboutSection, FeatureSection } from \"@/components/sections/content-section\";\n\nexport function ContentSectionExample() {\n  return (\n    <div className=\"p-8 bg-background min-h-screen space-y-16\">\n      <div className=\"max-w-6xl mx-auto space-y-16\">\n        {/* 纯文本区块 */}\n        <div>\n          <h3 className=\"text-xl font-semibold mb-6 text-center\">纯文本区块</h3>\n          <div className=\"max-w-4xl mx-auto\">\n            <AboutSection title=\"我们的故事\">\n              <p>\n                这是纯文本内容区块的示例。它非常适合故事、\n                关于页面或任何不需要配图的内容。\n              </p>\n              <p>\n                该组件自动处理间距、排版和响应式设计，\n                确保您的内容在所有设备上都看起来很棒。\n              </p>\n            </AboutSection>\n          </div>\n        </div>\n\n        {/* 文本左，图像右 */}\n        <div className=\"bg-muted/30 p-8 rounded-2xl\">\n          <h3 className=\"text-xl font-semibold mb-6 text-center\">文本左，图像右</h3>\n          <ContentSection\n            title=\"高级分析仪表板\"\n            layout=\"text-left\"\n            image={{\n              src: \"https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop&crop=center\",\n              alt: \"分析仪表板\",\n              width: 600,\n              height: 400\n            }}\n          >\n            <p>\n              我们的高级分析仪表板为您的业务\n              性能提供实时洞察。跟踪关键指标，监控用户行为，做出数据驱动的决策。\n            </p>\n            <p>\n              通过可自定义的小部件和交互式图表，您可以\n              完全按照您需要的方式可视化数据。导出报告，设置警报，与您的团队协作。\n            </p>\n          </ContentSection>\n        </div>\n\n        {/* 文本右，图像左 */}\n        <div>\n          <h3 className=\"text-xl font-semibold mb-6 text-center\">文本右，图像左</h3>\n          <FeatureSection\n            title=\"无缝集成\"\n            layout=\"text-right\"\n            image={{\n              src: \"https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop&crop=center\",\n              alt: \"集成插图\"\n            }}\n          >\n            <p>\n              与100多个热门工具和服务连接。我们的API优先方法\n              确保您可以与任何系统集成，无论多么复杂。\n            </p>\n            <p>\n              从CRM系统到营销自动化工具，我们都能满足您的需求。\n              在几分钟内设置集成，而不是几小时。\n            </p>\n          </FeatureSection>\n        </div>\n      </div>\n    </div>\n  );\n}"
+            }
+          },
+          {
+            "id": "faq",
+            "name": "常见问题区块",
+            "description": "交互式常见问题",
+            "category": "sections",
+            "previewUrl": "/blocks/preview/faq",
+            "preview": {
+              "title": "常见问题区块组件",
+              "description": "具有可展开问题和答案的交互式常见问题区块",
+              "code": "import { FAQ } from \"@/components/sections/faq\";\n\nexport function FAQExample() {\n  return (\n    <div className=\"bg-background min-h-screen\">\n      <FAQ dict={{\n        faq: {\n          title: \"常见问题\",\n          description: \"查找有关我们产品和服务的常见问题的答案。\",\n          stillHaveQuestions: \"仍有疑问？\",\n          contactSupport: \"联系支持\",\n          faqs: [\n            {\n              question: \"我可以随时更改我的计划吗？\",\n              answer: \"是的，您可以随时升级或降级您的计划。更改将在您的下一个计费周期中生效。\"\n            }\n          ]\n        }\n      }}/>\n    </div>\n  );\n}"
+            }
+          }
+        ]
+      }
+    ]
+  }
+} 

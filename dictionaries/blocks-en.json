@@ -1,0 +1,255 @@
+{
+  "blocks": {
+    "title": "Component Library",
+    "description": "Browse and preview all reusable components",
+    "preview": "Preview",
+    "code": "Code",
+    "copy": "Copy",
+    "copySuccess": "Copy Success",
+    "copyFailed": "Copy Failed",
+    "viewInSeparateWindow": "Open in New Tab",
+    "documentation": "Documentation",
+    "codeExample": "Code Example",
+    "componentPreview": "Component Preview",
+    "usageInstructions": "Usage Instructions",
+    "usageDescription": "This component can be directly copied into your project for use. Ensure you have installed the relevant dependency packages and correctly imported the required components.",
+    "noPreviewAvailable": "This component does not have a preview page",
+    "categories": [
+      {
+        "name": "UI Elements",
+        "id": "ui-elements",
+        "components": [
+          {
+            "id": "button",
+            "name": "Button",
+            "description": "Interactive button component with variants",
+            "category": "ui-elements",
+            "previewUrl": "/blocks/preview/button",
+            "preview": {
+              "title": "Button Component",
+              "description": "A versatile button component with multiple variants and sizes",
+              "code": "import { Button, PrimaryButton, GradientButton, LinkButton } from \"@/components/ui/button\";\nimport { Users, Globe, Star, TrendingUp } from \"lucide-react\";\n\nexport function ButtonExample() {\n  return (\n    <div className=\"p-8 bg-background min-h-screen\">\n      <div className=\"space-y-6\">\n        {/* Default Button Variants */}\n        <div>\n          <h3 className=\"text-lg font-semibold mb-4 text-foreground\">Default Button Variants</h3>\n          <div className=\"flex flex-wrap gap-4\">\n            <PrimaryButton>Primary Button</PrimaryButton>\n            <GradientButton>Gradient Button</GradientButton>\n   <LinkButton>Link Button</LinkButton>\n          </div>\n        </div>\n\n        {/* Standard Variants */}\n        <div>\n          <h3 className=\"text-lg font-semibold mb-4 text-foreground\">Standard Variants</h3>\n          <div className=\"flex flex-wrap gap-4\">\n            <Button variant=\"default\">Default</Button>\n            <Button variant=\"primary\">Primary</Button>\n            <Button variant=\"secondary\">Secondary</Button>\n            <Button variant=\"outline\">Outline</Button>\n            <Button variant=\"ghost\">Ghost</Button>\n            <Button variant=\"link\">Link</Button>\n          </div>\n        </div>\n\n        {/* Special Variants */}\n        <div>\n          <h3 className=\"text-lg font-semibold mb-4 text-foreground\">Special Variants</h3>\n          <div className=\"flex flex-wrap gap-4\">\n            <Button variant=\"gradient\">Gradient</Button>\n            <Button variant=\"success\">Success</Button>\n            <Button variant=\"warning\">Warning</Button>\n            <Button variant=\"destructive\">Destructive</Button>\n          </div>\n        </div>\n\n        {/* Size Variants */}\n        <div>\n          <h3 className=\"text-lg font-semibold mb-4 text-foreground\">Size Variants</h3>\n          <div className=\"flex flex-wrap items-center gap-4\">\n            <Button size=\"sm\">Small</Button>\n            <Button size=\"default\">Default</Button>\n            <Button size=\"lg\">Large</Button>\n            <Button size=\"xl\">Extra Large</Button>\n          </div>\n        </div>\n\n        {/* Icon Buttons */}\n        <div>\n          <h3 className=\"text-lg font-semibold mb-4 text-foreground\">Icon Buttons</h3>\n          <div className=\"flex flex-wrap gap-4\">\n            <Button icon={Users} iconPosition=\"left\">With Left Icon</Button>\n            <Button icon={Star} iconPosition=\"right\">With Right Icon</Button>\n            <Button variant=\"outline\" icon={TrendingUp}>Outline with Icon</Button>\n            <Button size=\"icon\" icon={Globe} />\n          </div>\n        </div>\n      </div>\n    </div>\n  );\n}"
+            }
+          },
+          {
+            "id": "card",
+            "name": "Card",
+            "description": "Flexible content container",
+            "category": "ui-elements",
+            "previewUrl": "/blocks/preview/card",
+            "preview": {
+              "title": "Card Component",
+              "description": "A flexible card component for displaying content",
+              "code": "import { Card, CardContent, CardDescription, CardHeader, CardTitle } from \"@/components/ui/card\";\n\nexport function CardExample() {\n  return (\n    <div className=\"p-8 bg-background min-h-screen\">\n      <div className=\"grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl\">\n        <Card>\n          <CardHeader>\n            <CardTitle>Card Title</CardTitle>\n            <CardDescription>Card description goes here</CardDescription>\n          </CardHeader>\n          <CardContent>\n            <p>This is the card content area where you can put any content.</p>\n          </CardContent>\n        </Card>\n        <Card>\n          <CardHeader>\n            <CardTitle>Another Card</CardTitle>\n          </CardHeader>\n          <CardContent>\n            <p>Cards are flexible and can contain various types of content.</p>\n          </CardContent>\n        </Card>\n      </div>\n    </div>\n  );\n}"
+            }
+          },
+          {
+            "id": "badge",
+            "name": "Badge",
+            "description": "Small status indicators and labels",
+            "category": "ui-elements",
+            "previewUrl": "/blocks/preview/badge",
+            "preview": {
+              "title": "Badge Component",
+              "description": "Small status indicators and labels with different variants",
+              "code": "import { Badge } from \"@/components/ui/badge\";\n\nexport function BadgeExample() {\n  return (\n    <div className=\"p-8 bg-background min-h-screen\">\n      <div className=\"flex flex-wrap gap-4\">\n        <Badge>Default</Badge>\n        <Badge variant=\"secondary\">Secondary</Badge>\n        <Badge variant=\"outline\">Outline</Badge>\n        <Badge variant=\"destructive\">Destructive</Badge>\n      </div>\n    </div>\n  );\n}"
+            }
+          },
+          {
+            "id": "contact-form",
+            "name": "Contact Form",
+            "description": "Complete contact form with validation",
+            "category": "ui-elements",
+            "previewUrl": "/blocks/preview/contact-form",
+            "preview": {
+              "title": "Contact Form Component",
+              "description": "A complete contact form with fields for name, email, company, and message",
+              "code": "import { ContactForm, CompactContactForm, MinimalContactForm, SupportContactForm, ContactFormData } from \"@/components/ui/contact-form\";\n\nexport function ContactFormExample() {\n  const handleFormSubmit = async (formData: ContactFormData) => {\n    console.log(\"Form submitted:\", formData);\n    alert(`Thank you ${formData.name}! Your message has been sent.`);\n  };\n\n  return (\n    <div className=\"p-8 bg-background min-h-screen\">\n      <div className=\"space-y-12\">\n        {/* Default Contact Form */}\n        <div>\n          <h3 className=\"text-xl font-semibold mb-6 text-foreground\">Default Contact Form</h3>\n          <div className=\"max-w-2xl\">\n            <ContactForm onSubmit={handleFormSubmit} />\n          </div>\n        </div>\n\n        {/* Compact Contact Form */}\n        <div>\n          <h3 className=\"text-xl font-semibold mb-6 text-foreground\">Compact Contact Form</h3>\n          <div className=\"max-w-lg\">\n            <CompactContactForm onSubmit={handleFormSubmit} />\n          </div>\n        </div>\n\n        {/* Support Contact Form */}\n        <div>\n          <h3 className=\"text-xl font-semibold mb-6 text-foreground\">Support Contact Form</h3>\n          <div className=\"max-w-2xl\">\n            <SupportContactForm onSubmit={handleFormSubmit} />\n          </div>\n        </div>\n\n        {/* Minimal Contact Form */}\n        <div>\n          <h3 className=\"text-xl font-semibold mb-6 text-foreground\">Minimal Contact Form</h3>\n          <div className=\"max-w-2xl\">\n            <MinimalContactForm onSubmit={handleFormSubmit} />\n          </div>\n        </div>\n      </div>\n    </div>\n  );\n}"
+            }
+          },
+          {
+            "id": "blog-card",
+            "name": "Blog Card",
+            "description": "Card component for displaying blog posts",
+            "category": "ui-elements",
+            "previewUrl": "/blocks/preview/blog-card",
+            "preview": {
+              "title": "Blog Card Component",
+              "description": "Card component for displaying blog post information with author and metadata",
+              "code": "import { BlogCard } from \"@/components/ui/blog-card\";\n\nexport function BlogCardExample() {\n  return (\n    <div className=\"p-8 bg-background min-h-screen\">\n      <div className=\"max-w-4xl mx-auto space-y-8\">\n        <div>\n          <h3 className=\"text-lg font-semibold mb-4\">Default Variant</h3>\n          <div className=\"max-w-md\">\n            <BlogCard\n              post={{\n                slug: \"default-example\",\n                title: \"Getting Started with Next.js\",\n                excerpt: \"Learn how to build modern web applications using Next.js. This guide covers the fundamentals and best practices.\",\n                author: \"John Doe\",\n                date: \"2024-01-15\",\n                readTime: \"5 min read\",\n                tags: [\"Next.js\", \"React\", \"Web Development\"]\n              }}\n              variant=\"default\"\n            />\n          </div>\n        </div>\n\n        <div>\n          <h3 className=\"text-lg font-semibold mb-4\">Wide Variant</h3>\n          <BlogCard\n            post={{\n              slug: \"wide-example\",\n              title: \"Building Scalable SaaS Applications with TypeScript\",\n              excerpt: \"Discover how to create robust and maintainable SaaS applications using TypeScript. This comprehensive guide covers architecture patterns, best practices, and real-world examples.\",\n              author: \"Jane Smith\",\n              date: \"2024-01-20\",\n              readTime: \"8 min read\",\n              tags: [\"TypeScript\", \"SaaS\", \"Architecture\", \"Best Practices\", \"Scalability\"]\n            }}\n            variant=\"wide\"\n          />\n        </div>\n      </div>\n    </div>\n  );\n}"
+            }
+          },
+          {
+            "id": "feature-card",
+            "name": "Feature Card",
+            "description": "Simple card for showcasing product features",
+            "category": "ui-elements",
+            "previewUrl": "/blocks/preview/feature-card",
+            "preview": {
+              "title": "Feature Card Component",
+              "description": "Simple feature card with icon, title and description",
+              "code": "import { FeatureCard, HeroFeatureCard, DetailedFeatureCard, CompactFeatureCard, MinimalFeatureCard } from \"@/components/ui/feature-card\";\nimport { Users, Globe, Clock, Star, TrendingUp, Shield, Zap, Database, Settings, Rocket, Lock, Code } from \"lucide-react\";\n\nexport function FeatureCardExample() {\n  return (\n    <div className=\"p-8 bg-background min-h-screen\">\n      <div className=\"space-y-12\">\n        {/* Hero Variant */}\n        <div>\n          <h3 className=\"text-xl font-semibold mb-6 text-foreground\">Hero Variant</h3>\n          <div className=\"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6\">\n            <HeroFeatureCard \n              feature={{\n                icon: Zap,\n                title: \"Lightning Fast\",\n                description: \"Built for speed with optimized performance and instant loading times\",\n                link: { href: \"#\", text: \"Learn more\" }\n              }}\n            />\n            <HeroFeatureCard \n              feature={{\n                icon: Shield,\n                title: \"Enterprise Security\",\n                description: \"Bank-grade security with end-to-end encryption and compliance\"\n              }}\n            />\n            <HeroFeatureCard \n              feature={{\n                icon: Globe,\n                title: \"Global Scale\",\n                description: \"Worldwide CDN and infrastructure for seamless global delivery\"\n              }}\n            />\n            <HeroFeatureCard \n              feature={{\n                icon: Database,\n                title: \"Smart Data\",\n                description: \"Intelligent data organization with automated backups\"\n              }}\n            />\n          </div>\n        </div>\n\n        {/* Detailed Variant */}\n        <div>\n          <h3 className=\"text-xl font-semibold mb-6 text-foreground\">Detailed Variant (Default)</h3>\n          <div className=\"grid grid-cols-1 md:grid-cols-2 gap-6\">\n            <DetailedFeatureCard \n              feature={{\n                icon: Database,\n                title: \"Smart Data Management\",\n                description: \"Intelligent data organization with automated backups and real-time sync across all devices.\",\n                benefits: [\"Automated backups\", \"Real-time sync\", \"Data encryption\", \"Version control\"],\n                link: { href: \"#\", text: \"Explore features\" }\n              }}\n            />\n            <DetailedFeatureCard \n              feature={{\n                icon: Settings,\n                title: \"Workflow Automation\",\n                description: \"Automate repetitive tasks and create custom workflows to boost productivity.\",\n                benefits: [\"Custom workflows\", \"Task automation\", \"Trigger conditions\", \"Integration rules\"]\n              }}\n            />\n          </div>\n        </div>\n\n        {/* Compact Variant */}\n        <div>\n          <h3 className=\"text-xl font-semibold mb-6 text-foreground\">Compact Variant</h3>\n          <div className=\"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4\">\n            <CompactFeatureCard \n              feature={{\n                icon: Rocket,\n                title: \"Quick Setup\",\n                description: \"Get started in minutes with our guided setup process\"\n              }}\n            />\n            <CompactFeatureCard \n              feature={{\n                icon: Lock,\n                title: \"Secure Access\",\n                description: \"Multi-factor authentication and role-based permissions\"\n              }}\n            />\n            <CompactFeatureCard \n              feature={{\n                icon: Code,\n                title: \"Developer Friendly\",\n                description: \"RESTful APIs and comprehensive documentation\"\n              }}\n            />\n          </div>\n        </div>\n\n        {/* Minimal Variant */}\n        <div>\n          <h3 className=\"text-xl font-semibold mb-6 text-foreground\">Minimal Variant</h3>\n          <div className=\"grid grid-cols-1 md:grid-cols-3 gap-8\">\n            <MinimalFeatureCard \n              feature={{\n                icon: Star,\n                title: \"24/7 Support\",\n                description: \"Round-the-clock support from our expert team\",\n                link: { href: \"#\", text: \"Contact us\" }\n              }}\n            />\n            <MinimalFeatureCard \n              feature={{\n                icon: TrendingUp,\n                title: \"Analytics\",\n                description: \"Comprehensive analytics dashboard with real-time insights\"\n              }}\n            />\n            <MinimalFeatureCard \n              feature={{\n                icon: Users,\n                title: \"Team Collaboration\",\n                description: \"Seamless collaboration tools for your entire team\"\n              }}\n            />\n          </div>\n        </div>\n      </div>\n    </div>\n  );\n}"
+            }
+          },
+          {
+            "id": "feature-card-detailed",
+            "name": "Feature Card Detailed",
+            "description": "Detailed card with benefits list",
+            "category": "ui-elements",
+            "previewUrl": "/blocks/preview/feature-card-detailed",
+            "preview": {
+              "title": "Feature Card Detailed Component",
+              "description": "Detailed feature card with icon, title, description and benefits list",
+              "code": "import { FeatureCardDetailed } from \"@/components/ui/feature-card-detailed\";\nimport { Database, Users, Settings, BarChart3 } from \"lucide-react\";\n\nexport function FeatureCardDetailedExample() {\n  return (\n    <div className=\"p-8 bg-background min-h-screen\">\n      <div className=\"max-w-6xl mx-auto\">\n        <div className=\"mb-12 text-center\">\n          <h1 className=\"text-3xl font-bold mb-4\">Feature Card Detailed</h1>\n          <p className=\"text-muted-foreground\">\n            Detailed feature cards with icon, title, description and benefits list\n          </p>\n        </div>\n\n        <div className=\"grid grid-cols-1 md:grid-cols-2 gap-8\">\n          <FeatureCardDetailed\n            icon={Database}\n            title=\"Smart Data Management\"\n            description=\"Intelligent data organization with automated backups and real-time sync across all devices.\"\n            benefits={[\n              \"Automated backups\",\n              \"Real-time sync\", \n              \"Data encryption\",\n              \"Version control\"\n            ]}\n          />\n          <FeatureCardDetailed\n            icon={Users}\n            title=\"Team Collaboration\"\n            description=\"Seamless collaboration tools with role-based permissions and real-time editing.\"\n            benefits={[\n              \"Role-based access\",\n              \"Real-time editing\",\n              \"Comment system\",\n              \"Activity tracking\"\n            ]}\n          />\n          <FeatureCardDetailed\n            icon={Settings}\n            title=\"Workflow Automation\"\n            description=\"Automate repetitive tasks and create custom workflows to boost productivity.\"\n            benefits={[\n              \"Custom workflows\",\n              \"Task automation\",\n              \"Trigger conditions\",\n              \"Integration rules\"\n            ]}\n          />\n          <FeatureCardDetailed\n            icon={BarChart3}\n            title=\"Advanced Analytics\"\n            description=\"Comprehensive analytics dashboard with custom reports and data visualization.\"\n            benefits={[\n              \"Custom dashboards\",\n              \"Real-time metrics\",\n              \"Export reports\",\n              \"Data insights\"\n            ]}\n          />\n        </div>\n      </div>\n    </div>\n  );\n}"
+            }
+          },
+          {
+            "id": "support-card",
+            "name": "Support Card",
+            "description": "Card for support features",
+            "category": "ui-elements",
+            "previewUrl": "/blocks/preview/support-card",
+            "preview": {
+              "title": "Support Card Component",
+              "description": "Center-aligned card for displaying support services and features",
+              "code": "import { SupportCard } from \"@/components/ui/support-card\";\nimport { Headphones, Rocket, Target, BookOpen, Users, Zap } from \"lucide-react\";\n\nexport function SupportCardExample() {\n  return (\n    <div className=\"p-8 bg-background min-h-screen\">\n      <div className=\"max-w-6xl mx-auto\">\n        <div className=\"mb-12 text-center\">\n          <h1 className=\"text-3xl font-bold mb-4\">Support Card</h1>\n          <p className=\"text-muted-foreground\">\n            Center-aligned cards for displaying support services and features\n          </p>\n        </div>\n\n        <div className=\"grid grid-cols-1 md:grid-cols-3 gap-8\">\n          <SupportCard\n            icon={Headphones}\n            title=\"24/7 Support\"\n            description=\"Round-the-clock support from our expert team\"\n          />\n          <SupportCard\n            icon={Rocket}\n            title=\"Onboarding\"\n            description=\"Guided setup and personalized onboarding experience\"\n          />\n          <SupportCard\n            icon={Target}\n            title=\"Training\"\n            description=\"Comprehensive training materials and certification programs\"\n          />\n        </div>\n      </div>\n    </div>\n  );\n}"
+            }
+          },
+          {
+            "id": "case-showcase-grid",
+            "name": "Case Showcase Grid",
+            "description": "Interactive grid for displaying case studies",
+            "category": "ui-elements",
+            "previewUrl": "/blocks/preview/case-showcase-grid",
+            "preview": {
+              "title": "Case Showcase Grid Component",
+              "description": "Interactive showcase grid for displaying case studies with external links and hover effects",
+              "code": "import { CaseShowcaseGrid } from \"@/components/ui/case-showcase-grid\";\n const sampleCases = [{\n   slug: \"youphoto-ai\",\n   title: \"YouPhoto AI - Your One-Click AI Photo Editor\",\n   description: \"AI-powered photo editor for reStyles, emoji, avatar, memes & more! Transform photos with advanced AI technology.\",\n   image: \"/images/cases/case1.png\",\n   externalUrl: \"https://youphoto.ai\",\n   tags: [\"AI\", \"Photo Editor\", \"SaaS\"]\n }]   \n\n\n export default function CaseShowcaseGridExample() {\n   return (\n     <div>\n       <h3 className=\"text-xl font-semibold mb-6 text-foreground\">\n         Case Showcase Grid\n       </h3>\n       <p className=\"text-muted-foreground mb-8\">\n         Interactive showcase grid for displaying case studies with external\n         links. Each card opens the external URL in a new tab when clicked.\n       </p>\n       <CaseShowcaseGrid cases={sampleCases} lang=\"en\" dict={sampleDict} />\n     </div>\n   );\n }"
+            }
+          },
+          {
+            "id": "pricing",
+            "name": "Pricing Table",
+            "description": "Pricing plans and comparison",
+            "category": "ui-elements",
+            "previewUrl": "/blocks/preview/pricing",
+            "preview": {
+              "title": "Pricing Section",
+              "description": "Display pricing plans with features comparison",
+              "code": " import { Pricing } from \"@/components/ui/pricing\";\n\n export default function PricingPage() {\n   return (\n     <div className=\"bg-background min-h-screen py-10\">\n       <Pricing dict={{\n         pricing: {\n           mostPopular: \"Most Chosen\",\n           plans: [\n             {\n               name: \"Basic\",\n               description: \"For small teams and individual users\",\n               price: \"$10\",\n               period: \"month\",\n               popular: false,\n               features: [\"1000 API calls\", \"1000 API calls\", \"1000 API calls\", \"1000 API calls\", \"1000 API calls\"],\n               buttonText: \"Get Started\"\n             },\n             {\n               name: \"Pro\",\n               description: \"For large teams and enterprise users\",\n               price: \"$100\",\n               period: \"month\",\n               popular: true,\n               features: [\"1000 API calls\", \"1000 API calls\", \"1000 API calls\", \"1000 API calls\", \"1000 API calls\"],\n               buttonText: \"Get Started\"\n             }\n           ]\n         }\n       }} />\n     </div>\n   );\n }\n"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Layout",
+        "id": "layout",
+        "components": [
+          {
+            "id": "header",
+            "name": "Header",
+            "description": "Navigation header with logo and menu",
+            "category": "layout",
+            "previewUrl": "/blocks/preview/header",
+            "preview": {
+              "title": "Header Component",
+              "description": "Navigation header with logo, menu items and action buttons",
+              "code": "import { Header } from \"@/components/layout/header\";\n\nexport function HeaderExample() {\n  return (\n    <div className=\"bg-background min-h-screen\">\n      <Header />\n      <div className=\"pt-20 p-8\">\n        <p className=\"text-muted-foreground\">This is a preview of the Header component in action.</p>\n      </div>\n    </div>\n  );\n}"
+            }
+          },
+          {
+            "id": "footer",
+            "name": "Footer",
+            "description": "Site footer with links and info",
+            "category": "layout",
+            "previewUrl": "/blocks/preview/footer",
+            "preview": {
+              "title": "Footer Component",
+              "description": "Site footer with organized links and company information",
+              "code": "import { Footer } from \"@/components/layout/footer\";\n\nexport function FooterExample() {\n  return (\n    <div className=\"bg-background min-h-screen flex flex-col\">\n      <div className=\"flex-1 p-8\">\n        <p className=\"text-muted-foreground\">This is a preview of the Footer component.</p>\n      </div>\n      <Footer />\n    </div>\n  );\n}"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Sections",
+        "id": "sections",
+        "components": [
+          {
+            "id": "hero",
+            "name": "Hero Section",
+            "description": "Landing page hero with CTA",
+            "category": "sections",
+            "previewUrl": "/blocks/preview/hero",
+            "preview": {
+              "title": "Hero Section",
+              "description": "A compelling hero section for landing pages with call-to-action",
+              "code": "import { Hero } from \"@/components/sections/hero\";\n\nexport function HeroExample() {\n  return (\n    <div className=\"bg-background min-h-screen\">\n      <Hero />\n    </div>\n  );\n}"
+            }
+          },
+          
+          {
+            "id": "testimonials",
+            "name": "Testimonials Section",
+            "description": "Customer testimonials and reviews",
+            "category": "sections",
+            "previewUrl": "/blocks/preview/testimonials",
+            "preview": {
+              "title": "Testimonials Section",
+              "description": "Display customer testimonials and reviews",
+              "code": "import { TestimonialsGrid } from \"@/components/ui/testimonials-grid\";\n\nexport default function TestimonialsGridExample() {\n  return (\n    <div className=bg-background min-h-screen>\n      <TestimonialsGrid \n          testimonials={[\n           {\n             rating: 5,\n             content: \"This product has completely transformed our workflow. The team is more productive than ever!\",\n             avatar: \"https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face&auto=format\",\n             name: \"John Doe\",\n             role: \"CEO, TechCorp\"\n           },\n           {\n             rating: 5,\n              content: \"Amazing customer support and intuitive design. Highly recommend to anyone looking for quality.\",\n             avatar: \"https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face&auto=format\",\n             name: \"Sarah Johnson\",\n             role: \"Product Manager\"\n           },\n           {\n             rating: 4,\n             content: \"Great value for money. The features are exactly what we needed for our growing business.\",\n             avatar: \"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face&auto=format\",\n             name: \"Mike Chen\",\n             role: \"Startup Founder\"\n           }\n         ]} \n       />\n    </div>\n  );\n}\n"
+            }
+          },
+          {
+            "id": "cta-section",
+            "name": "CTA Section",
+            "description": "Call-to-action section with buttons",
+            "category": "sections",
+            "previewUrl": "/blocks/preview/cta-section",
+            "preview": {
+              "title": "CTA Section Component",
+              "description": "Call-to-action section with customizable buttons and trust indicators",
+              "code": "import { CTASection, PrimaryCTA, GradientCTA, MinimalCTA } from \"@/components/sections/cta-section\";\n\nexport function CTASectionExample() {\n  return (\n    <div className=\"bg-background min-h-screen space-y-0\">\n      {/* Primary CTA */}\n      <PrimaryCTA\n        title=\"Ready to Get Started?\"\n        description=\"Join thousands of satisfied customers and transform your business today\"\n        primaryText=\"Start Free Trial\"\n        secondaryText=\"Learn More\"\n      />\n      \n      {/* Gradient CTA */}\n      <GradientCTA\n        title=\"Experience the Difference\"\n        description=\"See how our platform can revolutionize your workflow and boost productivity\"\n        primaryText=\"Start Free Trial\"\n        secondaryText=\"Schedule Demo\"\n      />\n      \n      {/* Minimal CTA */}\n      <MinimalCTA\n        title=\"Simple and Effective\"\n        description=\"Perfect for subtle conversions without overwhelming your users\"\n        buttonText=\"Get Started\"\n      />\n      \n      {/* Custom Multi-button CTA */}\n      <CTASection\n        title=\"Custom Configuration\"\n        description=\"Fully customizable with multiple buttons and actions\"\n        variant=\"primary\"\n        buttons={[\n          { text: \"Primary Action\", variant: \"secondary\" },\n          { text: \"Secondary Action\", variant: \"outline\" },\n          { text: \"Learn More\", variant: \"ghost\" }\n        ]}\n      />\n    </div>\n  );\n}"
+            }
+          },
+          {
+            "id": "stats-section",
+            "name": "Stats Section",
+            "description": "Statistics display section",
+            "category": "sections",
+            "previewUrl": "/blocks/preview/stats-section",
+            "preview": {
+              "title": "Stats Section Component",
+              "description": "Display statistics and metrics in an attractive grid layout",
+              "code": "import { StatsSection, CompanyStats, BusinessMetrics, ProductStats } from \"@/components/ui/stats-section\";\nimport { Users, Globe, Clock, Star, TrendingUp } from \"lucide-react\";\n\nexport function StatsSectionExample() {\n  return (\n    <div className=\"bg-background min-h-screen space-y-0\">\n      {/* Company Stats (Default) */}\n      <div className=\"py-8\">\n        <h3 className=\"text-xl font-semibold mb-6 text-center\">Company Stats (Default)</h3>\n        <CompanyStats />\n      </div>\n      \n      {/* Business Metrics (Cards) */}\n      <div className=\"py-8\">\n        <h3 className=\"text-xl font-semibold mb-6 text-center\">Business Metrics (Cards)</h3>\n        <BusinessMetrics />\n      </div>\n      \n      {/* Product Stats (Highlight) */}\n      <div className=\"py-8\">\n        <h3 className=\"text-xl font-semibold mb-6 text-center\">Product Stats (Highlight)</h3>\n        <ProductStats />\n      </div>\n      \n      {/* Custom Stats with Icons */}\n      <div className=\"py-8\">\n        <h3 className=\"text-xl font-semibold mb-6 text-center\">Custom Stats with Icons</h3>\n        <StatsSection\n          title=\"Platform Performance\"\n          description=\"Real-time metrics that matter\"\n          variant=\"cards\"\n          columns={4}\n          stats={[\n            { value: \"2.5M\", suffix: \"+\", label: \"Global Users\", icon: Users, color: \"primary\" },\n            { value: \"180\", suffix: \"+\", label: \"Countries\", icon: Globe, color: \"secondary\" },\n            { value: \"99.9\", suffix: \"%\", label: \"Uptime\", icon: Clock, color: \"success\" },\n            { value: \"4.9\", suffix: \"/5\", label: \"User Rating\", icon: Star, color: \"warning\" }\n          ]}\n        />\n      </div>\n    </div>\n  );\n}"
+            }
+          },
+          {
+            "id": "content-section",
+            "name": "Content Section",
+            "description": "Text and image content section",
+            "category": "sections",
+            "previewUrl": "/blocks/preview/content-section",
+            "preview": {
+              "title": "Content Section Component",
+              "description": "Flexible content section with text and optional image layout",
+              "code": "import { ContentSection, AboutSection, FeatureSection } from \"@/components/sections/content-section\";\n\nexport function ContentSectionExample() {\n  return (\n    <div className=\"p-8 bg-background min-h-screen space-y-16\">\n      <div className=\"max-w-6xl mx-auto space-y-16\">\n        {/* Text Only Section */}\n        <div>\n          <h3 className=\"text-xl font-semibold mb-6 text-center\">Text Only Section</h3>\n          <div className=\"max-w-4xl mx-auto\">\n            <AboutSection title=\"Our Story\">\n              <p>\n                This is an example of a text-only content section. It's perfect for stories, \n                about sections, or any content that doesn't need accompanying images.\n              </p>\n              <p>\n                The component automatically handles spacing, typography, and responsive design \n                to ensure your content looks great on all devices.\n              </p>\n            </AboutSection>\n          </div>\n        </div>\n\n        {/* Text Left, Image Right */}\n        <div className=\"bg-muted/30 p-8 rounded-2xl\">\n          <h3 className=\"text-xl font-semibold mb-6 text-center\">Text Left, Image Right</h3>\n          <ContentSection\n            title=\"Advanced Analytics Dashboard\"\n            layout=\"text-left\"\n            image={{\n              src: \"https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop&crop=center\",\n              alt: \"Analytics dashboard\",\n              width: 600,\n              height: 400\n            }}\n          >\n            <p>\n              Our advanced analytics dashboard provides real-time insights into your business \n              performance. Track key metrics, monitor user behavior, and make data-driven decisions.\n            </p>\n            <p>\n              With customizable widgets and interactive charts, you can visualize your data \n              exactly how you need it. Export reports, set up alerts, and collaborate with your team.\n            </p>\n          </ContentSection>\n        </div>\n\n        {/* Text Right, Image Left */}\n        <div>\n          <h3 className=\"text-xl font-semibold mb-6 text-center\">Text Right, Image Left</h3>\n          <FeatureSection\n            title=\"Seamless Integration\"\n            layout=\"text-right\"\n            image={{\n              src: \"https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop&crop=center\",\n              alt: \"Integration illustration\"\n            }}\n          >\n            <p>\n              Connect with over 100+ popular tools and services. Our API-first approach \n              ensures that you can integrate with any system, no matter how complex.\n            </p>\n            <p>\n              From CRM systems to marketing automation tools, we've got you covered. \n              Set up integrations in minutes, not hours.\n            </p>\n          </FeatureSection>\n        </div>\n      </div>\n    </div>\n  );\n}"
+            }
+          },
+          {
+            "id": "faq",
+            "name": "FAQ Section",
+            "description": "Interactive frequently asked questions",
+            "category": "sections",
+            "previewUrl": "/blocks/preview/faq",
+            "preview": {
+              "title": "FAQ Section Component",
+              "description": "Interactive FAQ section with expandable questions and answers",
+              "code": "import { FAQ } from \"@/components/sections/faq\";\n\nexport function FAQExample() {\n  return (\n    <div className=\"bg-background min-h-screen\">\n      <FAQ dict={{\n        faq: {\n          title: \"Frequently Asked Questions\",\n          description: \"Find answers to common questions about our product and services.\",\n          stillHaveQuestions: \"Still have questions?\",\n          contactSupport: \"Contact Support\",\n          faqs: [\n            {\n              question: \"Can I change my plan at any time?\",\n              answer: \"Yes, you can upgrade or downgrade your plan at any time. Changes will be reflected in your next billing cycle.\"\n            }\n          ]\n        }\n      }}/>\n    </div>\n  );\n}"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

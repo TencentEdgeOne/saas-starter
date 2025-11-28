@@ -1,0 +1,302 @@
+# Windsurf Rules for SaaS Starter Project
+
+## 🎯 Core Principle: REUSE EXISTING COMPONENTS FIRST
+
+**ALWAYS prioritize using existing components over creating new ones. Only create new components when absolutely necessary and existing components cannot be extended or configured to meet the requirements.**
+
+## Project Context
+This is a modern SaaS starter template built with Next.js, featuring:
+- Static Site Generation (SSG)
+- Internationalization (i18n)
+- Edge Functions
+- Component Library
+- Tailwind CSS
+
+## Directory Structure Rules
+```
+src/
+├── app/             # Next.js App Router pages
+├── components/      # React components
+│   ├── layout/     # Layout components
+│   ├── sections/   # Page sections
+│   └── ui/         # UI components
+├── lib/            # Utility functions
+└── styles/         # Global styles
+```
+
+## Component Development Rules
+
+### 1. Component Location Rules
+- UI components → `src/components/ui/`
+- Section components → `src/components/sections/`
+- Layout components → `src/components/layout/`
+- Page components → `src/app/[lang]/`
+
+### 2. Component Inventory
+#### Buttons & Actions
+- `Button` - Primary component with variants: `default`, `destructive`, `outline`, `secondary`, `ghost`, `link`, `gradient`, `primary`, `success`, `warning`
+- `PrimaryButton`, `GradientButton`, `LinkButton` - Preset button combinations
+
+#### Cards & Layout
+- `Card`, `CardContent`, `CardDescription`, `CardHeader`, `CardTitle` - Standard card components
+- `Badge` - For tags, status indicators, labels
+
+#### Content Display
+- `BlogCard` - For blog post previews
+- `FeatureCard`, `FeatureCardDetailed` - For feature showcases
+- `SupportCard` - For support/help content
+- `CaseShowcaseGrid` - For case studies
+- `TestimonialsGrid` - For testimonials
+
+#### Forms & Input
+- `ContactForm`, `CompactContactForm`, `MinimalContactForm`, `SupportContactForm`
+
+#### Data & Stats
+- `StatsSection` - Statistics display
+- `CompanyStats`, `BusinessMetrics`, `ProductStats`
+
+#### Interactive Elements
+- `FAQList` - Collapsible FAQ component
+- `FeaturesGrid` - Grid layout for features
+- `PricingTable` - Pricing comparison tables
+- `Toast` - Notification system
+- `CodeHighlighter` - Syntax-highlighted code display
+
+### 3. Component Structure
+```typescript
+"use client";  // Required for components using React hooks
+
+import { cn } from "@/lib/utils";
+
+export interface ComponentProps {
+  // Props interface
+}
+
+export function Component({
+  // Props destructuring
+}: ComponentProps) {
+  return (
+    // JSX
+  );
+}
+```
+
+### 4. Component Reuse Priority
+1. FIRST: Use existing component as-is
+2. SECOND: Extend existing component with new props
+3. THIRD: Create variant of existing component
+4. LAST RESORT: Create entirely new component
+
+### 5. Component Extension Guidelines
+```typescript
+// ✅ GOOD: Extend existing component
+interface ExtendedButtonProps extends ButtonProps {
+  newProp?: string;
+}
+
+// ❌ AVOID: Creating new component when Button exists
+interface CustomButtonProps {
+  // ... duplicate Button functionality
+}
+```
+
+### 6. Styling Rules
+- Use Tailwind CSS classes
+- Use `cn()` utility for conditional classes
+- Follow project color scheme: `primary`, `secondary`, `accent`, `muted`
+- Use existing animation classes: `animate-float`, `animate-pulse`
+- Maintain responsive design
+
+## Edge Functions Rules
+
+### 1. Function Location
+- All functions must be in `functions/` directory
+- Use subdirectories for feature grouping
+- NEVER put functions in public or publish directory
+
+### 2. Function Structure
+```typescript
+export function onRequest(context) {
+  // Function logic
+  return new Response(data, {
+    headers: {
+      'content-type': 'application/json',
+    },
+  });
+}
+```
+
+### 3. Function Categories
+#### MUST BE IN functions/:
+- Shopping cart operations: `functions/cart/`
+- Authentication: `functions/auth/`
+- Order management: `functions/orders/`
+- Payment processing: `functions/payments/`
+- Form submissions: `functions/forms/`
+- Customer operations: `functions/customers/`
+- Geolocation services: `functions/geo/`
+- OCR services: `functions/ocr/`
+- Database operations: `functions/db/`
+- Third-party integrations: `functions/integrations/`
+
+#### MUST BE IN Frontend:
+- Display pages
+- Content catalog
+- Static forms
+- Navigation
+- SEO pages
+- UI components
+- Layouts
+- CMS content display
+- i18n UI components
+
+## Internationalization Rules
+
+### 1. Dictionary Structure
+- English: `dictionaries/en.json`
+- Chinese: `dictionaries/zh.json`
+- Blocks: `dictionaries/blocks-[locale].json`
+
+### 2. Translation Keys
+- Use nested objects for organization
+- Keep consistent structure across languages
+- Use descriptive key names
+
+### 3. Icon Consistency Rule
+- NEVER change icon names when translating
+- ALWAYS copy icon names exactly from English version
+- ONLY translate text content
+- Verify icon mapping exists in components
+
+### 4. Project Structure
+```
+public/
+├── locales/
+│   ├── en/                 # English translations
+│   │   ├── common.json     # Common translations
+│   │   ├── home.json       # Homepage translations
+│   │   └── [page].json     # Page translations
+│   ├── zh/                 # Chinese translations
+│   └── [locale]/           # Other languages
+```
+
+## Code Style Rules
+
+### 1. TypeScript
+- Use strict type checking
+- Define interfaces for all props
+- Use type inference when possible
+- Export types and interfaces
+
+### 2. React Patterns
+- Use functional components
+- Implement proper error boundaries
+- Follow React hooks rules
+- Use proper prop types
+
+### 3. File Naming
+- Components: PascalCase
+- Utilities: camelCase
+- Test files: `*.test.tsx`
+- Page files: `page.tsx`
+
+## Performance Rules
+
+### 1. Static Generation
+- Use getStaticProps for data fetching
+- Implement proper caching strategies
+- Optimize image loading
+- Minimize bundle size
+
+### 2. Edge Functions
+- Keep functions small and focused
+- Implement proper error handling
+- Use appropriate caching headers
+- Follow edge function limitations:
+  - 20 MB code size limit
+  - 2048 MB memory limit
+  - 50ms CPU execution time
+  - 40s response timeout
+
+## Security Rules
+
+### 1. Environment Variables
+- Never expose secrets in code
+- Use proper environment configuration
+- Follow security best practices
+- Implement proper validation
+
+### 2. API Security
+- Validate all inputs
+- Implement rate limiting
+- Use proper CORS settings
+- Follow least privilege principle
+
+## Local Development Rules
+
+### 1. Server Configuration
+- Frontend dev server: framework-specific (e.g., "npm run dev")
+- Edge functions dev server: "edgeone pages dev --fePort ${port}"
+- Add commands to package.json
+
+### 2. Environment Variables
+```bash
+# Development
+DEV=true
+NEXT_PUBLIC_DEV=true
+NEXT_PUBLIC_API_URL_DEV=http://localhost:8088/
+FRONT_END_URL_DEV=http://localhost:3000/
+
+# Platform Configuration
+SHOPIFY_STOREFRONT_ACCESS_TOKEN=your_token
+SANITY_PROJECT_ID=your_project_id
+CONTENTFUL_SPACE_ID=your_space_id
+STRIPE_SECRET_KEY=your_key
+
+# Internationalization
+NEXT_PUBLIC_DEFAULT_LOCALE=en
+NEXT_PUBLIC_SUPPORTED_LOCALES=en,zh
+I18N_FALLBACK_LOCALE=en
+```
+
+## Testing Rules
+
+### 1. Unit Tests
+- Test all components
+- Test utility functions
+- Use proper mocking
+- Follow testing best practices
+
+### 2. Integration Tests
+- Test component interactions
+- Test page navigation
+- Test i18n functionality
+- Test edge functions
+
+## Documentation Rules
+
+### 1. Code Comments
+- Document complex logic
+- Explain business rules
+- Document type definitions
+- Keep comments up to date
+
+### 2. README
+- Keep documentation current
+- Include setup instructions
+- Document environment variables
+- List available scripts
+
+## Git Rules
+
+### 1. Commit Messages
+- Use conventional commits
+- Keep commits focused
+- Write clear descriptions
+- Reference issues
+
+### 2. Branch Strategy
+- Use feature branches
+- Follow naming conventions
+- Keep branches up to date
+- Clean up merged branches 
