@@ -1,5 +1,6 @@
 import { Locale } from './i18n';
 import type { TestimonialsData } from '@/types/testimonials';
+import type { Feature } from '@/types/features';
 
 // Translation file type definitions
 export interface Dictionary {
@@ -439,6 +440,81 @@ export interface Dictionary {
       dashboard: string;
     };
   };
+  ai: {
+    pageTitle: string;
+    pageSubtitle: string;
+    hero: {
+      heading: string;
+      subheading: string;
+      ctaText: string;
+      ctaSecondary: string;
+    };
+    generator: {
+      title: string;
+      description: string;
+      modelLabel: string;
+      modelPlaceholder: string;
+      promptLabel: string;
+      promptPlaceholder: string;
+      generate: string;
+      generating: string;
+      resultTitle: string;
+      emptyStateTitle: string;
+      emptyStateDescription: string;
+      errorTitle: string;
+      errorDescription: string;
+      download: string;
+      retry: string;
+      safetyNote: string;
+      examplesTitle?: string;
+      examples?: Array<{
+        label: string;
+        prompt: string;
+      }>;
+      checkingCredits?: string;
+      credits?: string;
+      cost?: string;
+      creditsUnavailable?: string;
+      notEnoughCredits?: string;
+      pleaseSignIn?: string;
+      unableToFetchCredits?: string;
+      unableToFetchCost?: string;
+      failedToFetchCost?: string;
+      imageGenerationTimeout?: string;
+      modelNotConfigured?: string;
+    };
+    api?: {
+      userAuthenticationRequired: string;
+      invalidJsonBody: string;
+      promptRequired: string;
+      modelRequired: string;
+      unsupportedSize: string;
+      unsupportedModel: string;
+      notEnoughCredits: string;
+      apiKeyNotConfigured: string;
+      generationFailed: string;
+      creditsSpendFailed: string;
+    };
+    features: {
+      title: string;
+      subtitle: string;
+      items: Feature[];
+    };
+    howItWorks: {
+      title: string;
+      subtitle: string;
+      steps: Array<{
+        number: string;
+        title: string;
+        description: string;
+      }>;
+    };
+    cta: {
+      title: string;
+      description: string;
+      buttonText: string;
+    };
+  };
   profile: {
     title: string;
     description: string;
@@ -461,6 +537,9 @@ export interface Dictionary {
     manage: string;
     cancel: string;
     trialEnds: string;
+    creditsBalance: string;
+    creditsReward:string
+    subscriptionSuccess:string
   };
 }
 

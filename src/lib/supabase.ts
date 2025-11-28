@@ -4,9 +4,23 @@ import Stripe from 'stripe'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co'
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key'
+
 const TRIAL_PERIOD_DAYS = 0;
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+// 套餐价格到积分的映射
+const PLAN_CREDITS_MAPPING: Record<string, { price: number; credits: number }> = {
+  'lite': { price: 80, credits: 100 },
+  'standard': { price: 150, credits: 300 },
+  'pro': { price: 300, credits: 500 }
+};
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true,
+  },
+})
 
 
 // Server-side Supabase client for API routes
@@ -148,6 +162,76 @@ export const createOrRetrieveCustomer = async ({
 };
 
 /**
+ * 根据价格ID确定套餐名称
+ * @param priceId Stripe价格ID
+ */
+const determinePlanName = async (priceId: string): Promise<string | null> => {
+  const stripe = createStripe();
+  
+  try {
+    const price = await stripe.prices.retrieve(priceId);
+    const product = await stripe.products.retrieve(price.product as string);
+    
+    // 根据产品名称或价格确定套餐类型
+    const productName = product.name.toLowerCase();
+    
+    if (productName.includes('lite') || price.unit_amount === 8000) {
+      return 'lite';
+    } else if (productName.includes('standard') || price.unit_amount === 15000) {
+      return 'standard';
+    } else if (productName.includes('pro') || price.unit_amount === 30000) {
+      return 'pro';
+    }
+    
+    return null;
+  } catch (error) {
+    console.error('Failed to determine plan name:', error);
+    return null;
+  }
+};
+
+/**
+ * 根据购买的套餐为用户添加积分
+ * @param userId 用户ID
+ * @param priceId 价格ID
+ * @param planName 套餐名称
+ */
+export const addCreditsForPurchase = async (
+  userId: string, 
+  priceId: string, 
+  planName: string
+) => {
+  // 根据套餐名称获取对应的积分数量
+  const creditsAmount = PLAN_CREDITS_MAPPING[planName]?.credits;
+  
+  if (!creditsAmount) {
+    throw new Error(`Invalid plan name: ${planName}`);
+  }
+  
+  // 生成唯一交易号
+  const transNo = `purchase_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  
+  // 插入积分记录
+  const { error } = await createSupabaseAdminClient()
+    .from('credits')
+    .insert({
+      trans_no: transNo,
+      user_id: userId,
+      trans_type: 'purchase_bonus',
+      credits: creditsAmount,
+      plan_name: planName,
+      description: `购买 ${planName} 套餐获得的积分奖励`
+    });
+  
+  if (error) {
+    throw new Error(`Failed to add credits: ${error.message}`);
+  }
+  
+  console.log(`Added ${creditsAmount} credits for user ${userId} for ${planName} plan`);
+  return creditsAmount;
+};
+
+/**
  * Copies the billing details from the payment method to the customer object.
  */
 const copyBillingDetailsToCustomer = async (
@@ -179,7 +263,7 @@ const copyBillingDetailsToCustomer = async (
 export const manageSubscriptionStatusChange = async (
   subscriptionId: string,
   customerId: string,
-  createAction: boolean = false
+  createAction: string
 ) => {
   // Get customer's UUID from mapping table.
   const { data: customerData, error: noCustomerError } = await createSupabaseAdminClient()
@@ -213,13 +297,13 @@ export const manageSubscriptionStatusChange = async (
     canceled_at: subscription.canceled_at
       ? toDateTime(subscription.canceled_at).toISOString()
       : null,
-    current_period_start: toDateTime(
+    current_period_start: (subscription as any).current_period_start ? toDateTime(
       (subscription as any).current_period_start
-    ).toISOString(),
-    current_period_end: toDateTime(
+    ).toISOString() : null,
+    current_period_end: (subscription as any).current_period_end ? toDateTime(
       (subscription as any).current_period_end
-    ).toISOString(),
-    created: toDateTime(subscription.created).toISOString(),
+    ).toISOString() : null,
+    created:  toDateTime(subscription.created).toISOString(),
     ended_at: subscription.ended_at
       ? toDateTime(subscription.ended_at).toISOString()
       : null,
@@ -239,10 +323,27 @@ export const manageSubscriptionStatusChange = async (
   console.log(
     `Inserted/updated subscription [${subscription.id}] for user [${uuid}]`
   );
+  
+  // 如果是创建订阅，添加相应的积分
+  if(createAction === 'customer.subscription.created') {
+    try {
+      const priceId = subscription.items.data[0].price.id;
+      const planName = await determinePlanName(priceId);
+      
+      if (planName) {
+        await addCreditsForPurchase(uuid, priceId, planName);
+      } else {
+        console.warn(`Could not determine plan name for price ID: ${priceId}`);
+      }
+    } catch (error) {
+      console.error('Failed to add credits for purchase:', error);
+      // 不中断订阅流程，只记录错误
+    }
+  }
 
   // For a new subscription copy the billing details to the customer object.
   // NOTE: This is a costly operation and should happen at the very end.
-  if (createAction && subscription.default_payment_method && uuid)
+  if (['customer.subscription.created','checkout.session.completed'].includes(createAction) && subscription.default_payment_method && uuid)
     //@ts-ignore
     await copyBillingDetailsToCustomer(
       uuid,

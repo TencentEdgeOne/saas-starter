@@ -43,7 +43,6 @@ export async function POST(request: NextRequest) {
     console.log(`❌ Error message: ${err.message}`);
     return new Response(`Webhook Error: ${err.message}`, { status: 400 });
   }
-  
   // insert records
   if (relevantEvents.has(event.type)) {
     try {
@@ -69,7 +68,7 @@ export async function POST(request: NextRequest) {
           await manageSubscriptionStatusChange(
             subscription.id,
             subscription.customer as string,
-            event.type === 'customer.subscription.created'
+            event.type 
           );
           break;
         case 'checkout.session.completed':
@@ -79,7 +78,7 @@ export async function POST(request: NextRequest) {
             await manageSubscriptionStatusChange(
               subscriptionId as string,
               checkoutSession.customer as string,
-              true
+              event.type
             );
           }
           break;

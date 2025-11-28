@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from 'react'
+import React, {  useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useAuth } from '@/contexts/AuthContext'
 import { getSubscriptions } from '@/lib/auth'
@@ -8,9 +8,10 @@ import { Subscription } from '@/types/subscription'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Loader2, User, Mail, Calendar, CreditCard, DollarSign, Settings, LogOut } from 'lucide-react'
+import { Loader2, User, Mail, Calendar, CreditCard, DollarSign, Settings, LogOut, Coins } from 'lucide-react'
 import { Dictionary } from '@/lib/dictionaries'
 import { formatDate } from '@/lib/utils'
+import { CREDITS_CONFIG } from '@/lib/credits'
 
 interface ProfileContentProps {
   dict?: Dictionary
@@ -22,6 +23,8 @@ export function ProfileContent({ dict, lang }: ProfileContentProps) {
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([])
   const [subscriptionsLoading, setSubscriptionsLoading] = useState(true)
   const [subscriptionsError, setSubscriptionsError] = useState<string | null>(null)
+  const [creditsBalance, setCreditsBalance] = useState<number>(0)
+  const [creditsLoading, setCreditsLoading] = useState(true)
 
   useEffect(() => {
     if (user) {
@@ -42,7 +45,26 @@ export function ProfileContent({ dict, lang }: ProfileContentProps) {
         }
       }
 
+      const fetchCreditsBalance = async () => {
+        try {
+          setCreditsLoading(true)
+          const response = await fetch('/api/credits/balance')
+          
+          if (response.ok) {
+            const data = await response.json()
+            setCreditsBalance(data.balance || 0)
+          } else {
+            setCreditsBalance(0)
+          }
+        } catch (err) {
+          console.error('Failed to fetch credits balance:', err)
+          setCreditsBalance(0)
+        } finally {
+          setCreditsLoading(false)
+        }
+      }
       fetchSubscriptions()
+      fetchCreditsBalance()
     }
   }, [user])
 
@@ -71,9 +93,23 @@ export function ProfileContent({ dict, lang }: ProfileContentProps) {
     )
   }
 
+  const getSubscriptionCredits = (subscription: Subscription) => {
+    const curPlan = subscription.prices?.products?.name?.toLowerCase() || ''
+    const creditsCount = CREDITS_CONFIG.PURCHASE_BONUS[curPlan as keyof typeof CREDITS_CONFIG.PURCHASE_BONUS] || 0
+
+    return `${dict?.profile?.subscriptionSuccess || 'Subscription successful, earned'} ${creditsCount} ${dict?.profile?.creditsReward || 'credits'}`
+  }
+
+  const getPlanName = (subscription: Subscription) => {
+    const curPlan = subscription.prices?.products?.name?.toLowerCase() || '' ;
+    const CURPLANMAP = lang === 'zh' ? CREDITS_CONFIG.PLANS_ZH : CREDITS_CONFIG.PLANS;
+    const planName = CURPLANMAP[curPlan as keyof typeof CREDITS_CONFIG.PLANS] || 'Unknown Product'
+    return planName
+  }
+
   return (
     <div className="grid gap-8 lg:grid-cols-3">
-      {/* Profile Information */}
+      {/* User Profile Information Section */}
       <div className="lg:col-span-1">
         <Card>
           <CardHeader>
@@ -104,17 +140,32 @@ export function ProfileContent({ dict, lang }: ProfileContentProps) {
               </div>
             </div>
 
-            <div className="pt-4 border-t">
+            <div className="flex items-center space-x-3">
+              <Coins className="h-4 w-4 text-gray-500" />
+              <div>
+                <p className="text-sm font-medium">{dict?.profile?.creditsBalance ||'Credits Balance'}</p>
+                <p className="text-sm text-gray-600">
+                  {creditsLoading ? (
+                    <Loader2 className="h-4 w-4 inline animate-spin" />
+                  ) : (
+                    creditsBalance
+                  )}
+                </p>
+              </div>
+            </div>
+
+            {/* Edit Profile Button - Disabled for now */}
+            {/* <div className="pt-4 border-t">
               <Button variant="outline" className="w-full">
                 <Settings className="h-4 w-4 mr-2" />
                 {dict?.profile?.editProfile || 'Edit Profile'}
               </Button>
-            </div>
+            </div> */}
           </CardContent>
         </Card>
       </div>
 
-      {/* Subscriptions */}
+      {/* User Subscriptions Management Section */}
       <div className="lg:col-span-2">
         <Card>
           <CardHeader>
@@ -157,7 +208,7 @@ export function ProfileContent({ dict, lang }: ProfileContentProps) {
                   <div key={subscription.id} className="border rounded-lg p-4">
                     <div className="flex items-center justify-between mb-3">
                       <h4 className="font-semibold">
-                        {subscription.prices?.products?.name || 'Unknown Product'}
+                        { getPlanName(subscription)}
                       </h4>
                       <Badge 
                         variant={
@@ -171,14 +222,14 @@ export function ProfileContent({ dict, lang }: ProfileContentProps) {
                     </div>
                     
                     <p className="text-sm text-gray-600 mb-3">
-                      {subscription.prices?.products?.description}
+                    {getSubscriptionCredits(subscription)}
                     </p>
                     
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-2">
                         <DollarSign className="h-4 w-4 text-gray-500" />
                         <span className="text-lg font-semibold">
-                          ${(subscription.prices?.unit_amount || 0) / 100}
+                          {(subscription.prices?.unit_amount || 0) / 100}
                         </span>
                         <span className="text-gray-500">
                           /{subscription.prices?.interval || 'month'}

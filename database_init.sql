@@ -88,9 +88,9 @@ create table subscriptions (
   -- Time at which the subscription was created.
   created timestamp with time zone default timezone('utc'::text, now()) not null,
   -- Start of the current period that the subscription has been invoiced for.
-  current_period_start timestamp with time zone default timezone('utc'::text, now()) not null,
+  current_period_start timestamp with time zone default timezone('utc'::text, now()),
   -- End of the current period that the subscription has been invoiced for. At the end of this period, a new invoice will be created.
-  current_period_end timestamp with time zone default timezone('utc'::text, now()) not null,
+  current_period_end timestamp with time zone default timezone('utc'::text, now()),
   -- If the subscription has ended, the timestamp of the date the subscription ended.
   ended_at timestamp with time zone default timezone('utc'::text, now()),
   -- A date in the future at which the subscription will automatically get canceled.
@@ -122,3 +122,46 @@ CREATE TABLE contact_messages (
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 alter table customers enable row level security;
+
+/**
+* CREDITS
+* Note: this table manages user credits/points system for the application.
+* Credits can be earned through various activities and used for purchases.
+*/
+create type credit_transaction_type as enum ('signup_bonus', 'purchase_bonus', 'spend', 'expire');
+
+create table credits (
+  -- Auto-increment primary key
+  id SERIAL PRIMARY KEY,
+  trans_no VARCHAR(255) UNIQUE NOT NULL,
+  -- When the credit transaction was created
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  -- Reference to the user (UUID from auth.users)
+  user_id uuid REFERENCES auth.users NOT NULL,
+  -- Type of transaction: 'signup_bonus', 'purchase_bonus', 'spend', 'refund', 'expire'
+  trans_type credit_transaction_type NOT NULL,
+  -- Amount of credits (positive for earning, negative for spending)
+  credits integer,
+  -- Optional plan name for purchase bonus (pro, standard, lite)
+  plan_name VARCHAR(50),
+  -- Optional expiration date for credits
+  expired_at TIMESTAMP WITH TIME ZONE,
+  -- Description of the transaction
+  description TEXT
+);
+alter table credits enable row level security;
+-- Users can only view their own credit transactions
+create policy "Can only view own credits data." on credits for select using (auth.uid() = user_id);
+
+/**
+* USER_CREDITS_BALANCE
+* Note: this is a view that calculates the current credit balance for each user.
+* It sums up all credits for each user, excluding expired credits.
+*/
+create or replace view user_credits_balance as
+select 
+  user_id,
+  coalesce(sum(credits), 0) as balance
+from credits
+where expired_at is null or expired_at > now()
+group by user_id;

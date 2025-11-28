@@ -4,7 +4,7 @@ globs:
 alwaysApply: true
 ---
 ---
-description: Guidelines and best practices for building e-commerce website on EdgeOne Pages based on Shopify and Next.js, including edge functions, and real-world examples
+description: Guidelines and best practices for building websites on EdgeOne Pages with Next.js, including edge functions, and real-world examples
 globs: **/*.{ts,tsx,js,jsx,toml,json}
 ---
 
@@ -39,7 +39,7 @@ EdgeOne Pages is a full-stack platform that combines:
 - Use ES modules format exclusively for Edge Functions
 - For Node Functions, use common Node.js patterns (e.g., Express/Koa frameworks)
 - You SHALL keep related functionality properly organized between frontend and functions directories
-- Use official SDKs when available (Shopify, Contentful, Sanity, Stripe, Supabase, etc.)
+- Use official SDKs when available (Contentful, Sanity, Stripe, Supabase, etc.)
 - Minimize external dependencies, especially for Edge Functions
 - Do NOT use libraries with native bindings in Edge Functions
 - Follow EdgeOne Pages security best practices
@@ -104,7 +104,6 @@ EdgeOne Pages is a full-stack platform that combines:
   - If has `strapi` dependencies → **Strapi CMS project**
   - If has `@supabase/supabase-js` → **Supabase project** (like stripe-subscription-starter)
   - If has `stripe` dependencies → **Payment integration project**
-  - If has `@shopify/storefront-api-client` → **Shopify e-commerce project**
   - If has `woocommerce` dependencies → **WooCommerce e-commerce project**
 
   ### STEP 2: Smart Feature Classification by Keywords (中英文双语支持)
@@ -273,7 +272,7 @@ EdgeOne Pages is a full-stack platform that combines:
   - All customer operations: `node-functions/customers/create.js`, `node-functions/customers/update.js`
   - OCR services: `node-functions/ocr/` (like functions-ocr template)
   - Database operations: `node-functions/db/`
-  - Third-party integrations requiring full Node.js environment: `node-functions/supabase/`, `node-functions/stripe/`, `node-functions/shopify/`
+  - Third-party integrations requiring full Node.js environment: `node-functions/supabase/`, `node-functions/stripe/`
   - Any code using environment variables for API keys or secrets that requires a full Node.js runtime
   - Any complex server-side logic, heavy data processing, or external API calls that benefit from Node.js environment.
 
@@ -337,9 +336,6 @@ NEXT_PUBLIC_API_URL_DEV=http://localhost:8088/
 FRONT_END_URL_DEV=http://localhost:3000/
 
 # Platform Configuration (use as needed)
-# For Shopify E-commerce
-SHOPIFY_STOREFRONT_ACCESS_TOKEN=your_token_here
-SHOPIFY_STORE_DOMAIN=your-store.myshopify.com
 
 # For Sanity CMS
 SANITY_PROJECT_ID=your_project_id
@@ -419,7 +415,7 @@ I18N_FALLBACK_LOCALE=en
   - Type system: TypeScript preferred
   - Edge functions: EdgeOne Edge Functions, for low-latency edge logic
   - Node functions: EdgeOne Node Functions, for complex backend logic
-  - Platform integrations: Multiple options (Shopify, Contentful, Sanity, Supabase, Stripe, etc.)
+  - Platform integrations: Multiple options (Contentful, Sanity, Supabase, Stripe, etc.)
   - Internationalization: next-i18next for Next.js projects, react-i18next for React SPA, vue-i18n for Vue projects
 
   ### Syntax and Project Specifications
@@ -456,7 +452,6 @@ I18N_FALLBACK_LOCALE=en
      - Use English as default language when writing code and comments.
   7. Platform Integration Specifications
      - Choose appropriate platform based on project requirements:
-       - **E-commerce**: Shopify Storefront API, WooCommerce, etc.
        - **CMS**: Sanity, Contentful, WordPress headless, etc.
        - **Database**: Supabase, Firebase, etc.
        - **Payments**: Stripe, PayPal, etc.

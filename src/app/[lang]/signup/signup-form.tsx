@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Toast } from '@/components/ui/toast'
 import { Dictionary } from '@/lib/dictionaries'
-import { Eye, EyeOff, Mail, Lock, User } from 'lucide-react'
+import { Eye, EyeOff, Mail, Lock, User, Github } from 'lucide-react'
 
 interface SignupFormProps {
   dict: Dictionary
@@ -25,6 +25,7 @@ export default function SignupForm({ dict, lang }: SignupFormProps) {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [oauthLoading, setOauthLoading] = useState<string | null>(null)
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null)
   const router = useRouter()
 
@@ -33,6 +34,32 @@ export default function SignupForm({ dict, lang }: SignupFormProps) {
       ...formData,
       [e.target.name]: e.target.value
     })
+  }
+
+  const handleOAuthLogin = async (provider: 'google' | 'github', forceReauth: boolean = false) => {
+    setOauthLoading(provider)
+    setError('')
+
+    try {
+      const response = await fetch(`/api/auth/oauth/thirdpartysignin`,{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ provider, forceReauth }),
+      })
+      const data = await response.json()
+
+      if (response.ok && data.url) {
+        window.location.href = data.url
+      } else {
+        setError(data.error || `Failed to initiate ${provider} login`)
+        setOauthLoading(null)
+      }
+    } catch (error) {
+      setError(`Connection failed. Please try again.`)
+      setOauthLoading(null)
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -71,9 +98,19 @@ export default function SignupForm({ dict, lang }: SignupFormProps) {
 
       if (response.ok) {
         setToast({ message: data.message || 'Account created successfully!', type: 'success' })
-        setTimeout(() => {
-          router.push(`/${lang}/login`)
-        }, 2000)
+        if (data.session) {
+          // 有 session，等待 Cookie 设置完成后刷新页面以重新初始化 AuthContext
+          console.log('Registration successful with session, redirecting...')
+          setTimeout(() => {
+            window.location.href = `/${lang}?auth=success`
+          }, 1500)
+        } else {
+          // 其他情况，跳转到登录页
+          console.log('Registration successful but no session, redirecting to login...')
+          setTimeout(() => {
+            router.push(`/${lang}/login`)
+          }, 2000)
+        }
       } else {
         setError(data.error || 'An error occurred')
       }
@@ -191,14 +228,59 @@ export default function SignupForm({ dict, lang }: SignupFormProps) {
               </div>
             )}
 
-            <Button
+           <Button
               type="submit"
               className="w-full"
               disabled={loading}
             >
               {loading ? (dict.auth?.signup?.creating || 'Creating account...') : (dict.auth?.signup?.signUpButton || 'Sign Up')}
             </Button>
+
+            
+          
+          <div className="mt-6 space-y-3">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-white text-gray-500">
+                  { 'Or continue with'}
+                </span>
+              </div>
+            </div>
+           <button
+              type="button"
+              onClick={() => handleOAuthLogin('google', true)}
+              disabled={loading || oauthLoading !== null}
+              className="w-full flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              <svg className="w-4 h-4" viewBox="0 0 24 24">
+                <text x="50%" y="50%" dominantBaseline="central" textAnchor="middle" fontSize="24" fontWeight="bold" fill="currentColor">
+                  G
+                </text>
+              </svg>
+              <span className="text-sm font-medium">
+                {oauthLoading === 'google' ? ( 'Connecting...') : ('Google')}
+              </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleOAuthLogin('github', true)}
+              disabled={loading || oauthLoading !== null}
+              className="w-full flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              <Github className="w-4 h-4" />
+              <span className="text-sm font-medium">
+                {oauthLoading === 'github' ? ('Connecting...') : ( 'GitHub')}
+              </span>
+            </button>
+            </div>
+            
           </form>
+
+
 
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
