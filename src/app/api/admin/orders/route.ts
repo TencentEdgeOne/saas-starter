@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseAdminClient } from '@/lib/supabase'
 
@@ -16,8 +18,41 @@ export async function POST(request: NextRequest) {
       statusFilter = ''
     } = body
     
-    // Build query
-    let query = supabase
+    
+    // Handle search filter first
+    let matchingUserIds: string[] = []
+    if (search) {
+      // First search user IDs by email
+      const { data: authUsers, error: authError } = await supabase.auth.admin.listUsers({
+        page: 1,
+        perPage: 1000
+      })
+      
+      if (!authError && authUsers.users) {
+        matchingUserIds = authUsers.users
+          .filter(user => user.email?.toLowerCase().includes(search.toLowerCase()))
+          .map(user => user.id)
+        
+        if (matchingUserIds.length === 0) {
+          // If no matching users, return empty result
+          return NextResponse.json({
+            orders: [],
+            pagination: {
+              page,
+              limit,
+              total: 0,
+              totalPages: 0
+            }
+          })
+        }
+      }
+    }
+
+   
+    
+    
+    // Build data query
+    let dataQuery = supabase
       .from('subscriptions')
       .select(`
         id,
@@ -44,64 +79,34 @@ export async function POST(request: NextRequest) {
         )
       `)
     
-    // Apply status filter
+    // Apply same filters to data query
     if (statusFilter) {
-      query = query.eq('status', statusFilter)
+      dataQuery = dataQuery.eq('status', statusFilter)
     }
-    
-    // Apply search filter (search user email)
-    if (search) {
-      // First search user IDs by email
-      const { data: authUsers, error: authError } = await supabase.auth.admin.listUsers({
-        page: 1,
-        perPage: 1000
-      })
-      
-      if (!authError && authUsers.users) {
-        const matchingUserIds = authUsers.users
-          .filter(user => user.email?.toLowerCase().includes(search.toLowerCase()))
-          .map(user => user.id)
-        
-        if (matchingUserIds.length > 0) {
-          query = query.in('user_id', matchingUserIds)
-        } else {
-          // If no matching users, return empty result
-          return NextResponse.json({
-            orders: [],
-            pagination: {
-              page,
-              limit,
-              total: 0,
-              totalPages: 0
-            }
-          })
-        }
-      }
-    }
-    
-    // Get total count
-    const { count, error: countError } = await supabase
-      .from('subscriptions')
-      .select('*', { count: 'exact', head: true })
-    
-    if (countError) {
-      console.error('Error counting subscriptions:', countError)
+    if (search && matchingUserIds.length > 0) {
+      dataQuery = dataQuery.in('user_id', matchingUserIds)
     }
     
     // Apply sorting
     const validSortFields = ['created', 'status', 'ended_at']
     if (validSortFields.includes(sortBy)) {
-      query = query.order(sortBy, { ascending: sortOrder === 'asc' })
+      dataQuery = dataQuery.order(sortBy, { ascending: sortOrder === 'asc' })
     } else {
-      query = query.order('created', { ascending: false })
+      dataQuery = dataQuery.order('created', { ascending: false })
     }
     
+
+    dataQuery = dataQuery.range(0, 1000)
+    const { data: allSubscriptions}  =await dataQuery
+    const count = allSubscriptions?.length || 0;
+
     // Apply pagination
     const offset = (page - 1) * limit
-    query = query.range(offset, offset + limit - 1)
+    dataQuery = dataQuery.range(offset, offset + limit - 1)
     
-    const { data: subscriptions, error: subscriptionsError } = await query
+    const { data: subscriptions, error: subscriptionsError } = await dataQuery
     
+
     if (subscriptionsError) {
       console.error('Error fetching subscriptions:', subscriptionsError)
       return NextResponse.json(
@@ -112,18 +117,21 @@ export async function POST(request: NextRequest) {
     
     // Get user email information
     const userIds = subscriptions?.map((sub: any) => sub.user_id) || []
-    const { data: authUsers, error: authError } = await supabase.auth.admin.listUsers({
-      page: 1,
-      perPage: 1000
-    })
+    let userEmailMap = new Map<string, string>()
     
-    const userEmailMap = new Map<string, string>()
-    if (!authError && authUsers.users) {
-      authUsers.users.forEach(user => {
-        if (userIds.includes(user.id)) {
-          userEmailMap.set(user.id, user.email || 'Unknown')
-        }
+    if (userIds.length > 0) {
+      const { data: authUsers, error: authError } = await supabase.auth.admin.listUsers({
+        page: 1,
+        perPage: 1000
       })
+      
+      if (!authError && authUsers.users) {
+        authUsers.users.forEach(user => {
+          if (userIds.includes(user.id)) {
+            userEmailMap.set(user.id, user.email || 'Unknown')
+          }
+        })
+      }
     }
     
     // Format order data
@@ -143,6 +151,15 @@ export async function POST(request: NextRequest) {
       current_period_start: subscription.current_period_start,
       current_period_end: subscription.current_period_end
     }))
+    
+    console.log('Orders API Response:', {
+      ordersCount: formattedOrders.length,
+      totalCount: count,
+      page,
+      limit,
+      hasSearch: !!search,
+      hasStatusFilter: !!statusFilter
+    })
     
     return NextResponse.json({
       orders: formattedOrders,

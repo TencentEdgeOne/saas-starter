@@ -346,7 +346,7 @@ export default function OrdersPage() {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <div className="text-sm text-muted-foreground">
-              {t.showingResults} {((currentPage - 1) * pageSize) + 1} {t.to} {Math.min(currentPage * pageSize, pagination.total)} {t.of} {pagination.total} {t.results}
+             {t.of} {pagination.total} {t.results}
             </div>
             <div className="flex items-center space-x-2">
               <span className="text-sm text-muted-foreground">{t.itemsPerPage}:</span>
