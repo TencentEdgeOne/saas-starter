@@ -1,4 +1,8 @@
 "use client"
+
+// Force dynamic rendering for admin pages
+export const dynamic = 'force-dynamic'
+
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
@@ -64,7 +68,7 @@ function AdminLayoutContent({ children }: AdminLayoutProps) {
           setAdminUser(null)
         }
       } catch (error) {
-        console.error('Auth check error:', error)
+        console.error('AdminLayout: Auth check error:', error)
         setAuthStatus({ isLoggedIn: false, hasAccount: false, isAdmin: false })
       } finally {
         setIsLoading(false)
@@ -401,12 +405,12 @@ function AdminLayoutContent({ children }: AdminLayoutProps) {
   }
 
   return (
-    <div className="min-h-screen bg-background flex">
-      {/* Sidebar */}
+    <div className="min-h-screen bg-background">
+      {/* Sidebar - Completely Fixed */}
       <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-card border-r border-border transform ${
         sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-      } transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0`}>
-        <div className="flex items-center justify-between h-16 px-6 border-b border-border">
+      } transition-transform duration-300 ease-in-out lg:translate-x-0 flex flex-col overflow-hidden`}>
+        <div className="flex items-center justify-between h-16 px-6 border-b border-border shrink-0">
           <h1 className="text-xl font-bold text-primary">{t.adminPanel}</h1>
           <Button
             variant="ghost"
@@ -418,7 +422,7 @@ function AdminLayoutContent({ children }: AdminLayoutProps) {
           </Button>
         </div>
         
-        <nav className="mt-6 px-3">
+        <nav className="flex-1 overflow-y-auto px-3 py-6 scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent">
           {navigation.map((item) => {
             const Icon = item.icon
             const isActive = pathname === item.href || (item.href !== '/admin' && pathname.startsWith(item.href))
@@ -442,10 +446,10 @@ function AdminLayoutContent({ children }: AdminLayoutProps) {
         </nav>
       </div>
 
-      {/* Main content */}
-      <div className='w-full'>
-        {/* Top bar */}
-        <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-border bg-background px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+      {/* Main content area */}
+      <div className='min-h-screen lg:pl-64'>
+        {/* Top bar - Fixed */}
+        <div className="fixed top-0 right-0 left-0 lg:left-64 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-border bg-background/95 backdrop-blur-sm px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
           <Button
             variant="ghost"
             size="icon"
@@ -492,8 +496,8 @@ function AdminLayoutContent({ children }: AdminLayoutProps) {
         </div>
 
         {/* Page content */}
-        <main className="py-6">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <main className="pt-16">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
             {children}
           </div>
         </main>

@@ -61,33 +61,54 @@ export async function checkAdminStatus(): Promise<{
 }> {
   try {
     // 获取当前会话
-    const { data: { session } } = await supabase.auth.getSession()
+    const { data: { session }, error: sessionError } = await supabase.auth.getSession()
     
-    if (!session?.access_token) {
+    if (sessionError) {
       return { isAdmin: false, isLoggedIn: false, hasAccount: false }
     }
+    
+    if (!session?.access_token) {
+      console.log('No session or access token found')
+      return { isAdmin: false, isLoggedIn: false, hasAccount: false}
+    }
 
+    
     // 调用 API 检查管理员状态
     const response = await fetch('/api/admin/auth/status', {
       headers: {
         'Authorization': `Bearer ${session.access_token}`,
+        'Content-Type': 'application/json',
       },
     })
 
+    console.log('API response status:', response.status, response.statusText)
+
     if (response.ok) {
       const data = await response.json()
+      console.log('API response data:', data)
+      
       return {
         isAdmin: data.isAdmin,
         isLoggedIn: data.isLoggedIn,
         hasAccount: data.hasAccount,
-        user: data.user
+        user: data.user,
       }
     } else {
-      return { isAdmin: false, isLoggedIn: false, hasAccount: false }
+      const errorText = await response.text()
+      console.error('API request failed:', response.status, errorText)
+      return { 
+        isAdmin: false, 
+        isLoggedIn: false, 
+        hasAccount: false, 
+      }
     }
   } catch (error) {
     console.error('Admin status check error:', error)
-    return { isAdmin: false, isLoggedIn: false, hasAccount: false }
+    return { 
+      isAdmin: false, 
+      isLoggedIn: false, 
+      hasAccount: false, 
+    }
   }
 }
 

@@ -1,5 +1,8 @@
 "use client"
 
+// Force dynamic rendering for admin pages
+export const dynamic = 'force-dynamic'
+
 import React, { useState, useEffect } from 'react'
 import { Search, Mail, Calendar, ChevronLeft, ChevronRight, ArrowUpDown, ArrowUp, ArrowDown, Package, DollarSign, Filter } from 'lucide-react'
 import { Button } from '@/components/ui/button'

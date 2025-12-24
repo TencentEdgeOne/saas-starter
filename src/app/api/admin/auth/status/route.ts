@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { createSupabaseAdminClient } from '@/lib/supabase'
@@ -10,18 +12,21 @@ const supabase = createClient(
 
 export async function GET(request: NextRequest) {
   try {
+    
     // Get Authorization token from request headers
     const authHeader = request.headers.get('authorization')
+    
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      console.log('No valid auth header found')
       return NextResponse.json({
         isAdmin: false,
         isLoggedIn: false,
-        hasAccount: false
+        hasAccount: false,
       })
     }
 
     const token = authHeader.substring(7) // Remove "Bearer " prefix
-
+    console.log('Token extracted, length:', token.length)
     // Verify user identity
     const { data: { user }, error } = await supabase.auth.getUser(token)
     if (error || !user) {
@@ -45,7 +50,8 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({
         isAdmin: false,
         isLoggedIn: true,
-        hasAccount: false
+        hasAccount: false,
+        debug: `Customer lookup failed: ${customerError?.message}`
       })
     }
 

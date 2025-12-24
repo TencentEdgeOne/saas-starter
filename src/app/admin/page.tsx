@@ -1,5 +1,8 @@
 "use client"
 
+// Force dynamic rendering for admin pages
+export const dynamic = 'force-dynamic'
+
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Users, ShoppingCart, TrendingUp, DollarSign } from 'lucide-react'
