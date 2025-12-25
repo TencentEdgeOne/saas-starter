@@ -9,18 +9,17 @@ import { usePathname, useRouter } from 'next/navigation'
 import { 
   Users, 
   ShoppingCart, 
-  BarChart3, 
   Settings, 
   LogOut, 
   Menu, 
   X,
-  Globe,
   Eye,
   EyeOff,
   Mail,
   Lock
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import AdminLanguageSwitcher from '@/components/admin-language-switcher'
 import { supabase } from '@/lib/supabase'
 import { checkAdminStatus, adminSignOut, authenticateAdmin, type AdminUser } from '@/lib/admin-auth'
 import { AdminLanguageProvider, useAdminLanguage, adminTexts } from '@/lib/admin-language-context'
@@ -49,7 +48,7 @@ function AdminLayoutContent({ children }: AdminLayoutProps) {
   const [loginLoading, setLoginLoading] = useState(false)
   const [loginError, setLoginError] = useState('')
   
-  const { language, changeLanguage } = useAdminLanguage()
+  const { language } = useAdminLanguage()
   const pathname = usePathname()
   const router = useRouter()
   const t = adminTexts[language]
@@ -95,8 +94,7 @@ function AdminLayoutContent({ children }: AdminLayoutProps) {
   }, [])
 
   const navigation = [
-    { name: t.dashboard, href: '/admin', icon: BarChart3 },
-    { name: t.users, href: '/admin/users', icon: Users },
+    { name: t.users, href: '/admin', icon: Users },
     { name: t.orders, href: '/admin/orders', icon: ShoppingCart },
     { name: t.settings, href: '/admin/settings', icon: Settings },
   ]
@@ -166,13 +164,7 @@ function AdminLayoutContent({ children }: AdminLayoutProps) {
               </div>
               
               <div className="flex items-center">
-                <button
-                  onClick={() => changeLanguage(language === 'en' ? 'zh' : 'en')}
-                  className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-muted/50 hover:bg-muted transition-colors duration-200"
-                >
-                  <Globe className="h-4 w-4 text-muted-foreground" />
-                  <span className="text-sm text-foreground">{language === 'en' ? 'English': '中文'}</span>
-                </button>
+                <AdminLanguageSwitcher />
               </div>
             </div>
           </div>
@@ -463,17 +455,7 @@ function AdminLayoutContent({ children }: AdminLayoutProps) {
             <div className="flex flex-1"></div>
             <div className="flex items-center gap-x-4 lg:gap-x-6">
               {/* Language switcher */}
-              <div className="relative">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="flex items-center gap-2"
-                  onClick={() => changeLanguage(language === 'en' ? 'zh' : 'en')}
-                >
-                  <Globe className="h-4 w-4" />
-                  <span className="text-sm">{language === 'en' ? 'EN' : '中文'}</span>
-                </Button>
-              </div>
+              <AdminLanguageSwitcher />
 
              
 

@@ -4,186 +4,401 @@
 export const dynamic = 'force-dynamic'
 
 import React, { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { Users, ShoppingCart, TrendingUp, DollarSign } from 'lucide-react'
+import { Search, Mail, Calendar, ChevronLeft, ChevronRight, Coins, ArrowUpDown, ArrowUp, ArrowDown, Shield, User, Settings } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import { supabase } from '@/lib/supabase'
 import { useAdminLanguage, adminTexts } from '@/lib/admin-language-context'
 
-interface DashboardStats {
-  totalUsers: number
-  totalOrders: number
-  revenue: number
-  growth: number
+interface UserCredits {
+  balance: number
+  total_earned: number
+  total_spent: number
 }
 
-interface RecentUser {
+interface User {
   id: string
   email: string
   created_at: string
+  updated_at: string
+  last_sign_in_at: string | null
+  email_confirmed_at: string | null
+  role?: 'user' | 'admin'
+  credits: UserCredits
 }
 
-interface RecentOrder {
-  id: string
-  user_email: string
-  amount: number
-  created_at: string
+interface UsersResponse {
+  users: User[]
+  pagination: {
+    page: number
+    limit: number
+    total: number
+    totalPages: number
+  }
 }
 
-export default function AdminDashboard() {
+interface SortConfig {
+  field: string
+  order: 'asc' | 'desc'
+}
+export default function UsersPage() {
   const { language } = useAdminLanguage()
   const t = adminTexts[language]
   
-  const [stats, setStats] = useState<DashboardStats>({
-    totalUsers: 0,
-    totalOrders: 0,
-    revenue: 0,
-    growth: 0
-  })
-  const [recentUsers, setRecentUsers] = useState<RecentUser[]>([])
-  const [recentOrders, setRecentOrders] = useState<RecentOrder[]>([])
-  const [loading, setLoading] = useState(true)
+  const [usersData, setUsersData] = useState<UsersResponse | null>(null)
+  const [configloading, setConfigloading] = useState(false)
+  const [tableRefreshing, setTableRefreshing] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [searchTerm, setSearchTerm] = useState('')
+  const [debouncedSearch, setDebouncedSearch] = useState('')
+  const [selectedUser, setSelectedUser] = useState<User | null>(null)
+  const [showRoleChangeConfirm, setShowRoleChangeConfirm] = useState(false)
+  const [newRole, setNewRole] = useState<'user' | 'admin'>('user')
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
+  const [sortConfig, setSortConfig] = useState<SortConfig>({
+    field: 'created_at',
+    order: 'desc'
+  })
 
-  
+  // Get current logged in user info
   useEffect(() => {
-    const fetchDashboardData = async () => {
-      try {
-       
-
-        // Get user statistics
-        const { data: usersData, error: usersError } = await supabase
-          .from('profiles')
-          .select('id, email, created_at')
-          .order('created_at', { ascending: false })
-
-        if (usersError) throw usersError
-
-        // Get subscription statistics (as orders)
-        const { data: subscriptionsData, error: subscriptionsError } = await supabase
-          .from('subscriptions')
-          .select(`
-            id,
-            created_at,
-            profiles!inner(email)
-          `)
-          .order('created_at', { ascending: false })
-
-        if (subscriptionsError) throw subscriptionsError
-
-        // Calculate statistics
-        const totalUsers = usersData?.length || 0
-        const totalOrders = subscriptionsData?.length || 0
-        const revenue = totalOrders * 29.99 // Assume each subscription is $29.99
-        const growth = 12.5 // Assume growth rate
-
-        setStats({
-          totalUsers,
-          totalOrders,
-          revenue,
-          growth
-        })
-
-        // Set recent users (first 5)
-        setRecentUsers(
-          usersData?.slice(0, 5).map(user => ({
-            id: user.id,
-            email: user.email,
-            created_at: user.created_at
-          })) || []
-        )
-
-        // Set recent orders (first 5)
-        setRecentOrders(
-          subscriptionsData?.slice(0, 5).map(sub => ({
-            id: sub.id,
-            user_email: sub?.profiles[0].email || '',
-            amount: 29.99,
-            created_at: sub.created_at
-          })) || []
-        )
-
-      } catch (err) {
-        console.error('Error fetching dashboard data:', err)
-        setError(t.error)
-      } finally {
-        setLoading(false)
+    const getCurrentUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user) {
+        setCurrentUserId(user.id)
       }
     }
+    getCurrentUser()
+  }, [])
 
-    fetchDashboardData()
-  }, [t.error])
+  // Debounced search
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchTerm)
+      setCurrentPage(1) // Reset to first page when searching
+    }, 300)
 
+    return () => clearTimeout(timer)
+  }, [searchTerm])
 
+  // Fetch users list
+  const fetchUsers = async () => {
+    try {
+     
+      setTableRefreshing(true)
+      
+      const response = await fetch(`/api/admin/users`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          page: currentPage,
+          limit: pageSize,
+          search: debouncedSearch,
+          sortBy: sortConfig.field,
+          sortOrder: sortConfig.order
+        })
+      })
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch users')
+      }
 
-  const statCards = [
-    {
-      title: t.totalUsers,
-      value: stats.totalUsers.toLocaleString(),
-      icon: Users,
-      color: 'text-blue-600',
-      bgColor: 'bg-blue-50 dark:bg-blue-900/20'
-    },
-    {
-      title: t.totalOrders,
-      value: stats.totalOrders.toLocaleString(),
-      icon: ShoppingCart,
-      color: 'text-green-600',
-      bgColor: 'bg-green-50 dark:bg-green-900/20'
-    },
-    {
-      title: t.totalRevenue,
-      value: `$${stats.revenue.toLocaleString()}`,
-      icon: DollarSign,
-      color: 'text-purple-600',
-      bgColor: 'bg-purple-50 dark:bg-purple-900/20'
-    },
-    {
-      title: t.growth,
-      value: `+${stats.growth}%`,
-      icon: TrendingUp,
-      color: 'text-orange-600',
-      bgColor: 'bg-orange-50 dark:bg-orange-900/20'
+      const data: UsersResponse = await response.json()
+      setUsersData(data)
+      setError(null)
+    } catch (err) {
+      console.error('Error fetching users:', err)
+      setError(t.error)
+    } finally {
+      setTableRefreshing(false)
     }
-  ]
+  }
+
+  useEffect(() => {
+    fetchUsers()
+  }, [ currentPage, pageSize, debouncedSearch, sortConfig])
+
+
+  // Handle page size change
+  const handlePageSizeChange = (newPageSize: number) => {
+    setPageSize(newPageSize)
+    setCurrentPage(1) // Reset to first page
+  }
+
+  // Handle sorting
+  const handleSort = (field: string) => {
+    setSortConfig(prev => ({
+      field,
+      order: prev.field === field && prev.order === 'asc' ? 'desc' : 'asc'
+    }))
+    setCurrentPage(1)
+  }
+
+  // Get sort icon
+  const getSortIcon = (field: string) => {
+    if (sortConfig.field !== field) {
+      return <ArrowUpDown className="h-4 w-4" />
+    }
+    return sortConfig.order === 'asc' ? 
+      <ArrowUp className="h-4 w-4" /> : 
+      <ArrowDown className="h-4 w-4" />
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <p className="text-destructive">{error}</p>
+      </div>
+    )
+  }
+
+  const users = usersData?.users || []
+  const pagination = usersData?.pagination
 
   return (
     <div className="space-y-6">
       {/* Page header */}
-      <div>
-        <h1 className="text-3xl font-bold text-foreground">{t.dashboard}</h1>
-      </div>
-
-     
-
-      {/* Recent data */}
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        {/* Recent Users */}
-        <div className="bg-card rounded-lg border border-border p-6 shadow-sm">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-foreground">{t.recentUsers}</h2>
-            <Link
-              href="/admin/users"
-              className="text-sm text-primary hover:text-primary/80 transition-colors"
-            >
-              {t.viewAll}
-            </Link>
-          </div>
-        </div>
-
-        {/* Recent Orders */}
-        <div className="bg-card rounded-lg border border-border p-6 shadow-sm">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-foreground">{t.recentOrders}</h2>
-            <Link
-              href="/admin/orders"
-              className="text-sm text-primary hover:text-primary/80 transition-colors"
-            >
-              {t.viewAll}
-            </Link>
-          </div>
-         
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-foreground">{t.userManagement}</h1>
+          <p className="text-muted-foreground mt-2">
+            {t.totalUsers}: {pagination?.total || 0}
+          </p>
         </div>
       </div>
+
+      {/* Search bar */}
+      <div className="flex items-center space-x-4">
+        <div className="relative flex-1 max-w-md">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <input
+            type="text"
+            placeholder={t.searchUsers}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full pl-10 pr-4 py-2 border border-border rounded-md bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+          />
+        </div>
+      </div>
+
+      {/* Users table */}
+      <div className="bg-card rounded-lg border border-border shadow-sm overflow-hidden relative">
+        {/* Table refresh overlay */}
+        {tableRefreshing && (
+          <div className="absolute inset-0 bg-background/50 backdrop-blur-sm z-10 flex items-center justify-center">
+            <div className="flex items-center space-x-2 bg-card px-4 py-2 rounded-lg border border-border shadow-lg">
+              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary"></div>
+              <span className="text-sm text-muted-foreground">{t.loading}</span>
+            </div>
+          </div>
+        )}
+        
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="bg-muted/50 border-b border-border">
+              <tr>
+                <th className="px-6 py-4 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                  <button
+                    onClick={() => handleSort('email')}
+                    disabled={tableRefreshing}
+                    className="flex items-center space-x-1 hover:text-foreground transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <span>{t.email}</span>
+                    {getSortIcon('email')}
+                  </button>
+                </th>
+                <th className="px-6 py-4 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                  <button
+                    onClick={() => handleSort('created_at')}
+                    disabled={tableRefreshing}
+                    className="flex items-center space-x-1 hover:text-foreground transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <span>{t.joinDate}</span>
+                    {getSortIcon('created_at')}
+                  </button>
+                </th>
+                <th className="px-6 py-4 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                  <button
+                    onClick={() => handleSort('last_sign_in_at')}
+                    disabled={tableRefreshing}
+                    className="flex items-center space-x-1 hover:text-foreground transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <span>{t.lastLogin}</span>
+                    {getSortIcon('last_sign_in_at')}
+                  </button>
+                </th>
+                <th className="px-6 py-4 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                  {t.credits}
+                </th>
+                <th className="px-6 py-4 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                  {t.role}
+                </th>
+                <th className="px-6 py-4 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                  {t.status}
+                </th>
+               
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border">
+              {users.length === 0 ? (
+                <tr>
+                  <td colSpan={7} className="px-6 py-8 text-center text-muted-foreground">
+                    {t.noUsers}
+                  </td>
+                </tr>
+              ) : (
+                users.map((user) => (
+                  <tr key={user.id} className="hover:bg-muted/50 transition-colors">
+                    <td className="px-6 py-3 whitespace-nowrap">
+                      <div className="flex items-center">
+                        <div className="flex-shrink-0 h-8 w-8 bg-primary/10 rounded-full flex items-center justify-center">
+                          <Mail className="h-4 w-4 text-primary" />
+                        </div>
+                        <div className="ml-3">
+                          <div className="text-sm font-medium text-foreground">
+                            {user.email}
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-3 whitespace-nowrap">
+                      <div className="flex items-center text-sm text-muted-foreground">
+                        <Calendar className="h-4 w-4 mr-2" />
+                        {new Date(user.created_at).toLocaleDateString()}
+                      </div>
+                    </td>
+                    <td className="px-6 py-3 whitespace-nowrap">
+                      <div className="text-sm text-muted-foreground">
+                        {user.last_sign_in_at 
+                          ? new Date(user.last_sign_in_at).toLocaleDateString()
+                          : t.never
+                        }
+                      </div>
+                    </td>
+                    <td className="px-6 py-3 whitespace-nowrap">
+                      <div className="flex items-center text-sm">
+                        <Coins className="h-4 w-4 mr-2 text-yellow-500" />
+                        <span className="font-medium text-foreground">
+                          {user.credits.balance}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="px-6 py-3 whitespace-nowrap">
+                      <div className="flex items-center">
+                        {user.role === 'admin' ? (
+                          <>
+                            <Shield className="h-4 w-4 mr-2 text-blue-500" />
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400">
+                              {t.admin}
+                            </span>
+                          </>
+                        ) : (
+                          <>
+                            <User className="h-4 w-4 mr-2 text-gray-500" />
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400">
+                              {t.user}
+                            </span>
+                          </>
+                        )}
+                      </div>
+                    </td>
+                    <td className="px-6 py-3 whitespace-nowrap">
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                        user.email_confirmed_at 
+                          ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400'
+                          : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400'
+                      }`}>
+                        {user.email_confirmed_at ? t.active : t.inactive}
+                      </span>
+                    </td>
+                    
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Pagination */}
+      {pagination && pagination.totalPages > 0 && (
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <div className="text-sm text-muted-foreground">
+             {t.of} {pagination.total} {t.results}
+            </div>
+            <div className="flex items-center space-x-2">
+              <span className="text-sm text-muted-foreground">{t.itemsPerPage}:</span>
+              <select
+                value={pageSize}
+                onChange={(e) => handlePageSizeChange(Number(e.target.value))}
+                disabled={tableRefreshing}
+                className="px-3 py-1 border border-border rounded-md bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <option value={5}>5</option>
+                <option value={10}>10</option>
+                <option value={20}>20</option>
+                <option value={50}>50</option>
+                <option value={100}>100</option>
+              </select>
+            </div>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1 || tableRefreshing}
+            >
+              <ChevronLeft className="h-4 w-4 mr-1" />
+              {t.previous}
+            </Button>
+            
+            <div className="flex items-center space-x-1">
+              {Array.from({ length: Math.min(5, pagination.totalPages) }, (_, i) => {
+                let pageNum
+                if (pagination.totalPages <= 5) {
+                  pageNum = i + 1
+                } else if (currentPage <= 3) {
+                  pageNum = i + 1
+                } else if (currentPage >= pagination.totalPages - 2) {
+                  pageNum = pagination.totalPages - 4 + i
+                } else {
+                  pageNum = currentPage - 2 + i
+                }
+                
+                return (
+                  <Button
+                    key={pageNum}
+                    variant={currentPage === pageNum ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setCurrentPage(pageNum)}
+                    disabled={tableRefreshing}
+                    className="w-8 h-8 p-0"
+                  >
+                    {pageNum}
+                  </Button>
+                )
+              })}
+            </div>
+            
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCurrentPage(prev => Math.min(prev + 1, pagination.totalPages))}
+              disabled={currentPage === pagination.totalPages || tableRefreshing}
+            >
+              {t.next}
+              <ChevronRight className="h-4 w-4 ml-1" />
+            </Button>
+          </div>
+        </div>
+      )}
+
+      
     </div>
   )
 }

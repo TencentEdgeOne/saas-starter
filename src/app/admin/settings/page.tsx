@@ -138,30 +138,6 @@ export default function SettingsPage() {
         </div>
       )
     },
-    {
-      title: t.security,
-      description: t.securityDesc,
-      icon: Shield,
-      content: (
-        <div className="text-center py-8">
-          <Shield className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-foreground mb-2">{t.comingSoon}</h3>
-          <p className="text-sm text-muted-foreground">{t.featureNotImplemented}</p>
-        </div>
-      )
-    },
-    {
-      title: t.database,
-      description: t.databaseDesc,
-      icon: Database,
-      content: (
-        <div className="text-center py-8">
-          <Database className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-foreground mb-2">{t.comingSoon}</h3>
-          <p className="text-sm text-muted-foreground">{t.featureNotImplemented}</p>
-        </div>
-      )
-    }
   ]
 
   return (
@@ -218,38 +194,7 @@ export default function SettingsPage() {
         })}
       </div>
 
-      {/* System info */}
-      <div className="bg-card rounded-lg border border-border p-6 shadow-sm">
-        <h3 className="text-lg font-semibold text-foreground mb-4">
-          {language === 'zh' ? '系统信息' : 'System Information'}
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-          <div className="flex justify-between">
-            <span className="text-muted-foreground">
-              {language === 'zh' ? '版本:' : 'Version:'}
-            </span>
-            <span className="text-foreground">v1.0.0</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-muted-foreground">
-              {language === 'zh' ? '环境:' : 'Environment:'}
-            </span>
-            <span className="text-foreground">Development</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-muted-foreground">
-              {language === 'zh' ? '数据库:' : 'Database:'}
-            </span>
-            <span className="text-foreground">Supabase</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-muted-foreground">
-              {language === 'zh' ? '框架:' : 'Framework:'}
-            </span>
-            <span className="text-foreground">Next.js 14</span>
-          </div>
-        </div>
-      </div>
+      
     </div>
   )
 }
