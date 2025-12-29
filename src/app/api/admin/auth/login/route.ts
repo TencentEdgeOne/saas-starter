@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
-import { createSupabaseAdminClient } from '@/lib/supabase' // Use admin client
+import { isAdminEmail } from '@/lib/admin-utils'
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,7 +14,15 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // 1. First try to login to validate password
+    // 1. Check if email is in admin list first
+    if (!isAdminEmail(email)) {
+      return NextResponse.json(
+        { success: false, error: 'You do not have permission to access the admin panel' },
+        { status: 401 }
+      )
+    }
+
+    // 2. Try to login to validate password
     const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -23,25 +31,6 @@ export async function POST(request: NextRequest) {
     if (authError || !authData.user) {
       return NextResponse.json(
         { success: false, error: 'Invalid email or password' },
-        { status: 401 }
-      )
-    }
-     // Create admin client (bypass RLS)
-     const supabaseAdmin = createSupabaseAdminClient()
-
-    // 2. Verify user role is admin
-    const { data: customerData, error: customerError } = await supabaseAdmin
-      .from('customers')
-      .select('id, role')
-      .eq('id', authData.user.id)
-      .eq('role', 'admin')
-      .single()
-
-    if (customerError || !customerData) {
-      // If not admin, immediately sign out
-      await supabase.auth.signOut()
-      return NextResponse.json(
-        { success: false, error: 'You do not have permission to access the admin panel' },
         { status: 401 }
       )
     }

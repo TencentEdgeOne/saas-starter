@@ -1,18 +1,12 @@
 /**
 * CUSTOMERS
 * Note: this is a private table that contains a mapping of user IDs to Stripe customer IDs.
-* Updated to include user roles for admin access control.
 */
--- Create user role enum type
-create type user_role as enum ('user', 'admin');
-
 create table customers (
   -- UUID from auth.users
   id uuid references auth.users not null primary key,
   -- The user's customer ID in Stripe. User must not be able to update this.
-  stripe_customer_id text,
-  -- User role for access control (default: 'user')
-  role user_role default 'user' not null
+  stripe_customer_id text
 );
 alter table customers enable row level security;
 -- No policies as this is a private table that the user must not have access to.

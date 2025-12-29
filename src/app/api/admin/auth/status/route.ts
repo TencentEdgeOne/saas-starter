@@ -2,7 +2,7 @@ export const dynamic = 'force-dynamic'
 
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
-import { createSupabaseAdminClient } from '@/lib/supabase'
+import { isAdminEmail } from '@/lib/admin-utils'
 
 // Create client with anonymous key (for validating user sessions)
 const supabase = createClient(
@@ -27,9 +27,10 @@ export async function GET(request: NextRequest) {
 
     const token = authHeader.substring(7) // Remove "Bearer " prefix
     console.log('Token extracted, length:', token.length)
+    
     // Verify user identity
     const { data: { user }, error } = await supabase.auth.getUser(token)
-    if (error || !user) {
+    if (error || !user || !user.email) {
       return NextResponse.json({
         isAdmin: false,
         isLoggedIn: false,
@@ -37,26 +38,8 @@ export async function GET(request: NextRequest) {
       })
     }
 
-    // Create admin client (bypass RLS)
-    const supabaseAdmin = createSupabaseAdminClient()
-    // Check if user has customer record
-    const { data: customerData, error: customerError } = await supabaseAdmin
-      .from('customers')
-      .select('id, role')
-      .eq('id', user.id)
-      .single()
-
-    if (customerError || !customerData) {
-      return NextResponse.json({
-        isAdmin: false,
-        isLoggedIn: true,
-        hasAccount: false,
-        debug: `Customer lookup failed: ${customerError?.message}`
-      })
-    }
-
-    // Check if user is admin
-    if (customerData.role === 'admin') {
+    // Check if user email is in admin list
+    if (isAdminEmail(user.email)) {
       return NextResponse.json({
         isAdmin: true,
         isLoggedIn: true,

@@ -2,6 +2,7 @@ export const dynamic = 'force-dynamic'
 
 import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseAdminClient } from '@/lib/supabase'
+import { isAdminEmail } from '@/lib/admin-utils'
 
 export async function POST(request: NextRequest) {
   try {
@@ -84,10 +85,9 @@ export async function POST(request: NextRequest) {
     const offset = (page - 1) * limit
     const paginatedUsers = users.slice(offset, offset + limit)
     
-    // Get user credits and role information
+    // Get user credits information
     const userIds = paginatedUsers.map(user => user.id)
     let creditsData: any[] = []
-    let customersData: any[] = []
     
     if (userIds.length > 0) {
       // Get credits information
@@ -102,25 +102,14 @@ export async function POST(request: NextRequest) {
       } else {
         creditsData = credits || []
       }
-      
-      // Get user role information
-      const { data: customers, error: customersError } = await supabase
-        .from('customers')
-        .select('id, role')
-        .in('id', userIds)
-      
-      if (customersError) {
-        console.error('Error fetching customers:', customersError)
-        // Don't block user query, just log error
-      } else {
-        customersData = customers || []
-      }
     }
     
-    // Format data, merge user, credits and role information
+    // Format data, merge user and credits information
     const formattedUsers = paginatedUsers.map(user => {
       const userCredits = creditsData.find(c => c.user_id === user.id)
-      const userCustomer = customersData.find(c => c.id === user.id)
+      // Determine role based on ADMIN_EMAILS environment variable
+      const role = isAdminEmail(user.email || '') ? 'admin' : 'user'
+      
       return {
         id: user.id,
         email: user.email || '',
@@ -128,7 +117,7 @@ export async function POST(request: NextRequest) {
         updated_at: user.updated_at,
         last_sign_in_at: user.last_sign_in_at,
         email_confirmed_at: user.email_confirmed_at,
-        role: userCustomer?.role || 'user', // Default to regular user
+        role: role,
         credits: {
           balance: userCredits?.balance || 0,
           total_earned: 0, // This requires additional query calculation

@@ -4,7 +4,7 @@
 export const dynamic = 'force-dynamic'
 
 import React, { useState, useEffect } from 'react'
-import { Search, Mail, Calendar, ChevronLeft, ChevronRight, Coins, ArrowUpDown, ArrowUp, ArrowDown, Shield, User, Settings } from 'lucide-react'
+import { Search, Mail, Calendar, ChevronLeft, ChevronRight, Coins, ArrowUpDown, ArrowUp, ArrowDown, Shield, User } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { supabase } from '@/lib/supabase'
 import { useAdminLanguage, adminTexts } from '@/lib/admin-language-context'
@@ -45,15 +45,10 @@ export default function UsersPage() {
   const t = adminTexts[language]
   
   const [usersData, setUsersData] = useState<UsersResponse | null>(null)
-  const [configloading, setConfigloading] = useState(false)
   const [tableRefreshing, setTableRefreshing] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [searchTerm, setSearchTerm] = useState('')
   const [debouncedSearch, setDebouncedSearch] = useState('')
-  const [selectedUser, setSelectedUser] = useState<User | null>(null)
-  const [showRoleChangeConfirm, setShowRoleChangeConfirm] = useState(false)
-  const [newRole, setNewRole] = useState<'user' | 'admin'>('user')
-  const [currentUserId, setCurrentUserId] = useState<string | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [sortConfig, setSortConfig] = useState<SortConfig>({
@@ -61,13 +56,11 @@ export default function UsersPage() {
     order: 'desc'
   })
 
-  // Get current logged in user info
+  // Get current logged in user info (for future use if needed)
   useEffect(() => {
     const getCurrentUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (user) {
-        setCurrentUserId(user.id)
-      }
+      await supabase.auth.getUser()
+      // User info available if needed for future features
     }
     getCurrentUser()
   }, [])
