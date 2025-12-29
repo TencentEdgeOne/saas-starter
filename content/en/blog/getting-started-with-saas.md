@@ -3,8 +3,8 @@ title: "Getting Started with SaaS Development"
 date: "2024-01-15"
 excerpt: "Learn the essential steps to build and launch your first SaaS product successfully."
 author: "Alex Johnson"
-tags: ["SaaS", "Development", "Startup"]
-image: '/images/blogs/blog1.png'
+tags: ["SaaS", "Development", "Startup", "Tutorial"]
+image: "/images/blogs/blog1.png"
 ---
 
 Building a Software as a Service (SaaS) product can be an exciting and rewarding journey. Whether you're a solo developer or part of a team, this guide will help you understand the essential steps to create a successful SaaS product.
