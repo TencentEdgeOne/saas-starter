@@ -12,34 +12,52 @@
     /* Foreground color variables */
     --foreground: 0 0% 13%; /* Primary text color #212121 */
     --foreground-dark: 0 0% 100%; /* Dark theme foreground color #FFFFFF */
-    /* Theme color variables */
-    --primary: 260 51% 48%; /* Primary color #673AB7 */
-    --primary-dark: 257 59% 60%; /* Dark primary #512DA8 */
+    
+    /* Dynamic theme color variables - will be updated by theme context */
+    --primary: 260 51% 48%; /* Primary color - default purple */
+    --primary-dark: 257 59% 60%; /* Dark primary - default purple */
     --primary-foreground: 0 0% 100%; /* Text/icon color #FFFFFF */
     --primary-foreground-dark: 0 0% 100%; /* Dark theme text/icon color */
-    --secondary: 257 44% 85%; /* Light primary #D1C4E9 */
+    
+    /* Secondary colors based on primary */
+    --secondary: 0 0% 96%; /* Light secondary background */
     --secondary-dark: 240 3.7% 15.9%; /* Dark theme secondary */
     --secondary-foreground: 0 0% 13%; /* Primary text on secondary */
     --secondary-foreground-dark: 0 0% 98%; /* Dark theme secondary text */
+    
+    /* Muted colors */
     --muted: 0 0% 96%; /* Light muted background */
     --muted-dark: 240 3.7% 15.9%; /* Dark theme muted */
     --muted-foreground: 0 0% 46%; /* Secondary text #757575 */
     --muted-foreground-dark: 0 0% 65%; /* Dark theme muted text */
-    --accent: 257 100% 65%; /* Accent color #7C4DFF */
-    --accent-dark: 257 100% 65%; /* Dark theme accent */
+    
+    /* Dynamic accent color - will be updated by theme context */
+    --accent: 257 100% 65%; /* Accent color - default purple */
+    --accent-dark: 257 100% 65%; /* Dark theme accent - default purple */
     --accent-foreground: 0 0% 100%; /* Accent text color */
     --accent-foreground-dark: 0 0% 100%; /* Dark theme accent text */
+    
+    /* Static colors */
     --destructive: 0 84.2% 60.2%; /* Default destructive color */
     --destructive-dark: 0 62.8% 30.6%; /* Dark theme destructive color */
+    --destructive-foreground: 0 0% 98%;
     --border: 0 0% 74%; /* Divider color #BDBDBD */
     --border-dark: 240 3.7% 36.5%; /* Dark theme border color */
     --input: 0 0% 90%; /* Input border color */
     --input-dark: 240 3.7% 15.9%; /* Dark theme input color */
-    --ring: 260 51% 48%; /* Focus ring color */
-    --ring-dark: 257 59% 42%; /* Dark theme ring color */
+    --ring: var(--primary); /* Focus ring uses primary color */
+    --ring-dark: var(--primary-dark); /* Dark theme ring uses primary-dark */
     --radius: 0.5rem; /* Default border radius */
-    --popover-background: 0 0% 100%; /* Popover background color */
-    --popover-background-dark: 240 3.7% 15.9%; /* Dark theme popover background color */
+    
+    /* Card and popover colors */
+    --card: 0 0% 100%;
+    --card-dark: 240 10% 3.9%;
+    --card-foreground: 0 0% 13%;
+    --card-foreground-dark: 0 0% 98%;
+    --popover: 0 0% 100%;
+    --popover-dark: 240 10% 3.9%;
+    --popover-foreground: 0 0% 13%;
+    --popover-foreground-dark: 0 0% 98%;
   }
 
   .dark {
@@ -58,6 +76,10 @@
     --border: var(--border-dark);
     --input: var(--input-dark);
     --ring: var(--ring-dark);
+    --card: var(--card-dark);
+    --card-foreground: var(--card-foreground-dark);
+    --popover: var(--popover-dark);
+    --popover-foreground: var(--popover-foreground-dark);
   }
 }
 
@@ -111,8 +133,42 @@
   50% { transform: translateY(-20px); }
 }
 
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) translateX(0px); }
+  33% { transform: translateY(-15px) translateX(10px); }
+  66% { transform: translateY(-10px) translateX(-5px); }
+}
+
+@keyframes float-fast {
+  0%, 100% { transform: translateY(0px) translateX(0px); }
+  25% { transform: translateY(-10px) translateX(5px); }
+  50% { transform: translateY(-15px) translateX(-3px); }
+  75% { transform: translateY(-8px) translateX(8px); }
+}
+
+@keyframes pulse-gentle {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
 .float-animation {
   animation: float 6s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+.animate-float-fast {
+  animation: float-fast 3s ease-in-out infinite;
+}
+
+.animate-pulse-gentle {
+  animation: pulse-gentle 2s ease-in-out infinite;
 }
 
 @keyframes spin-slow {
