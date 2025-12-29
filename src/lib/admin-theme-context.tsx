@@ -146,9 +146,6 @@ export function ThemePreview({ theme, isSelected, onClick }: {
         </div>
         <span className="text-sm font-medium capitalize">{theme}</span>
       </div>
-      {isSelected && (
-        <div className="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full" />
-      )}
     </div>
   )
 }
