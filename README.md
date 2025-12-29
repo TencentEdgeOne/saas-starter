@@ -20,6 +20,7 @@ A modern, production-ready SaaS AI template built with Next.js 14, TypeScript, a
 - **Third-party Login**: Google, GitHub OAuth integration
 - **Credits System**: Complete credit management with earning, spending, and history
 - **AI Image Generation**: Multi-model AI image generation capabilities
+- **Admin Management System**: User management, billing management with environment variable admin configuration
 - **Blog System**: Markdown-based blog with frontmatter
 - **Case Studies**: Showcase your success stories
 - **Payment Integration**: Stripe-ready payment system
@@ -116,6 +117,38 @@ STABILITY_API_KEY=your-stability-api-key
 # Add corresponding API keys as needed
 ```
 
+### 🛡️ Admin Management System
+
+Complete admin management system supporting comprehensive platform administration:
+
+**Core Features:**
+
+- **User Management**: View user list, user details, credit management
+- **Billing Management**: View order list, order details, revenue statistics
+- **Multi-language Support**: Chinese and English interface switching
+- **Responsive Design**: Desktop and mobile device compatibility
+
+**Admin Configuration:**
+
+Configure admin emails through environment variables, supporting multiple administrators:
+
+```bash
+# Admin email configuration (multiple emails separated by commas)
+ADMIN_EMAILS=admin1@example.com,admin2@example.com,admin3@example.com
+```
+
+**Features:**
+
+- Environment variable-driven admin permission control
+- Secure authentication and authorization mechanisms
+- Real-time data statistics and visualization
+- Complete user lifecycle management
+- Order and payment record tracking
+
+**Access:**
+
+Administrators can access the admin management system through the `/admin` path. The system automatically verifies if the email is configured in the `ADMIN_EMAILS` environment variable.
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -155,6 +188,7 @@ edgeone pages dev
 saas-starter-template/
 ├── src/
 │   ├── app/                 # Next.js App Router
+│   │   ├── admin/          # Admin management system pages
 │   │   ├── ai/             # AI image generation pages
 │   │   ├── blog/           # Blog pages
 │   │   ├── cases/          # Case studies
