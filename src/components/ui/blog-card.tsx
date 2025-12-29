@@ -47,12 +47,12 @@ export function BlogCard({ post, variant = "default", className = "", lang = "en
         <div className="p-6">
           {/* Tags */}
           <div className="flex flex-wrap gap-2 mb-4 relative">
-            {post.tags.slice(0, 3).map((tag) => (
+            {post.tags.slice(0, 5).map((tag) => (
               <Badge key={tag} variant="secondary" className="text-xs px-2 py-1 bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 transition-colors">
                 {tag}
               </Badge>
             ))}
-            {post.tags.length > 3 && (
+            {post.tags.length > 5 && (
               <div className="relative">
                 <Badge 
                   variant="outline" 
@@ -60,7 +60,7 @@ export function BlogCard({ post, variant = "default", className = "", lang = "en
                   onMouseEnter={() => setShowAllTags(true)}
                   onMouseLeave={() => setShowAllTags(false)}
                 >
-                  +{post.tags.length - 3}
+                  +{post.tags.length - 5}
                 </Badge>
                 {showAllTags && (
                   <div 
@@ -69,7 +69,7 @@ export function BlogCard({ post, variant = "default", className = "", lang = "en
                     onMouseLeave={() => setShowAllTags(false)}
                   >
                     <div className="flex flex-wrap gap-1.5">
-                      {post.tags.map((tag) => (
+                      {post.tags.slice(5, ).map((tag) => (
                         <Badge key={tag} variant="secondary" className="text-xs px-2 py-1 bg-primary/10 text-primary border-primary/20">
                           {tag}
                         </Badge>
