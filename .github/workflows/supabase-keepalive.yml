@@ -2,7 +2,7 @@ name: supabase-keepalive
 
 on:
   schedule:
-    - cron: "0 1 * * *" # 每天一次；GitHub cron 用 UTC（03:00 UTC = 北京 11:00）
+    - cron: "0 8 * * *" # 每天一次；GitHub cron 用 UTC（03:00 UTC = 北京 11:00）
   workflow_dispatch:
 
 jobs:
