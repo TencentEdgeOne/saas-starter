@@ -4,11 +4,13 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { isAdminEmail } from '@/lib/admin-utils'
 
-// Create client with anonymous key (for validating user sessions)
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+// Lazily create client to avoid build-time errors when env vars are not set
+function getSupabaseClient() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
+}
 
 export async function GET(request: NextRequest) {
   try {
@@ -29,6 +31,7 @@ export async function GET(request: NextRequest) {
     console.log('Token extracted, length:', token.length)
     
     // Verify user identity
+    const supabase = getSupabaseClient()
     const { data: { user }, error } = await supabase.auth.getUser(token)
     if (error || !user || !user.email) {
       return NextResponse.json({
